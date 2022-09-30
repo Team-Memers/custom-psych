@@ -35,7 +35,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Note Splashes',
-			"If unchecked, hitting \"Sick!\" notes won't show particles.",
+			"If unchecked, hitting sicks won't show particles.",
 			'noteSplashes',
 			'bool',
 			true);
@@ -49,7 +49,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
-			"What should the Time Bar display?",
+			"What should the time bar display?",
 			'timeBarType',
 			'string',
 			'Time Left',
@@ -71,7 +71,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Score Text Zoom on Hit',
-			"If unchecked, disables the Score text zooming\neverytime you hit a note.",
+			"If unchecked, disables the score text zooming\neverytime you hit a note.",
 			'scoreZoom',
 			'bool',
 			true);
@@ -91,7 +91,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		
 		#if !mobile
 		var option:Option = new Option('FPS Counter',
-			'If unchecked, hides FPS Counter.',
+			'If unchecked, hides the FPS counter.',
 			'showFPS',
 			'bool',
 			true);
@@ -100,17 +100,17 @@ class VisualsUISubState extends BaseOptionsMenu
 		#end
 		
 		var option:Option = new Option('Pause Screen Song:',
-			"What song do you prefer for the Pause Screen?",
+			"What song do you prefer for the pause screen?",
 			'pauseMusic',
 			'string',
 			'Tea Time',
-			['None', 'Breakfast', 'Tea Time']);
+			['None', 'Breakfast', 'Tea Time', 'DISCO FLAVA MAKES U HOT']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
 		
 		#if CHECK_FOR_UPDATES
 		var option:Option = new Option('Check for Updates',
-			'On Release builds, turn this on to check for updates when you start the game.',
+			'On release builds, turn this on to check for updates when you start the game.',
 			'checkForUpdates',
 			'bool',
 			true);
@@ -118,7 +118,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		#end
 
 		var option:Option = new Option('Combo Stacking',
-			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
+			"If unchecked, judgements and combos won't stack, saving on system memory and making them easier to read.",
 			'comboStacking',
 			'bool',
 			true);
