@@ -5211,7 +5211,7 @@ class PlayState extends MusicBeatState
 			if (goods > 1) ratingFC = "SDG";
 			if (goods > 9) ratingFC = "GFC";
 			if (bads > 0) ratingFC = "FC";
-			if (songMisses == 1) ratingFC = "MF"
+			if (songMisses == 1) ratingFC = "MF";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
 		}
