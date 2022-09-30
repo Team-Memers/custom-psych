@@ -1022,50 +1022,49 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 
-		if (FlxG.save.data.songPosition)
-			{
-				songPosBG = new FlxSprite(0, 10).loadGraphic(Paths.loadImage('healthBar'));
-				if(ClientPrefs.downScroll)
-					songPosBG.y = FlxG.height * 0.9 + 35;
-					songPosBG.screenCenter(X);
-					songPosBG.scrollFactor.set();
+		if (ClientPrefs.songPosition)
+		{
+			songPosBG = new FlxSprite(0, 10).loadGraphic(Paths.loadImage('healthBar'));
+			if(ClientPrefs.downScroll)
+				songPosBG.y = FlxG.height * 0.9 + 35;
+				songPosBG.screenCenter(X);
+				songPosBG.scrollFactor.set();
 	
-					songPosBar = new FlxBar(640 - (Std.int(songPosBG.width - 100) / 2), songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 100),
-						Std.int(songPosBG.height + 6), this, 'songPositionBar', 0, songLength);
-					songPosBar.scrollFactor.set();
-					songPosBar.createGradientBar([FlxColor.BLACK], [boyfriend.barColor, dad.barColor]);
-					add(songPosBar);
+				songPosBar = new FlxBar(640 - (Std.int(songPosBG.width - 100) / 2), songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 100),
+					Std.int(songPosBG.height + 6), this, 'songPositionBar', 0, songLength);
+				songPosBar.scrollFactor.set();
+				songPosBar.createGradientBar([FlxColor.BLACK], [boyfriend.barColor, dad.barColor]);
+				add(songPosBar);
 	
-					bar = new FlxSprite(songPosBar.x, songPosBar.y).makeGraphic(Math.floor(songPosBar.width), Math.floor(songPosBar.height), FlxColor.TRANSPARENT);
+				bar = new FlxSprite(songPosBar.x, songPosBar.y).makeGraphic(Math.floor(songPosBar.width), Math.floor(songPosBar.height), FlxColor.TRANSPARENT);
 	
-					add(bar);
+				add(bar);
 	
-					FlxSpriteUtil.drawRect(bar, 0, 0, songPosBar.width, songPosBar.height, FlxColor.TRANSPARENT, {thickness: 4, color: FlxColor.BLACK});
+				FlxSpriteUtil.drawRect(bar, 0, 0, songPosBar.width, songPosBar.height, FlxColor.TRANSPARENT, {thickness: 4, color: FlxColor.BLACK});
 	
-					songPosBG.width = songPosBar.width;
+				songPosBG.width = songPosBar.width;
 	
-					songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - (SONG.songName.length * 5), songPosBG.y - 15, 0, SONG.songName, 16);
-					songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-					songName.scrollFactor.set();
+				songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - (SONG.songName.length * 5), songPosBG.y - 15, 0, SONG.songName, 16);
+				songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				songName.scrollFactor.set();
 	
-					songName.text = SONG.songName + ' (' + FlxStringUtil.formatTime(songLength, false) + ')';
-					songName.y = songPosBG.y + (songPosBG.height / 3);
+				songName.text = SONG.songName + ' (' + FlxStringUtil.formatTime(songLength, false) + ')';
+				songName.y = songPosBG.y + (songPosBG.height / 3);
 	
-					add(songName);
+				add(songName);
 	
-					songName.screenCenter(X);
+				songName.screenCenter(X);
 	
-					songPosBG.cameras = [camHUD];
-					bar.cameras = [camHUD];
-					songPosBar.cameras = [camHUD];
-					songName.cameras = [camHUD];
-				}
+				songPosBG.cameras = [camHUD];
+				bar.cameras = [camHUD];
+				songPosBar.cameras = [camHUD];
+				songName.cameras = [camHUD];
 			}
 		}
 
-		/*var splash:NoteSplash = new NoteSplash(100, 100, 0);
+		var splash:NoteSplash = new NoteSplash(100, 100, 0);
 		grpNoteSplashes.add(splash);
-		splash.alpha = 0.0;*/
+		splash.alpha = 0.0;
 
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();

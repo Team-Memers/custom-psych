@@ -111,7 +111,7 @@ class ClientPrefs {
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.ghostTapping = ghostTapping;
-		FlxG.save.data.timeBarType = timeBarType;
+		FlxG.save.data.songPosition = songPosition;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
