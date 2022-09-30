@@ -51,7 +51,7 @@ class WeekData {
 
 	public static function createWeekFile():WeekFile {
 		var weekFile:WeekFile = {
-			songs: [["Song", "", [0, 0, 0]]]],
+			songs: [["Song", "", [0, 0, 0]]],
 			weekCharacters: ['', '', ''],
 			weekBackground: '',
 			weekBefore: '',
