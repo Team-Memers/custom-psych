@@ -2295,10 +2295,11 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Combo Breaks: ' + songMisses
-		+ ' | Accuracy: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
+
+		scoreTxt.text = 'Score: ' + songScore 
+		+ ' | Combo Breaks: ' + songMisses 
+		+ ' | Accuracy: ' + (ratingName != '?' ? '$accuracy% [$ratingFC | $ratingName]' : '0.00%');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
