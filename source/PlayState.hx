@@ -4119,7 +4119,7 @@ class PlayState extends MusicBeatState
 		
 		if (daRating.hitCausesMiss)
 		{
-			combo = 0
+			combo = 0;
 			comboBreaks = comboBreaks + 1 + songMisses;
 		}
 
