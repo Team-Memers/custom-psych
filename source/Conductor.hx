@@ -164,6 +164,7 @@ class Rating
 	public var ratingMod:Float = 1;
 	public var score:Int = 350;
 	public var noteSplash:Bool = true;
+	public var hitCausesMiss:Bool = false;
 
 	public function new(name:String)
 	{
