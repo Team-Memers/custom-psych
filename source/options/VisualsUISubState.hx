@@ -48,11 +48,12 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 		
-		var option:Option = new Option('Time Bar',
-			'If checked, it will show a time bar at the top or bottom of your screen, depending on scroll direction.'
-			'songPosition',
-			'bool',
-			false);
+		var option:Option = new Option('Time Bar:',
+			"What should the time bar display?",
+			'timeBarType',
+			'string',
+			'Time Left',
+			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
