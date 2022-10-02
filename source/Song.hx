@@ -156,15 +156,15 @@ class Song
 	}
 
 	public static function parseJSONshitSM(songId:String, jsonData:Dynamic, jsonMetaData:Dynamic):SwagSong
-		{
-			var songData:SwagSong = cast jsonData.song;
+	{
+		var songData:SwagSong = cast jsonData.song;
 	
-			songData.songId = songId;
+		songData.songId = songId;
 	
-			// Enforce default values for optional fields.
-			if (songData.validScore == null)
-				songData.validScore = true;
-			}
-	
-			return Song.conversionChecks(songData);
-		}
+		// Enforce default values for optional fields.
+		if (songData.validScore == null)
+		songData.validScore = true;
+
+		return Song.conversionChecks(songData);
+	}
+}
