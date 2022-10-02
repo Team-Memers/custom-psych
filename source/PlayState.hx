@@ -358,7 +358,7 @@ class PlayState extends MusicBeatState
 
 		var rating:Rating = new Rating('bad');
 		rating.ratingMod = 0.4;
-		rating.score = 100;
+		rating.score = 0;
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
