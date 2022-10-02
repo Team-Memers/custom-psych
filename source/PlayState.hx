@@ -263,6 +263,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
+	public var comboBreaks:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -362,7 +363,7 @@ class PlayState extends MusicBeatState
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
-		var rating:Rating = new Rating('shit');
+		var rating:Rating = new Rating('shit'); //kade what the FUCK
 		rating.ratingMod = 0;
 		rating.score = -300;
 		rating.noteSplash = false;
@@ -2298,7 +2299,7 @@ class PlayState extends MusicBeatState
 	{
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
-		scoreTxt.text = 'Combo Breaks: ' + songMisses
+		scoreTxt.text = 'Combo Breaks: ' + comboBreaks
 		+ ' | Accuracy: ' + (ratingName != '?' ? '$accuracy% [$ratingFC | $ratingName]' : '0.00%');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
@@ -4117,7 +4118,7 @@ class PlayState extends MusicBeatState
 		
 		if (daRating.hitCausesMiss)
 		{
-			songMisses++;
+			comboBreaks++;
 		}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
@@ -4505,6 +4506,8 @@ class PlayState extends MusicBeatState
 		});
 		combo = 0;
 		health -= daNote.missHealth * healthLoss;
+
+		comboBreaks = comboBreaks + songMisses;
 		
 		if(instakillOnMiss)
 		{
@@ -4514,7 +4517,7 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		songMisses++;
+		comboBreaks++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
@@ -4556,7 +4559,7 @@ class PlayState extends MusicBeatState
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
-				songMisses++;
+				comboBreaks++;
 			}
 			totalPlayed++;
 			RecalculateRating(true);
@@ -5179,6 +5182,7 @@ class PlayState extends MusicBeatState
 	public function RecalculateRating(badHit:Bool = false) {
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
+		setOnLuas('comboBreaks', comboBreaks);
 		setOnLuas('hits', songHits);
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
@@ -5217,9 +5221,9 @@ class PlayState extends MusicBeatState
 			if (goods > 1) ratingFC = "SDG";
 			if (goods > 9) ratingFC = "GFC";
 			if (bads > 0) ratingFC = "FC";
-			if (songMisses == 1) ratingFC = "MF";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			if (comboBreaks == 1) ratingFC = "MF";
+			if (comboBreaks > 0 && comboBreaks < 10) ratingFC = "SDCB";
+			else if (comboBreaks >= 10) ratingFC = "Clear";
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
@@ -5240,7 +5244,7 @@ class PlayState extends MusicBeatState
 				switch(achievementName)
 				{
 					case 'week1_nomiss' | 'week2_nomiss' | 'week3_nomiss' | 'week4_nomiss' | 'week5_nomiss' | 'week6_nomiss' | 'week7_nomiss':
-						if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD' && storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
+						if(isStoryMode && campaignMisses + comboBreaks < 1 && CoolUtil.difficultyString() == 'HARD' && storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
 						{
 							var weekName:String = WeekData.getWeekFileName();
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
