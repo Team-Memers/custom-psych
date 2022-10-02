@@ -176,7 +176,6 @@ class PlayState extends MusicBeatState
 	public var gfSpeed:Int = 1;
 	public var health:Float = 1;
 	public var combo:Int = 0;
-	public var comboBreaks:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
@@ -365,7 +364,7 @@ class PlayState extends MusicBeatState
 
 		var rating:Rating = new Rating('shit');
 		rating.ratingMod = 0;
-		rating.score = 50;
+		rating.score = -300;
 		rating.noteSplash = false;
 		rating.hitCausesMiss = true;
 		ratingsData.push(rating);
@@ -2299,7 +2298,7 @@ class PlayState extends MusicBeatState
 	{
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
-		scoreTxt.text = 'Combo Breaks: ' + comboBreaks
+		scoreTxt.text = 'Combo Breaks: ' + songMisses
 		+ ' | Accuracy: ' + (ratingName != '?' ? '$accuracy% [$ratingFC | $ratingName]' : '0.00%');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
@@ -4118,8 +4117,7 @@ class PlayState extends MusicBeatState
 		
 		if (daRating.hitCausesMiss)
 		{
-			combo = 0;
-			comboBreaks = comboBreaks + 1 + songMisses;
+			songMisses++;
 		}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
