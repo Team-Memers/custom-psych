@@ -14,6 +14,7 @@ using StringTools;
 
 typedef SwagSong =
 {
+	var songId:String;
 	var song:String;
 	var notes:Array<SwagSection>;
 	var events:Array<Dynamic>;
@@ -154,29 +155,16 @@ class Song
 		return swagShit;
 	}
 
-	public static function parseJSONshitSM(songId:String, jsonData:Dynamic, jsonMetaData:Dynamic):SongData
+	public static function parseJSONshitSM(songId:String, jsonData:Dynamic, jsonMetaData:Dynamic):SwagSong
 		{
-			var songData:SongData = cast jsonData.song;
+			var songData:SwagSong = cast jsonData.song;
 	
 			songData.songId = songId;
 	
 			// Enforce default values for optional fields.
 			if (songData.validScore == null)
 				songData.validScore = true;
-	
-			// Inject info from _meta.json.
-			var songMetaData:SongMeta = cast jsonMetaData;
-			if (songMetaData.name != null)
-			{
-				songData.songName = songMetaData.name;
 			}
-			else
-			{
-				songData.songName = songId.split('-').join(' ');
-			}
-	
-			songData.offset = songMetaData.offset != null ? songMetaData.offset : 0;
 	
 			return Song.conversionChecks(songData);
 		}
-	}
