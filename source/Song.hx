@@ -33,18 +33,6 @@ typedef SwagSong =
 
 class Song
 {
-	public static function loadFromJsonRAW(rawJson:String)
-	{
-		while (!rawJson.endsWith("}"))
-		{
-			rawJson = rawJson.substr(0, rawJson.length - 1);
-			// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
-		}
-		var jsonData = Json.parse(rawJson);
-
-		return parseJSONshitSM("rawsong", jsonData, ["name" => jsonData.name]);
-	}
-
 	public var song:String;
 	public var notes:Array<SwagSection>;
 	public var events:Array<Dynamic>;
@@ -153,30 +141,4 @@ class Song
 		swagShit.validScore = true;
 		return swagShit;
 	}
-
-	public static function parseJSONshitSM(songId:String, jsonData:Dynamic, jsonMetaData:Dynamic):SongData
-		{
-			var songData:SongData = cast jsonData.song;
-	
-			songData.songId = songId;
-	
-			// Enforce default values for optional fields.
-			if (songData.validScore == null)
-				songData.validScore = true;
-	
-			// Inject info from _meta.json.
-			var songMetaData:SongMeta = cast jsonMetaData;
-			if (songMetaData.name != null)
-			{
-				songData.songName = songMetaData.name;
-			}
-			else
-			{
-				songData.songName = songId.split('-').join(' ');
-			}
-	
-			songData.offset = songMetaData.offset != null ? songMetaData.offset : 0;
-	
-			return Song.conversionChecks(songData);
-		}
-	}
+}
