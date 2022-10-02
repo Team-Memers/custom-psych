@@ -89,7 +89,7 @@
 		<library name="week5"         preload="false" />
 		<library name="week6"         preload="false" />
 		<library name="week7"         preload="false" />
-		<library name="sm"    preload="false" />
+		<!-- <library name="sm"    preload="false" /> -->
 	</section>
 	
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
