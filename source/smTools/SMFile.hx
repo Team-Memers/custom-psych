@@ -125,15 +125,17 @@ class SMFile
 		var song = {
 			song: header.TITLE,
 			notes: [],
-			events: [],
+			eventObjects: [],
 			bpm: header.getBPM(0),
 			needsVoices: true,
 			player1: 'bf',
-			player2: 'dad',
+			player2: 'gf',
 			gfVersion: 'gf',
+			noteStyle: 'normal',
 			stage: 'stage',
 			speed: 1.0,
 			validScore: false,
+			chartVersion: "",
 		};
 
 		// lets check if the sm loading was valid
