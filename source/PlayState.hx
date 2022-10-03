@@ -2299,7 +2299,7 @@ class PlayState extends MusicBeatState
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
 		scoreTxt.text = 'Combo Breaks: ' + songMisses
-		+ ' | Accuracy: ' + (ratingName != '?' ? '$accuracy% [$ratingFC | $ratingName]' : '0.00%');
+		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
