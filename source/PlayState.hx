@@ -2409,8 +2409,8 @@ class PlayState extends MusicBeatState
 		{
 			case "multiplicative":
 				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
-			/*case "constant":
-				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);*/
+			case "constant":
+				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
 		}
 
 		var songData = SONG;
