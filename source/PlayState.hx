@@ -2293,14 +2293,14 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public function updateScore(miss:Bool = false)
+	public function updateScore()
 	{
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
 		scoreTxt.text = ('Combo Breaks: ' + songMisses
 		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
 
-		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
+		/*if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
@@ -2312,7 +2312,7 @@ class PlayState extends MusicBeatState
 					scoreTxtTween = null;
 				}
 			});
-		}
+		}*/
 		callOnLuas('onUpdateScore', [miss]);
 	}
 
@@ -4506,7 +4506,7 @@ class PlayState extends MusicBeatState
 		return ret;
 	}
 
-	function noteMiss(daNote:Note, badHit:Bool = false):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
+	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
 		//Dupe note remove
 		notes.forEachAlive(function(note:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
@@ -4518,7 +4518,7 @@ class PlayState extends MusicBeatState
 		combo = 0;
 		health -= daNote.missHealth * healthLoss;
 
-		updateScore(badHit);
+		updateScore();
 		
 		if(instakillOnMiss)
 		{
@@ -4549,7 +4549,7 @@ class PlayState extends MusicBeatState
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
 	}
 
-	function noteMissPress(direction:Int = 1, badHit:Bool = false):Void //You pressed a key when there was no notes to press for this key
+	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
 	{
 		if(ClientPrefs.ghostTapping) return; //fuck it
 
@@ -4575,7 +4575,7 @@ class PlayState extends MusicBeatState
 			totalPlayed++;
 			RecalculateRating(true);
 
-			updateScore(badHit);
+			updateScore();
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
@@ -4649,7 +4649,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function goodNoteHit(note:Note, badHit:Bool = false):Void
+	function goodNoteHit(note:Note):Void
 	{
 		if (!note.wasGoodHit)
 		{
@@ -4660,13 +4660,13 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 			}
 
-			updateScore(badHit);
-
 			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(note);
 				}
+
+				updateScore();
 
 				if(!note.noMissAnimation)
 				{
@@ -5239,7 +5239,7 @@ class PlayState extends MusicBeatState
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
 		}
-		//updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
+		updateScore(); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
