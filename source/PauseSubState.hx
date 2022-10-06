@@ -60,6 +60,7 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		difficultyChoices.push('BACK');
 
+		openfl.Lib.application.current.window.title = 'FNF: Psych Engine - Paused on' + PlayState.SONG.song;
 
 		pauseMusic = new FlxSound();
 		if(songName != null) {

@@ -59,6 +59,8 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
+		openfl.Lib.application.current.window.title = 'FNF: Psych Engine - Options Menu'
+
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.updateHitbox();
