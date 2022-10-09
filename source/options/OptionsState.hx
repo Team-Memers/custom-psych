@@ -60,8 +60,6 @@ class OptionsState extends MusicBeatState
 		FlxG.stage.application.window.title = 'FNF: Psych Engine - Options Menu';
 		#end
 
-		#end
-
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.updateHitbox();
