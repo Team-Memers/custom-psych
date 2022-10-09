@@ -231,7 +231,7 @@ class ChartingState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
-		FlxG.stage.application.window.title = 'FNF: Psych Engine - Charting' + _song.song;
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Charting ' + _song.song;
 		#end
 
 		vortex = FlxG.save.data.chart_vortex;
