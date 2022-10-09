@@ -412,7 +412,7 @@ class PlayState extends MusicBeatState
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
 
-		FlxG.stage.application.window.title = 'FNF: Psych Engine - Playing' + SONG.song;
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Playing ' + SONG.song;
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
