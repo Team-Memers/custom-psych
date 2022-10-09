@@ -64,8 +64,6 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		openfl.Lib.application.current.window.title = 'FNF: Psych Engine - In Freeplay';
-
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
 
