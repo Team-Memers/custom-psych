@@ -67,6 +67,10 @@ class EditorPlayState extends MusicBeatState
 	{
 		instance = this;
 
+		#if desktop
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Playtesting' + _song.song;
+		#end
+
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.color = FlxColor.GRAY;

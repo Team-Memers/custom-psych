@@ -42,6 +42,7 @@ class CreditsState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Credits Menu';
 		#end
 
 		persistentUpdate = true;

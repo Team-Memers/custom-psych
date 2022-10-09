@@ -62,6 +62,7 @@ class FreeplayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Selecting a Song';
 		#end
 
 		for (i in 0...WeekData.weeksList.length) {

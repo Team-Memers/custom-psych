@@ -81,7 +81,10 @@ class CharacterEditorState extends MusicBeatState
 	override function create()
 	{
 		//FlxG.sound.playMusic(Paths.music('breakfast'), 0.5);
-
+		#if desktop
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Editing a Character';
+		#end
+		
 		camEditor = new FlxCamera();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;

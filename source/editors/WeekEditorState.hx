@@ -55,6 +55,10 @@ class WeekEditorState extends MusicBeatState
 	}
 
 	override function create() {
+		#if desktop
+		FlxG.stage.application.window.title = 'FNF: Psych Engine - Editing a Week';
+		#end
+		
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
