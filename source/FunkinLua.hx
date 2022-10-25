@@ -131,8 +131,7 @@ class FunkinLua {
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
 
-		var difficultyName:String = CoolUtil.difficulties[PlayState.storyDifficulty];
-		set('difficultyName', difficultyName);
+		set('difficultyName', CoolUtil.difficulties[PlayState.storyDifficulty]);
 		set('difficultyPath', Paths.formatToSongPath(difficultyName));
 		set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
@@ -1524,9 +1523,9 @@ class FunkinLua {
 				case 'gf' | 'girlfriend': charType = 2;
 			}
 			PlayState.instance.addCharacterToList(name, charType);
-		});
-		Lua_helper.add_callback(lua, "precacheImage", function(name:String) {
-			Paths.returnGraphic(name);
+		}); bvds
+		/*Lua_helper.add_callback(lua, "precacheImage", function(name:String) {
+			Paths.returnGraphic(name); who the fuck uses precacheImage*/
 		});
 		Lua_helper.add_callback(lua, "precacheSound", function(name:String) {
 			CoolUtil.precacheSound(name);
