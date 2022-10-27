@@ -3196,12 +3196,12 @@ class PlayState extends MusicBeatState
 					if (strumScroll) //Downscroll
 					{
 						//daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-						daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed);
+						daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) /* songSpeed */ * daNote.multSpeed);
 					}
 					else //Upscroll
 					{
 						//daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-						daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed);
+						daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) /* songSpeed please */ * daNote.multSpeed);
 					}
 
 					var angleDir = strumDirection * Math.PI / 180;
@@ -3222,8 +3222,8 @@ class PlayState extends MusicBeatState
 						if(strumScroll && daNote.isSustainNote)
 						{
 							if (daNote.animation.curAnim.name.endsWith('end')) {
-								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
-								daNote.y -= 46 * (1 - (fakeCrochet / 600)) * songSpeed;
+								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 /* (songSpeed - 1)*/);
+								daNote.y -= 46 * (1 - (fakeCrochet / 600)) /* songSpeed */;
 								if(PlayState.isPixelStage) {
 									daNote.y += 8 + (6 - daNote.originalHeightForCalcs) * PlayState.daPixelZoom;
 								} else {
