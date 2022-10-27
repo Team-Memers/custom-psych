@@ -2054,9 +2054,9 @@ class ChartingState extends MusicBeatState
 
 		bpmTxt.text =
 		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
-		"\nMeasure: " + curSec + 1 +
-		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) + 1 +
-		"\n\nStep: " + curStep + 1 +
+		"\nMeasure: " + curSec +
+		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
+		"\n\nStep: " + curStep +
 		"\n\nSnap: " + quantization + "th";
 
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
