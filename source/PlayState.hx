@@ -3195,13 +3195,13 @@ class PlayState extends MusicBeatState
 
 					if (strumScroll) //Downscroll
 					{
-						//daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-						daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) /* songSpeed */ * daNote.multSpeed);
+						daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
+						daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed);
 					}
 					else //Upscroll
 					{
-						//daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-						daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) /* songSpeed please */ * daNote.multSpeed);
+						daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
+						daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed);
 					}
 
 					var angleDir = strumDirection * Math.PI / 180;
@@ -3222,8 +3222,8 @@ class PlayState extends MusicBeatState
 						if(strumScroll && daNote.isSustainNote)
 						{
 							if (daNote.animation.curAnim.name.endsWith('end')) {
-								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 /* (songSpeed - 1)*/);
-								daNote.y -= 46 * (1 - (fakeCrochet / 600)) /* songSpeed */;
+								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
+								daNote.y -= 46 * (1 - (fakeCrochet / 600)) * songSpeed;
 								if(PlayState.isPixelStage) {
 									daNote.y += 8 + (6 - daNote.originalHeightForCalcs) * PlayState.daPixelZoom;
 								} else {
@@ -3781,7 +3781,7 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(val1)) val1 = 1;
 				if(Math.isNaN(val2)) val2 = 0;
 
-				var newValue:Float = SONG.speed /* ClientPrefs.getGameplaySetting('scrollspeed', 1) ok THIS should do it*/ * val1;
+				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
 
 				if(val2 <= 0)
 				{
@@ -5243,7 +5243,7 @@ class PlayState extends MusicBeatState
 			if (goods > 9) ratingFC = "GFC";
 			if (bads > 0) ratingFC = "FC";
 			if (songMisses == 1) ratingFC = "MF";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+			if (songMisses > 1 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
 		}
 		//updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
