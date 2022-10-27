@@ -3781,7 +3781,7 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(val1)) val1 = 1;
 				if(Math.isNaN(val2)) val2 = 0;
 
-				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
+				var newValue:Float = SONG.speed /* ClientPrefs.getGameplaySetting('scrollspeed', 1) ok THIS should do it*/ * val1;
 
 				if(val2 <= 0)
 				{
