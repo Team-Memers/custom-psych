@@ -1523,10 +1523,10 @@ class FunkinLua {
 				case 'gf' | 'girlfriend': charType = 2;
 			}
 			PlayState.instance.addCharacterToList(name, charType);
-		}); bvds
-		/*Lua_helper.add_callback(lua, "precacheImage", function(name:String) {
-			Paths.returnGraphic(name); who the fuck uses precacheImage*/
 		});
+		/*Lua_helper.add_callback(lua, "precacheImage", function(name:String) {
+			Paths.returnGraphic(name); who the fuck uses precacheImage
+		});*/
 		Lua_helper.add_callback(lua, "precacheSound", function(name:String) {
 			CoolUtil.precacheSound(name);
 		});
