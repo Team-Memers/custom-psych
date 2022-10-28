@@ -2313,8 +2313,8 @@ class PlayState extends MusicBeatState
 		if (displayRatings)
 		{
 			tempScore += scoreSeparator + 'Combo Breaks: ' + comboBreaks;
-			tempScore += scoreSeparator + 'Accuracy: '  + $accuracy + '%';
-			tempScore += '[' + $ratingFC + scoreSeparator + $ratingName + ']' : '';
+			tempScore += scoreSeparator + 'Accuracy: '  + accuracy + '%';
+			tempScore += '[' + ratingFC + scoreSeparator + ratingName + ']' : '';
 		}
 		tempScore += '\n'; // to ensure text won't display as cropped i guess;
 
