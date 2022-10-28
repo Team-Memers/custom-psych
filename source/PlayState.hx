@@ -2307,13 +2307,14 @@ class PlayState extends MusicBeatState
 	{
 		// may be more readable than what i did previously; -Ghost/Gabriela
 		//var tempScore:String = 'Score: ' + songScore;
-		var tempScore:String = 'Combo Breaks: ' + comboBreaks;
+		var tempScore:String = '';
+		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
 		if (displayRatings)
 		{
-			//tempScore += scoreSeparator + 'Combo Breaks: ' + comboBreaks;
-			tempScore += scoreSeparator + 'Accuracy: '  + Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
-			tempScore += ratingName != '?' ? '[ ' + ratingFC + scoreSeparator + ratingName + ']' : '';
+			tempScore += scoreSeparator + 'Combo Breaks: ' + comboBreaks;
+			tempScore += scoreSeparator + 'Accuracy: '  + $accuracy + '%';
+			tempScore += '[' + $ratingFC + scoreSeparator + $ratingName + ']' : '';
 		}
 		tempScore += '\n'; // to ensure text won't display as cropped i guess;
 
