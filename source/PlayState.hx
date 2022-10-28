@@ -2300,25 +2300,12 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public var displayRatings:Bool = true;
-	public var scoreSeparator:String = ' | ';
-
 	public function updateScore(miss:Bool = false)
 	{
-		// may be more readable than what i did previously; -Ghost/Gabriela
-		//var tempScore:String = 'Score: ' + songScore;
-		var tempScore:String = '';
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
-		if (displayRatings)
-		{
-			tempScore += scoreSeparator + 'Combo Breaks: ' + comboBreaks;
-			tempScore += scoreSeparator + 'Accuracy: '  + accuracy + '%';
-			tempScore += '[' + ratingFC + scoreSeparator + ratingName + ']' : '';
-		}
-		tempScore += '\n'; // to ensure text won't display as cropped i guess;
-
-		scoreTxt.text = tempScore;
+		scoreTxt.text = ('Combo Breaks: ' + comboBreaks
+		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -2335,7 +2322,6 @@ class PlayState extends MusicBeatState
 		}
 		callOnLuas('onUpdateScore', [miss]);
 	}
-
 
 	public function setSongTime(time:Float)
 	{
@@ -4606,7 +4592,6 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add('played imss note');
 
 			/*boyfriend.stunned = true;
-
 			// get stunned for 1/60 of a second, makes you able to
 			new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
 			{
