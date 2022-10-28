@@ -4137,7 +4137,7 @@ class PlayState extends MusicBeatState
 		if (daRating.hitCausesMiss)
 		{
 			comboBreaks++;
-			songMisses++;
+			//songMisses++;
 		}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
