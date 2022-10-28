@@ -2300,12 +2300,24 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public var displayRatings:Bool = true;
+	public var scoreSeparator:String = ' | ';
+
 	public function updateScore(miss:Bool = false)
 	{
-		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
+		// may be more readable than what i did previously; -Ghost/Gabriela
+		//var tempScore:String = 'Score: ' + songScore;
+		var tempScore:String = 'Combo Breaks: ' + comboBreaks;
 
-		scoreTxt.text = ('Combo Breaks: ' + comboBreaks
-		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
+		if (displayRatings)
+		{
+			//tempScore += scoreSeparator + 'Combo Breaks: ' + comboBreaks;
+			tempScore += scoreSeparator + 'Accuracy: '  + Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
+			tempScore += ratingName != '?' ? '[ ' + ratingFC + scoreSeparator + ratingName + ']' : '';
+		}
+		tempScore += '\n'; // to ensure text won't display as cropped i guess;
+
+		scoreTxt.text = tempScore;
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -2322,6 +2334,7 @@ class PlayState extends MusicBeatState
 		}
 		callOnLuas('onUpdateScore', [miss]);
 	}
+
 
 	public function setSongTime(time:Float)
 	{
