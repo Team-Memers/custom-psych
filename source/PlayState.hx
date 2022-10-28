@@ -4536,7 +4536,7 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		comboBreaks++;
+		//comboBreaks++; maybe??? idk i hope
 		songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
