@@ -2306,7 +2306,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = ('Combo Breaks: ' + songMisses
 		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
 
-		callOnLuas('onUpdateScore');
+		callOnLuas('onUpdateScore', []);
 	}
 
 	public function setSongTime(time:Float)
