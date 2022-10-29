@@ -2299,27 +2299,14 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public function updateScore(miss:Bool = false)
+	public function updateScore()
 	{
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
 		scoreTxt.text = ('Combo Breaks: ' + songMisses
 		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
 
-		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
-		{
-			if(scoreTxtTween != null) {
-				scoreTxtTween.cancel();
-			}
-			scoreTxt.scale.x = 1.075;
-			scoreTxt.scale.y = 1.075;
-			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween) {
-					scoreTxtTween = null;
-				}
-			});
-		}
-		callOnLuas('onUpdateScore', [miss]);
+		callOnLuas('onUpdateScore');
 	}
 
 	public function setSongTime(time:Float)
@@ -4524,7 +4511,7 @@ class PlayState extends MusicBeatState
 		combo = 0;
 		health -= daNote.missHealth * healthLoss;
 
-		updateScore(badHit);
+		updateScore();
 		
 		if(instakillOnMiss)
 		{
@@ -4581,7 +4568,7 @@ class PlayState extends MusicBeatState
 			totalPlayed++;
 			RecalculateRating(true);
 
-			updateScore(badHit);
+			updateScore();
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
@@ -4665,7 +4652,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 			}
 
-			updateScore(badHit);
+			updateScore();
 
 			if(note.hitCausesMiss) {
 				noteMiss(note);
@@ -5245,7 +5232,7 @@ class PlayState extends MusicBeatState
 			if (songMisses > 1 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
 		}
-		//updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
+		//updateScore(); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
