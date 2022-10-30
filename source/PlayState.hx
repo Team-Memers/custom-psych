@@ -264,6 +264,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
+	public var comboBreaks:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -2303,7 +2304,7 @@ class PlayState extends MusicBeatState
 	{
 		var accuracy = Highscore.floorDecimal(ratingPercent * 100, 2);
 
-		scoreTxt.text = ('Combo Breaks: ' + songMisses
+		scoreTxt.text = ('Combo Breaks: ' + comboBreaks
 		+ ' | Accuracy: ' + '$accuracy% [$ratingFC | $ratingName]');
 
 		callOnLuas('onUpdateScore', []);
@@ -4122,7 +4123,8 @@ class PlayState extends MusicBeatState
 		
 		if (daRating.hitCausesMiss)
 		{
-			songMisses++;
+			comboBreaks++;
+			//songMisses++;
 		}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
@@ -4522,6 +4524,7 @@ class PlayState extends MusicBeatState
 		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
+		comboBreaks++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
@@ -4564,6 +4567,7 @@ class PlayState extends MusicBeatState
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
 				songMisses++;
+				comboBreaks++;
 			}
 			totalPlayed++;
 			RecalculateRating(true);
@@ -5190,6 +5194,7 @@ class PlayState extends MusicBeatState
 	public function RecalculateRating(badHit:Bool = false) {
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
+		setOnLuas('comboBreaks', comboBreaks);
 		setOnLuas('hits', songHits);
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
@@ -5228,9 +5233,9 @@ class PlayState extends MusicBeatState
 			if (goods > 1) ratingFC = "SDG";
 			if (goods > 9) ratingFC = "GFC";
 			if (bads > 0) ratingFC = "FC";
-			if (songMisses == 1) ratingFC = "MF";
-			if (songMisses > 1 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			if (comboBreaks == 1) ratingFC = "MF";
+			if (comboBreaks > 1 && comboBreaks < 10) ratingFC = "SDCB";
+			else if (comboBreaks >= 10) ratingFC = "Clear";
 		}
 		//updateScore(); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
