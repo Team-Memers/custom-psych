@@ -105,6 +105,9 @@ class CreditsState extends MusicBeatState
 			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",								'https://twitter.com/PhantomArcade3K',	'FADC45'],
 			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",								'https://twitter.com/evilsk8r',			'5ABD4B'],
 			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",								'https://twitter.com/kawaisprite',		'378FC7']
+			[''],
+			["Socials"],
+			['Psych Engine Discord',		'discord',	"Public Discord Server for Psych Engine",							'https://discord.gg/2ka77eMXDv',	'0096FF']
 		];
 		
 		for(i in pisspoop){
