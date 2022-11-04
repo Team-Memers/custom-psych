@@ -1184,7 +1184,11 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
-		judgementCounter.cameras = [camHUD];
+		
+		if (ClientPrefs.judgementCounter) {
+			judgementCounter.cameras = [camHUD];
+		}
+
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
