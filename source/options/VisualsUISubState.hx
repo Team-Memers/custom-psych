@@ -38,7 +38,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			"If unchecked, hitting sicks won't show particles.",
 			'noteSplashes',
 			'bool',
-			true);
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Hide HUD',
@@ -67,14 +67,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			"If unchecked, the camera won't zoom in on a beat hit.",
 			'camZooms',
 			'bool',
-			true);
-		addOption(option);
-
-		var option:Option = new Option('Score Text Zoom on Hit',
-			"If unchecked, disables the score text zooming\neverytime you hit a note.",
-			'scoreZoom',
-			'bool',
-			true);
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Health Bar Transparency',
@@ -89,7 +82,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 		
-		#if !mobile
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides the FPS counter.',
 			'showFPS',
@@ -97,14 +89,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
-		#end
 		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the pause screen?",
 			'pauseMusic',
 			'string',
 			'Tea Time',
-			['None', 'Breakfast', 'Tea Time', 'DISCO FLAVA MAKES U HOT']);
+			['None', 'Breakfast', 'Tea Time', 'DISCO FLAVA']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
 		
