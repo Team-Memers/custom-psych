@@ -46,7 +46,10 @@ class ModsMenuState extends MusicBeatState
 	var descriptionTxt:FlxText;
 	var needaReset = false;
 	private static var curSelected:Int = 0;
-	public static var defaultColor:FlxColor = 0xFF665AFF;
+
+	if (!ClientPrefs.darkMode) {
+		public static var defaultColor:FlxColor = 0xFF665AFF;
+	}
 
 	var buttonDown:FlxButton;
 	var buttonTop:FlxButton;
@@ -368,8 +371,10 @@ class ModsMenuState extends MusicBeatState
 		if(mods.length < 1)
 			bg.color = defaultColor;
 		else
-			bg.color = mods[curSelected].color;
-
+			if (!ClientPrefs.darkMode) {
+				bg.color = mods[curSelected].color;
+			}
+			
 		intendedColor = bg.color;
 		changeSelection();
 		updatePosition();
