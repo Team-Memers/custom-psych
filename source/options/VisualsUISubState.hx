@@ -63,13 +63,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Dark Mode',
-			'Makes everything darker.',
-			'darkMode',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Flashing Lights',
 			"Self explanatory.",
 			'flashing',

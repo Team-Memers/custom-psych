@@ -11,7 +11,6 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
-//import ClientPrefs; uhhh ?? don't i need to import this
 import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
@@ -78,12 +77,7 @@ class MainMenuState extends MusicBeatState
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
 		var bg:FlxSprite;
-		if (ClientPrefs.darkMode)
-    		bg = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		else
-    		bg = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-
-		//bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+    	bg = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
