@@ -80,7 +80,7 @@ class MainMenuState extends MusicBeatState
 
 		if (!ClientPrefs.darkMode) {
 			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		} else {
+		else
 			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		}
 
