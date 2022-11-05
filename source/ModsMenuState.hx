@@ -46,7 +46,6 @@ class ModsMenuState extends MusicBeatState
 	var descriptionTxt:FlxText;
 	var needaReset = false;
 	private static var curSelected:Int = 0;
-
 	public static var defaultColor:FlxColor = 0xFF665AFF;
 
 	var buttonDown:FlxButton;
@@ -271,7 +270,6 @@ class ModsMenuState extends MusicBeatState
 		setAllLabelsOffset(installButton, 2, 24);
 		add(installButton);
 		startX -= 180;
-
 		removeButton = new FlxButton(startX, 620, "Delete Selected Mod", function()
 		{
 			var path = haxe.io.Path.join([Paths.mods(), modsList[curSelected][0]]);
@@ -281,7 +279,6 @@ class ModsMenuState extends MusicBeatState
 				try
 				{
 					FileSystem.deleteFile(path); //FUCK YOU HAXE WHY DONT YOU WORK WAAAAAAAAAAAAH
-
 					var icon = mods[curSelected].icon;
 					var alphabet = mods[curSelected].alphabet;
 					remove(icon);
@@ -290,7 +287,6 @@ class ModsMenuState extends MusicBeatState
 					alphabet.destroy();
 					modsList.remove(modsList[curSelected]);
 					mods.remove(mods[curSelected]);
-
 					if(curSelected >= mods.length) --curSelected;
 					changeSelection();
 				}
@@ -366,11 +362,10 @@ class ModsMenuState extends MusicBeatState
 
 		if(curSelected >= mods.length) curSelected = 0;
 
-		if (mods.length < 1) {
+		if(mods.length < 1)
 			bg.color = defaultColor;
-		} else {
-				bg.color = mods[curSelected].color;
-			}
+		else
+			bg.color = mods[curSelected].color;
 
 		intendedColor = bg.color;
 		changeSelection();
@@ -379,7 +374,7 @@ class ModsMenuState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 
-		super.create(); // bg.color = mods[curSelected].color;
+		super.create();
 	}
 
 	/*function getIntArray(max:Int):Array<Int>{
@@ -658,17 +653,14 @@ class ModsMenuState extends MusicBeatState
 		_file.browse([zipFilter]);
 		canExit = false;
 	}
-
 	function onLoadComplete(_):Void
 	{
 		_file.removeEventListener(Event.SELECT, onLoadComplete);
 		_file.removeEventListener(Event.CANCEL, onLoadCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-
 		var fullPath:String = null;
 		@:privateAccess
 		if(_file.__path != null) fullPath = _file.__path;
-
 		if(fullPath != null)
 		{
 			var rawZip:String = File.getContent(fullPath);
@@ -688,7 +680,6 @@ class ModsMenuState extends MusicBeatState
 		canExit = true;
 		trace("File couldn't be loaded! Wtf?");
 	}
-
 	function onLoadCancel(_):Void
 	{
 		_file.removeEventListener(Event.SELECT, onLoadComplete);
@@ -698,7 +689,6 @@ class ModsMenuState extends MusicBeatState
 		canExit = true;
 		trace("Cancelled file loading.");
 	}
-
 	function onLoadError(_):Void
 	{
 		_file.removeEventListener(Event.SELECT, onLoadComplete);
