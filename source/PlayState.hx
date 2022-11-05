@@ -1162,7 +1162,7 @@ class PlayState extends MusicBeatState
 			judgementCounter.borderQuality = 2;
 			judgementCounter.scrollFactor.set();
 			judgementCounter.screenCenter(Y);
-			judgementCounter.text = 'Sicks: 0\nGoods: 0\nBads: 0\nShits: 0\nMisses: 0';
+			judgementCounter.text = 'Sicks: 0\nGoods: 0\nBads: 0\nShits: 0';
 			add(judgementCounter);
 		}
 
@@ -4533,7 +4533,7 @@ class PlayState extends MusicBeatState
 		updateScore();
 
 		if(ClientPrefs.judgementCounter) {
-			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nMisses: ${songMisses}';
+			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}';
 		}
 		
 		if(instakillOnMiss)
