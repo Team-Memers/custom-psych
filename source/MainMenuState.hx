@@ -78,9 +78,9 @@ class MainMenuState extends MusicBeatState
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
-		if (!ClientPrefs.darkMode) {
+		if(!ClientPrefs.darkMode) {
 			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		else
+		} else {
 			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		}
 
