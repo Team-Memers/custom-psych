@@ -47,9 +47,7 @@ class ModsMenuState extends MusicBeatState
 	var needaReset = false;
 	private static var curSelected:Int = 0;
 
-	if (!ClientPrefs.darkMode) {
-		public static var defaultColor:FlxColor = 0xFF665AFF;
-	}
+	public static var defaultColor:FlxColor = 0xFF665AFF;
 
 	var buttonDown:FlxButton;
 	var buttonTop:FlxButton;
@@ -371,10 +369,13 @@ class ModsMenuState extends MusicBeatState
 		if (mods.length < 1) {
 			bg.color = defaultColor;
 		} else {
-			if (!ClientPrefs.darkMode) {
+			if (ClientPrefs.darkMode)
 				bg.color = mods[curSelected].color;
-			}
-
+				bg.alpha = 0.6;
+			else
+				bg.color = mods[curSelected].color;
+		}
+		
 		intendedColor = bg.color;
 		changeSelection();
 		updatePosition();
@@ -382,7 +383,7 @@ class ModsMenuState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 
-		super.create();
+		super.create(); // bg.color = mods[curSelected].color;
 	}
 
 	/*function getIntArray(max:Int):Array<Int>{
