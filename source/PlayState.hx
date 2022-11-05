@@ -4680,7 +4680,7 @@ class PlayState extends MusicBeatState
 			updateScore();
 
 			if(ClientPrefs.judgementCounter) {
-				judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nMisses: ${songMisses}';
+				judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}';
 			}
 			
 			if(note.hitCausesMiss) {
