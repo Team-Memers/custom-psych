@@ -368,13 +368,13 @@ class ModsMenuState extends MusicBeatState
 
 		if(curSelected >= mods.length) curSelected = 0;
 
-		if(mods.length < 1)
+		if (mods.length < 1) {
 			bg.color = defaultColor;
-		else
+		} else {
 			if (!ClientPrefs.darkMode) {
 				bg.color = mods[curSelected].color;
 			}
-			
+
 		intendedColor = bg.color;
 		changeSelection();
 		updatePosition();

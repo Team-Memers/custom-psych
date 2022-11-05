@@ -28,6 +28,7 @@ class MainMenuState extends MusicBeatState
 {
 	public static var psychEngineVersion:String = '0.6.3'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
+	public static var bg:FlxSprite;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
@@ -78,9 +79,9 @@ class MainMenuState extends MusicBeatState
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
 		if (!ClientPrefs.darkMode) {
-			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		} else {
-			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		}
 
 		bg.scrollFactor.set(0, yScroll);
