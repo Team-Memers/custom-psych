@@ -36,7 +36,7 @@ class AchievementsMenuState extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		bg.alpha = 0.6;
+		menuBG.alpha = 0.6;
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
 
