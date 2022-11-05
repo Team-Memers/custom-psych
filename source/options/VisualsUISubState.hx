@@ -35,14 +35,14 @@ class VisualsUISubState extends BaseOptionsMenu
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Note Splashes',
-			"If unchecked, hitting sicks won't show particles.",
+			"Plays a splash effect when hitting sicks.",
 			'noteSplashes',
 			'bool',
 			false);
 		addOption(option);
 
 		var option:Option = new Option('Hide HUD',
-			'If checked, hides most HUD elements.',
+			'Hides most HUD elements.',
 			'hideHud',
 			'bool',
 			false);
@@ -64,21 +64,21 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
-			"Uncheck this if you're sensitive to flashing lights!",
+			"Self explanatory",
 			'flashing',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Camera Zooms',
-			"If unchecked, the camera won't zoom in on a beat hit.",
+			"Camera bops every beat.",
 			'camZooms',
 			'bool',
 			false);
 		addOption(option);
 
 		var option:Option = new Option('Health Bar Transparency',
-			'How much transparent should the health bar and icons be.',
+			'How transparent should the health bar and icons be?',
 			'healthBarAlpha',
 			'percent',
 			1);
@@ -90,15 +90,15 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		
 		var option:Option = new Option('FPS Counter',
-			'If unchecked, hides the FPS counter.',
+			'Shows your current FPS on the top left of your screen.',
 			'showFPS',
 			'bool',
 			true);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		
-		var option:Option = new Option('Pause Screen Song:',
-			"What song do you prefer for the pause screen?",
+		var option:Option = new Option('Pause Song:',
+			"Which song do you prefer for the pause menu?",
 			'pauseMusic',
 			'string',
 			'Tea Time',
@@ -108,7 +108,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		
 		#if CHECK_FOR_UPDATES
 		var option:Option = new Option('Check for Updates',
-			'On release builds, turn this on to check for updates when you start the game.',
+			'Check for updates when you start the game.',
 			'checkForUpdates',
 			'bool',
 			true);
@@ -116,10 +116,10 @@ class VisualsUISubState extends BaseOptionsMenu
 		#end
 
 		var option:Option = new Option('Combo Stacking',
-			"If unchecked, judgements and combos won't stack, saving on system memory and making them easier to read.",
+			"Judgements and combos will stack, saving on system memory and making them easier to read.",
 			'comboStacking',
 			'bool',
-			true);
+			false);
 		addOption(option);
 
 		super();

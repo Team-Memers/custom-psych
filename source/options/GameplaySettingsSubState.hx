@@ -35,7 +35,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		rpcTitle = 'Gameplay Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Controller Mode',
-			'Check this if you want to play with\na controller instead of using your keyboard.',
+			'Play with a controller instead of a keyboard.',
 			'controllerMode',
 			'bool',
 			false);
@@ -43,42 +43,42 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
-			'If checked, notes go down instead of up, simple enough.', //Description
+			'Self explanatory.', //Description
 			'downScroll', //Save data variable name
 			'bool', //Variable type
 			false); //Default value
 		addOption(option);
 
-		var option:Option = new Option('Middlescroll',
-			'If checked, your notes get centered.',
+		var option:Option = new Option('Centered Notes',
+			'Your strumline gets set to the middle of the screen.',
 			'middleScroll',
 			'bool',
 			false);
 		addOption(option);
 
 		var option:Option = new Option('Opponent Notes',
-			'If unchecked, opponent notes get hidden.',
+			"Shows or hides opponent's strumline.",
 			'opponentStrums',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Mechanics',
-			'Check this if you want to play with\nmechanics in songs.',
+			'Self explanatory.',
 			'mechanics',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Ghost Tapping',
-			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
+			"You won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
 			'bool',
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Disable Reset Button',
-			"If checked, pressing the reset keybind won't do anything.",
+		var option:Option = new Option('Reset Button',
+			'Kills you upon pressing the button.',
 			'noReset',
 			'bool',
 			false);
