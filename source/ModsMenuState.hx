@@ -368,6 +368,7 @@ class ModsMenuState extends MusicBeatState
 			bg.color = mods[curSelected].color;
 
 		intendedColor = bg.color;
+		bg.alpha = 0.6;
 		changeSelection();
 		updatePosition();
 		FlxG.sound.play(Paths.sound('scrollMenu'));
