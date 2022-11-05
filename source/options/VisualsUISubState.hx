@@ -64,7 +64,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
-			"Self explanatory",
+			"Self explanatory.",
 			'flashing',
 			'bool',
 			true);

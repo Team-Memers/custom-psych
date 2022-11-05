@@ -77,11 +77,11 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Reset Button',
-			'Kills you upon pressing the button.',
+		var option:Option = new Option('No Reset Button',
+			"Won't kill you upon pressing the reset button.",
 			'noReset',
 			'bool',
-			false);
+			true);
 		addOption(option);
 
 		var option:Option = new Option('Hitsound Volume',
