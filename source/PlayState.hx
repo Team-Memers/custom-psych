@@ -4531,6 +4531,10 @@ class PlayState extends MusicBeatState
 		health -= daNote.missHealth * healthLoss;
 
 		updateScore();
+
+		if(ClientPrefs.judgementCounter) {
+			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nMisses: ${songMisses}';
+		}
 		
 		if(instakillOnMiss)
 		{
