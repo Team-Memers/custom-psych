@@ -78,17 +78,19 @@ class MainMenuState extends MusicBeatState
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
-		if(!ClientPrefs.darkMode)
-			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		else 
+		if(ClientPrefs.darkMode)
+		{
 			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-
+		} else {
+			bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		}
+		add(bg);
+		
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
