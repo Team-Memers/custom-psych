@@ -97,8 +97,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.decimals = 1;
 		option.onChange = onChangeHitsoundVolume;
 
-		var option:Option = new Option('Rating Offset',
-			'Changes how late/early you have to hit for a sick.\nHigher values mean you have to hit later.',
+		var option:Option = new Option('Visual Offset',
+			'Changes where the judgement line is.',
 			'ratingOffset',
 			'int',
 			0);
