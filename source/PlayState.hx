@@ -904,8 +904,8 @@ class PlayState extends MusicBeatState
 
 		// STAGE SCRIPTS
 		#if (MODS_ALLOWED && LUA_ALLOWED)
-		var doPush:Bool = false;
 		if (!stageData.isStageVisible) {
+			var doPush:Bool = false;
 			var luaFile:String = 'stages/' + curStage + '.lua';
 			if(FileSystem.exists(Paths.modFolders(luaFile))) {
 				luaFile = Paths.modFolders(luaFile);
