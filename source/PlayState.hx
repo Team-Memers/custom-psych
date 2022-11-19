@@ -472,6 +472,9 @@ class PlayState extends MusicBeatState
 				girlfriend: [400, 130],
 				opponent: [100, 100],
 				hide_girlfriend: false,
+				isStageVisible: true,
+				isOpponentVisible: true,
+				isBoyfriendVisible: true,
 
 				camera_boyfriend: [0, 0],
 				camera_opponent: [0, 0],
@@ -488,6 +491,7 @@ class PlayState extends MusicBeatState
 		GF_Y = stageData.girlfriend[1];
 		DAD_X = stageData.opponent[0];
 		DAD_Y = stageData.opponent[1];
+		
 
 		if(stageData.camera_speed != null)
 			cameraSpeed = stageData.camera_speed;
@@ -901,17 +905,19 @@ class PlayState extends MusicBeatState
 		// STAGE SCRIPTS
 		#if (MODS_ALLOWED && LUA_ALLOWED)
 		var doPush:Bool = false;
-		var luaFile:String = 'stages/' + curStage + '.lua';
-		if(FileSystem.exists(Paths.modFolders(luaFile))) {
-			luaFile = Paths.modFolders(luaFile);
-			doPush = true;
-		} else {
-			luaFile = Paths.getPreloadPath(luaFile);
-			if(FileSystem.exists(luaFile)) {
+		if (!stageData.isStageVisible) {
+			var luaFile:String = 'stages/' + curStage + '.lua';
+			if(FileSystem.exists(Paths.modFolders(luaFile))) {
+				luaFile = Paths.modFolders(luaFile);
 				doPush = true;
+			} else {
+				luaFile = Paths.getPreloadPath(luaFile);
+				if(FileSystem.exists(luaFile)) {
+					doPush = true;
+				}
 			}
 		}
-
+		
 		if(doPush)
 			luaArray.push(new FunkinLua(luaFile));
 		#end
@@ -971,15 +977,19 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		dad = new Character(0, 0, SONG.player2);
-		startCharacterPos(dad, true);
-		dadGroup.add(dad);
-		startCharacterLua(dad.curCharacter);
+		if (!stageData.isOpponentVisible) {
+			dad = new Character(0, 0, SONG.player2);
+			startCharacterPos(dad, true);
+			dadGroup.add(dad);
+			startCharacterLua(dad.curCharacter);
+		}
 
-		boyfriend = new Boyfriend(0, 0, SONG.player1);
-		startCharacterPos(boyfriend);
-		boyfriendGroup.add(boyfriend);
-		startCharacterLua(boyfriend.curCharacter);
+		if (!stageData.isBoyfriendVisible) {
+			boyfriend = new Boyfriend(0, 0, SONG.player1);
+			startCharacterPos(boyfriend);
+			boyfriendGroup.add(boyfriend);
+			startCharacterLua(boyfriend.curCharacter);
+		}
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
