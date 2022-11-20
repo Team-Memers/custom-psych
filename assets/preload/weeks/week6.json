@@ -1,22 +1,50 @@
 {
-	"songs": [
-		["Senpai", "senpai-pixel", [255, 120, 191]],
-		["Roses", "senpai-pixel", [255, 120, 191]],
-		["Thorns", "spirit-pixel", [255, 120, 191]]
+	"storyName": "Senpai Dating Simulator",
+	"difficulties": "Hard, Rechart",
+	"hideFreeplay": false,
+	"weekBackground": "christmas",
+	"freeplayColor": [
+		0,
+		0,
+		0
 	],
-
+	"weekBefore": "",
+	"startUnlocked": true,
 	"weekCharacters": [
 		"senpai",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "school",
-
-	"storyName": "hating simulator ft. moawling",
-	"weekBefore": "week5",
-	"weekName": "Week 6",
-	"startUnlocked": true,
-
+	"songs": [
+		[
+			"Senpai",
+			"senpai-pixel",
+			[
+				200,
+				120,
+				0
+			]
+		],
+		[
+			"Roses",
+			"senpai-pixel",
+			[
+				200,
+				120,
+				0
+			]
+		],
+		[
+			"Thorns",
+			"spirit-pixel",
+			[
+				126,
+				0,
+				0
+			]
+		]
+	],
 	"hideStoryMode": false,
-	"hideFreeplay": false
+	"weekName": "week5",
+	"hiddenUntilUnlocked": false
 }

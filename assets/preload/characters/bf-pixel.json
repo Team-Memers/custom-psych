@@ -3,7 +3,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				7,
+				0,
 				0
 			],
 			"fps": 24,
@@ -14,7 +14,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				0,
+				-10,
 				0
 			],
 			"anim": "singLEFTmiss",
@@ -25,7 +25,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				0,
+				-10,
 				0
 			],
 			"anim": "singLEFT",
@@ -36,7 +36,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				0,
+				-8,
 				0
 			],
 			"anim": "singUPmiss",
@@ -47,7 +47,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				0,
+				-8,
 				0
 			],
 			"anim": "singUP",

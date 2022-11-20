@@ -1,22 +1,50 @@
 {
 	"songs": [
-		["Bopeebo", "dad", [146, 113, 253]],
-		["Fresh", "dad", [146, 113, 253]],
-		["Dad Battle", "dad", [146, 113, 253]]
+		[
+			"Bopeebo",
+			"dad",
+			[
+				125,
+				0,
+				125
+			]
+		],
+		[
+			"Fresh",
+			"dad",
+			[
+				125,
+				0,
+				125
+			]
+		],
+		[
+			"Dadbattle",
+			"dad",
+			[
+				125,
+				0,
+				125
+			]
+		]
 	],
-
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "Hard, Rechart",
 	"weekCharacters": [
 		"dad",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "stage",
-
 	"storyName": "Daddy Dearest",
-	"weekBefore": "tutorial",
-	"weekName": "Week 1",
-	"startUnlocked": true,
-
+	"weekName": "",
+	"freeplayColor": [
+		0,
+		0,
+		0
+	],
 	"hideStoryMode": false,
-	"hideFreeplay": false
+	"weekBefore": "tutorial",
+	"startUnlocked": true
 }

@@ -1,22 +1,50 @@
 {
 	"songs": [
-		["Pico", "pico", [148, 22, 83]],
-		["Philly Nice", "pico", [148, 22, 83]],
-		["Blammed", "pico", [148, 22, 83]]
+		[
+			"Pico",
+			"pico",
+			[
+				100,
+				120,
+				0
+			]
+		],
+		[
+			"Philly Nice",
+			"pico",
+			[
+				100,
+				120,
+				0
+			]
+		],
+		[
+			"Blammed",
+			"pico",
+			[
+				100,
+				120,
+				0
+			]
+		]
 	],
-
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "philly",
+	"difficulties": "Hard, Rechart",
 	"weekCharacters": [
 		"pico",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "philly",
-
-	"storyName": "PICO",
-	"weekBefore": "week2",
-	"weekName": "Week 3",
-	"startUnlocked": true,
-
+	"storyName": "Pico",
+	"weekName": "",
+	"freeplayColor": [
+		0,
+		0,
+		0
+	],
 	"hideStoryMode": false,
-	"hideFreeplay": false
+	"weekBefore": "week2",
+	"startUnlocked": true
 }

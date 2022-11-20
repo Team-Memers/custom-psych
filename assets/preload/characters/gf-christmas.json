@@ -3,8 +3,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				1,
-				0
+				0,
+				9
 			],
 			"anim": "cheer",
 			"fps": 24,
@@ -15,7 +15,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-19
+				-10
 			],
 			"anim": "singLEFT",
 			"fps": 24,
@@ -26,7 +26,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-20
+				-11
 			],
 			"anim": "singDOWN",
 			"fps": 24,
@@ -37,7 +37,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				4
+				13
 			],
 			"anim": "singUP",
 			"fps": 24,
@@ -48,7 +48,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-20
+				-11
 			],
 			"anim": "singRIGHT",
 			"fps": 24,
@@ -58,8 +58,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				-2,
-				-21
+				0,
+				-12
 			],
 			"anim": "sad",
 			"fps": 24,
@@ -84,7 +84,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-9
+				0
 			],
 			"anim": "danceLeft",
 			"fps": 24,
@@ -112,7 +112,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-9
+				0
 			],
 			"anim": "danceRight",
 			"fps": 24,
@@ -139,7 +139,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-9
+				0
 			],
 			"anim": "hairFall",
 			"fps": 24,
@@ -162,8 +162,8 @@
 		{
 			"loop": true,
 			"offsets": [
-				-2,
-				-17
+				0,
+				-8
 			],
 			"anim": "scared",
 			"fps": 24,
@@ -171,7 +171,7 @@
 			"indices": []
 		}
 	],
-	"no_antialiasing": false,
+	"no_antialiasing": true,
 	"image": "characters/gfChristmas",
 	"position": [
 		0,

@@ -2,7 +2,7 @@
 	"animations": [
 		{
 			"offsets": [
-				1,
+				0,
 				0
 			],
 			"loop": false,
@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				-20,
-				50
+				-28,
+				60
 			],
 			"loop": false,
 			"fps": 24,
@@ -24,8 +24,8 @@
 		},
 		{
 			"offsets": [
-				-30,
-				0
+				-50,
+				10
 			],
 			"loop": false,
 			"fps": 24,
@@ -35,19 +35,8 @@
 		},
 		{
 			"offsets": [
-				-51,
-				0
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Monster Right note"
-		},
-		{
-			"offsets": [
-				-40,
-				-94
+				-50,
+				-90
 			],
 			"loop": false,
 			"fps": 24,
@@ -57,38 +46,64 @@
 		},
 		{
 			"offsets": [
-				-20,
-				50
+				-27,
+				60
 			],
+			"loop": true,
+			"fps": 24,
+			"anim": "singUP-loop",
 			"indices": [
 				21,
 				22,
 				23
 			],
-			"fps": 24,
-			"anim": "singUP-loop",
-			"loop": true,
 			"name": "monster up note"
 		},
 		{
 			"offsets": [
-				-40,
-				-94
+				-53,
+				-88
 			],
+			"loop": true,
+			"fps": 24,
+			"anim": "singDOWN-loop",
 			"indices": [
 				27,
 				28,
 				29
 			],
-			"fps": 24,
-			"anim": "singDOWN-loop",
-			"loop": true,
 			"name": "monster down"
 		},
 		{
 			"offsets": [
-				-51,
+				0,
 				0
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle-loop",
+			"indices": [
+				12,
+				13,
+				14
+			],
+			"name": "monster idle"
+		},
+		{
+			"offsets": [
+				-36,
+				11
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Monster right note"
+		},
+		{
+			"offsets": [
+				-34,
+				10
 			],
 			"indices": [
 				12,
@@ -98,27 +113,12 @@
 			"fps": 24,
 			"anim": "singRIGHT-loop",
 			"loop": true,
-			"name": "Monster Right note"
+			"name": "Monster right note"
 		},
 		{
 			"offsets": [
-				-30,
-				0
-			],
-			"indices": [
-				17,
-				18,
-				19
-			],
-			"fps": 24,
-			"anim": "singLEFT-loop",
-			"loop": true,
-			"name": "Monster left note"
-		},
-		{
-			"offsets": [
-				1,
-				0
+				-50,
+				10
 			],
 			"indices": [
 				12,
@@ -126,9 +126,9 @@
 				14
 			],
 			"fps": 24,
-			"anim": "idle-loop",
+			"anim": "singLEFT-loop",
 			"loop": true,
-			"name": "monster idle"
+			"name": "Monster left note"
 		}
 	],
 	"no_antialiasing": false,

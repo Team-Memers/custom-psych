@@ -3,7 +3,7 @@
 		{
 			"offsets": [
 				0,
-				-9
+				0
 			],
 			"loop": false,
 			"fps": 24,
@@ -30,7 +30,7 @@
 		{
 			"offsets": [
 				0,
-				-9
+				0
 			],
 			"loop": false,
 			"fps": 24,
@@ -58,7 +58,7 @@
 		{
 			"offsets": [
 				0,
-				-27
+				-18
 			],
 			"loop": false,
 			"fps": 24,
@@ -92,7 +92,7 @@
 	"healthbar_colors": [
 		165,
 		0,
-		77
+		97
 	],
 	"camera_position": [
 		0,

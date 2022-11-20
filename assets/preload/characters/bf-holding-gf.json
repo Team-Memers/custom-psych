@@ -2,7 +2,7 @@
 	"animations": [
 		{
 			"offsets": [
-				-5,
+				0,
 				0
 			],
 			"loop": false,
@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				12,
-				7
+				8,
+				2
 			],
 			"loop": false,
 			"fps": 24,
@@ -24,8 +24,8 @@
 		},
 		{
 			"offsets": [
-				-10,
-				-10
+				-16,
+				-11
 			],
 			"loop": false,
 			"fps": 24,
@@ -35,8 +35,8 @@
 		},
 		{
 			"offsets": [
-				-29,
-				10
+				-44,
+				11
 			],
 			"loop": false,
 			"fps": 24,
@@ -46,8 +46,8 @@
 		},
 		{
 			"offsets": [
-				-41,
-				23
+				-44,
+				20
 			],
 			"loop": false,
 			"fps": 24,
@@ -57,8 +57,8 @@
 		},
 		{
 			"offsets": [
-				12,
-				7
+				8,
+				2
 			],
 			"loop": false,
 			"fps": 24,
@@ -68,8 +68,8 @@
 		},
 		{
 			"offsets": [
-				-10,
-				-10
+				-19,
+				-11
 			],
 			"loop": false,
 			"fps": 24,
@@ -79,8 +79,8 @@
 		},
 		{
 			"offsets": [
-				-29,
-				10
+				-40,
+				6
 			],
 			"loop": false,
 			"fps": 24,
@@ -90,7 +90,7 @@
 		},
 		{
 			"offsets": [
-				-41,
+				-40,
 				33
 			],
 			"loop": false,
@@ -102,7 +102,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				0,
+				5,
 				90
 			],
 			"anim": "bfCatch",

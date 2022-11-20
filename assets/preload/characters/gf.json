@@ -3,8 +3,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				3,
-				0
+				0,
+				10
 			],
 			"fps": 24,
 			"anim": "cheer",
@@ -15,7 +15,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-19
+				-9
 			],
 			"fps": 24,
 			"anim": "singLEFT",
@@ -26,7 +26,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-20
+				-10
 			],
 			"fps": 24,
 			"anim": "singDOWN",
@@ -37,7 +37,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				4
+				14
 			],
 			"fps": 24,
 			"anim": "singUP",
@@ -48,7 +48,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-20
+				-10
 			],
 			"fps": 24,
 			"anim": "singRIGHT",
@@ -59,7 +59,7 @@
 			"loop": false,
 			"offsets": [
 				-2,
-				-21
+				-11
 			],
 			"fps": 24,
 			"anim": "sad",
@@ -84,7 +84,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-9
+				1
 			],
 			"fps": 24,
 			"anim": "danceLeft",
@@ -112,7 +112,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-9
+				1
 			],
 			"fps": 24,
 			"anim": "danceRight",
@@ -139,7 +139,7 @@
 			"loop": true,
 			"offsets": [
 				45,
-				-8
+				2
 			],
 			"fps": 24,
 			"anim": "hairBlow",
@@ -155,7 +155,7 @@
 			"loop": false,
 			"offsets": [
 				0,
-				-9
+				1
 			],
 			"fps": 24,
 			"anim": "hairFall",
@@ -179,7 +179,7 @@
 			"loop": true,
 			"offsets": [
 				-2,
-				-17
+				-7
 			],
 			"fps": 24,
 			"anim": "scared",
