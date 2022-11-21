@@ -61,6 +61,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
+import MainMenuState;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -267,6 +268,10 @@ class PlayState extends MusicBeatState
 	public var comboBreaks:Int = 0;
 	public var scoreTxt:FlxText;
 	public var judgementCounter:FlxText;
+	public var versionWatermark:FlxText;
+	public var songNameWatermark:FlxText;
+	public var difficultyWatermark:FlxText;
+	public var playbackRateWatermark:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -1180,6 +1185,33 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 
+		if(ClientPrefs.watermarks)
+		{
+			versionWatermark = new FlxText(11, 580, 512, 'Psych Engine v' + MainMenuState.psychEngineVersion, 22);
+			versionWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			versionWatermark.scrollFactor.set();
+			versionWatermark.borderSize = 1.25;
+			add(versionWatermark);
+
+			songNameWatermark = new FlxText(11, versionWatermark.y + 25, 512, SONG.song, 22)
+			songNameWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			songNameWatermark.scrollFactor.set();
+			songNameWatermark.borderSize = 1.25;
+			add(songNameWatermark);
+
+			difficultyWatermark = new FlxText(11, songNameWatermark.y + 25, 512, CoolUtil.difficulties[storyDifficulty], 22);
+			difficultyWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			difficultyWatermark.scrollFactor.set();
+			difficultyWatermark.borderSize = 1.25;
+			add(difficultyWatermark);
+
+			playbackRateWatermark = new FlxText(11, difficultyWatermark.y + 25, 512, playbackRate, 22)
+			playbackRateWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			playbackRateWatermark.scrollFactor.set();
+			playbackRateWatermark.borderSize = 1.25;
+			add(playbackRateWatermark);
+		}
+
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -1191,6 +1223,13 @@ class PlayState extends MusicBeatState
 		
 		if (ClientPrefs.judgementCounter) {
 			judgementCounter.cameras = [camHUD];
+		}
+
+		if (ClientPrefs.watermarks) {
+			versionWatermark.cameras = [camHUD];
+			songNameWatermark.cameras = [camHUD];
+			difficultyWatermark.cameras = [camHUD];
+			playbackRateWatermark.cameras = [camHUD];
 		}
 
 		botplayTxt.cameras = [camHUD];

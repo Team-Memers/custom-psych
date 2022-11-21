@@ -63,6 +63,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Watermarks',
+			'Shows song and game information on the bottom left of your screen.',
+			'watermarks',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Flashing Lights',
 			"Self explanatory.",
 			'flashing',
