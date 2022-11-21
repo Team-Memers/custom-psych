@@ -96,10 +96,8 @@ class Main extends Sprite
 		}
 		#end
 
-		#if html5
 		FlxG.autoPause = false;
-		FlxG.mouse.visible = false;
-		#end
+		FlxG.mouse.visible = true;
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
