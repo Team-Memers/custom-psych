@@ -4,6 +4,8 @@ import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+import lime.app.Application;
 import flixel.FlxState;
 import openfl.Assets;
 import openfl.Lib;
@@ -14,7 +16,6 @@ import openfl.display.StageScaleMode;
 
 //crash handler stuff
 #if CRASH_HANDLER
-import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
