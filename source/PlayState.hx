@@ -2394,14 +2394,13 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
-		switch(curStage)
+		if(curStage == 'tank')
 		{
-			case 'tank':
-				if(!ClientPrefs.lowQuality) tankWatchtower.dance();
-				foregroundSprites.forEach(function(spr:BGSprite)
-				{
-					spr.dance();
-				});
+			if(!ClientPrefs.lowQuality) tankWatchtower.dance();
+			foregroundSprites.forEach(function(spr:BGSprite)
+			{
+				spr.dance();
+			});
 		}
 
 		#if desktop
