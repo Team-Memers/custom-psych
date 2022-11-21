@@ -1205,7 +1205,7 @@ class PlayState extends MusicBeatState
 			difficultyWatermark.borderSize = 1.25;
 			add(difficultyWatermark);
 
-			playbackRateWatermark = new FlxText(11, difficultyWatermark.y + 25, 512, Std.string(playbackRate), 22);
+			playbackRateWatermark = new FlxText(11, difficultyWatermark.y + 25, 512, Std.string(playbackRate) + 'x Speed', 22);
 			playbackRateWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			playbackRateWatermark.scrollFactor.set();
 			playbackRateWatermark.borderSize = 1.25;
