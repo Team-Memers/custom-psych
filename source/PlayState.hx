@@ -328,6 +328,8 @@ class PlayState extends MusicBeatState
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
 
+		Application.current.window.onFocusOut.add(onWindowFocusOut);
+
 		// for lua
 		instance = this;
 
@@ -3039,6 +3041,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
 		{
+			Application.current.window.onFocusOut.remove(onWindowFocusOut);
 			openChartEditor();
 		}
 
@@ -3888,10 +3891,19 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	function onWindowFocusOut():Void
+	{
+		if (!dead && !paused && startedCountdown && canPause)
+		{
+			openPauseMenu();
+		}
+	}
 
 	public var transitioning = false;
 	public function endSong():Void
 	{
+		Application.current.window.onFocusOut.remove(onWindowFocusOut);
+
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
