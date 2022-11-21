@@ -3,6 +3,7 @@ package;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
+import flixel.util.FlxTimer;
 import flixel.FlxState;
 import openfl.Assets;
 import openfl.Lib;
@@ -108,6 +109,7 @@ class Main extends Sprite
 	var game:FlxGame;
 	var oldVol:Float = 1.0;
 	var newVol:Float = 0.3;
+	public static var focusMusicTween:FlxTween;
 
 	public static var focused:Bool = true;
 

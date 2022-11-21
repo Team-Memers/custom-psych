@@ -27,6 +27,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import lime.app.Application;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -3893,7 +3894,7 @@ class PlayState extends MusicBeatState
 
 	function onWindowFocusOut():Void
 	{
-		if (!dead && !paused && startedCountdown && canPause)
+		if (!isDead && !paused && startedCountdown && canPause)
 		{
 			openPauseMenu();
 		}
