@@ -1193,7 +1193,7 @@ class PlayState extends MusicBeatState
 			versionWatermark.borderSize = 1.25;
 			add(versionWatermark);
 
-			songNameWatermark = new FlxText(11, versionWatermark.y + 25, 512, SONG.song, 22)
+			songNameWatermark = new FlxText(11, versionWatermark.y + 25, 512, SONG.song, 22);
 			songNameWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			songNameWatermark.scrollFactor.set();
 			songNameWatermark.borderSize = 1.25;
@@ -1205,7 +1205,7 @@ class PlayState extends MusicBeatState
 			difficultyWatermark.borderSize = 1.25;
 			add(difficultyWatermark);
 
-			playbackRateWatermark = new FlxText(11, difficultyWatermark.y + 25, 512, playbackRate, 22)
+			playbackRateWatermark = new FlxText(11, difficultyWatermark.y + 25, 512, playbackRate, 22);
 			playbackRateWatermark.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			playbackRateWatermark.scrollFactor.set();
 			playbackRateWatermark.borderSize = 1.25;
