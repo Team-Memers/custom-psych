@@ -105,7 +105,7 @@ class Main extends Sprite
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
-		pplication.current.window.onFocusOut.add(onWindowFocusOut);
+		Application.current.window.onFocusOut.add(onWindowFocusOut);
 		Application.current.window.onFocusIn.add(onWindowFocusIn);
 	}
 
