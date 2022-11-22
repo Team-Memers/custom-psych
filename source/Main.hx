@@ -109,9 +109,9 @@ class Main extends Sprite
 	var game:FlxGame;
 	var oldVol:Float = 1.0;
 	var newVol:Float = 0.3;
-	public static var focusMusicTween:FlxTween;
+	var focusMusicTween:FlxTween;
 
-	public static var focused:Bool = true;
+	var focused:Bool = true;
 
 	// thx for ur code ari
 	function onWindowFocusOut()
@@ -144,7 +144,6 @@ class Main extends Sprite
 
 		// Conserve power by lowering draw framerate when unfocused
 		FlxG.updateFramerate = ClientPrefs.framerate / 2;
-		}
 	}
 
 	function onWindowFocusIn()
