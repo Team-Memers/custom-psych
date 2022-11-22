@@ -1,8 +1,6 @@
 package options;
 
-#if desktop
 import Discord.DiscordClient;
-#end
 import flash.text.TextField;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -60,7 +58,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
-		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
 			"Self explanatory.",
 			'framerate',
@@ -72,7 +69,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.maxValue = 240;
 		option.displayFormat = '%v FPS';
 		option.onChange = onChangeFramerate;
-		#end
 
 		super();
 	}
