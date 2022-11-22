@@ -1753,8 +1753,6 @@ class ChartingState extends MusicBeatState
 				undo();
 			}
 
-
-
 			if(FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
 				--curZoom;
 				updateZoom();
