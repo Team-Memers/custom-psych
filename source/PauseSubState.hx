@@ -161,7 +161,7 @@ class PauseSubState extends MusicBeatSubstate
 		if(FlxG.mouse.wheel != 0)
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
-			changeSelection(FlxG.mouse.wheel);
+			changeSelection(-FlxG.mouse.wheel);
 		}
 
 		var daSelected:String = menuItems[curSelected];

@@ -105,7 +105,7 @@ class OptionsState extends MusicBeatState
 		if(FlxG.mouse.wheel != 0)
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
-			changeSelection(FlxG.mouse.wheel);
+			changeSelection(-FlxG.mouse.wheel);
 		}
 
 		if (controls.BACK) {
