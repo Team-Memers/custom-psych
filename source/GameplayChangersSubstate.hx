@@ -161,6 +161,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			changeSelection(1);
 		}
 
+		if(FlxG.mouse.wheel != 0)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+			changeSelection(FlxG.mouse.wheel);
+		}
+
 		if (controls.BACK) {
 			close();
 			ClientPrefs.saveSettings();
