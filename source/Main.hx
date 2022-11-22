@@ -119,33 +119,31 @@ class Main extends Sprite
 		focused = false;
 
 		// Lower global volume when unfocused
-		if (Type.getClass(FlxG.state) != PlayState) // imagine stealing my code smh
+		oldVol = FlxG.sound.volume;
+		if (oldVol > 0.3)
 		{
-			oldVol = FlxG.sound.volume;
-			if (oldVol > 0.3)
+			newVol = 0.3;
+		}
+		else
 			{
-				newVol = 0.3;
+			if (oldVol > 0.1)
+			{
+				newVol = 0.1;
 			}
 			else
 			{
-				if (oldVol > 0.1)
-				{
-					newVol = 0.1;
-				}
-				else
-				{
-					newVol = 0;
-				}
+				newVol = 0;
 			}
+		}
 
-			trace("Game unfocused");
+		trace("Game unfocused");
 
-			if (focusMusicTween != null)
-				focusMusicTween.cancel();
+		if (focusMusicTween != null)
+			focusMusicTween.cancel();
 			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: newVol}, 0.5);
 
-			// Conserve power by lowering draw framerate when unfocused
-			FlxG.drawFramerate = 30;
+		// Conserve power by lowering draw framerate when unfocused
+		FlxG.updateFramerate = ClientPrefs.framerate / 2;
 		}
 	}
 
@@ -157,19 +155,15 @@ class Main extends Sprite
 		});
 
 		// Lower global volume when unfocused
-		if (Type.getClass(FlxG.state) != PlayState)
-		{
-			trace("Game focused");
+		trace("Game focused");
 
-			// Normal global volume when focused
-			if (focusMusicTween != null)
-				focusMusicTween.cancel();
-
+		// Normal global volume when focused
+		if (focusMusicTween != null)
+			focusMusicTween.cancel();
 			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: oldVol}, 0.5);
 
-			// Bring framerate back when focused
-			FlxG.drawFramerate = 60;
-		}
+		// Bring framerate back when focused
+		FlxG.updateFramerate = ClientPrefs.framerate;
 	}
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
