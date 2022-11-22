@@ -350,7 +350,7 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
-		else if (accepted || FlxG.mouse.justPressed)
+		else if (accepted)
 		{
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);

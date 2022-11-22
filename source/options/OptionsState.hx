@@ -113,7 +113,7 @@ class OptionsState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if (controls.ACCEPT || FlxG.mouse.justPressed) {
+		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
 		}
 	}
