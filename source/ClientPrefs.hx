@@ -219,9 +219,14 @@ class ClientPrefs {
 		if(FlxG.save.data.comboOffset != null) {
 			comboOffset = FlxG.save.data.comboOffset;
 		}
-		
 		if(FlxG.save.data.ratingOffset != null) {
 			ratingOffset = FlxG.save.data.ratingOffset;
+		}
+		if(FlxG.save.data.judgementCounter != null) {
+			judgementCounter = FlxG.save.data.judgementCounter;
+		}
+		if(FlxG.save.data.watermarks != null) {
+			watermarks = FlxG.save.data.watermarks;
 		}
 		if(FlxG.save.data.sickWindow != null) {
 			sickWindow = FlxG.save.data.sickWindow;
