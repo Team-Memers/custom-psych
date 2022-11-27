@@ -95,13 +95,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.decimals = 1;
 		option.onChange = onChangeHitsoundVolume;
 
-		var option:Option = new Option('Optimization',
-			"Hides the stage and characters, useful for low-end computers.",
-			'optimization',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Visual Offset',
 			'Changes where the judgement line is.',
 			'ratingOffset',
