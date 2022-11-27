@@ -1518,7 +1518,7 @@ class PlayState extends MusicBeatState
 	}
 	#end
 
-	function set_songSpeed(value:Float):Float
+	function set_scrollSpeed(value:Float):Float
 	{
 		if(generatedMusic)
 		{
