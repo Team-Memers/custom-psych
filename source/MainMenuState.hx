@@ -16,6 +16,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
 import Achievements;
+import FunkinLua;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 
@@ -27,6 +28,7 @@ class MainMenuState extends MusicBeatState
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
+	public var luaArray:Array<FunkinLua> = [];
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 	
@@ -48,7 +50,7 @@ class MainMenuState extends MusicBeatState
 	override function create()
 	{
 		callOnLuas('onMainMenuState', []);
-		
+
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
 		#end
