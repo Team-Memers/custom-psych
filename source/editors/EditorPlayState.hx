@@ -84,8 +84,8 @@ class EditorPlayState extends MusicBeatState
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
 		];
 		
-		strumLine = new FlxSprite(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
-		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
+		strumLine = new FlxSprite(ClientPrefs.middlescroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
+		if(ClientPrefs.downscroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 		
 		comboGroup = new FlxTypedGroup<FlxSprite>();
@@ -180,7 +180,7 @@ class EditorPlayState extends MusicBeatState
 		go.updateHitbox();
 
 		go.screenCenter();
-		go.antialiasing = ClientPrefs.globalAntialiasing;
+		go.antialiasing = ClientPrefs.antialiasing;
 		add(go);
 		FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 			ease: FlxEase.cubeInOut,
@@ -269,7 +269,7 @@ class EditorPlayState extends MusicBeatState
 								{
 									sustainNote.x += FlxG.width / 2; // general offset
 								}
-								else if(ClientPrefs.middleScroll)
+								else if(ClientPrefs.middlescroll)
 								{
 									sustainNote.x += 310;
 									if(daNoteData > 1)
@@ -284,7 +284,7 @@ class EditorPlayState extends MusicBeatState
 						{
 							swagNote.x += FlxG.width / 2; // general offset
 						}
-						else if(ClientPrefs.middleScroll)
+						else if(ClientPrefs.middlescroll)
 						{
 							swagNote.x += 310;
 							if(daNoteData > 1) //Up and Right
@@ -404,7 +404,7 @@ class EditorPlayState extends MusicBeatState
 					daNote.x = strumX;
 				}
 				if(daNote.copyY) {
-					if (ClientPrefs.downScroll) {
+					if (ClientPrefs.downscroll) {
 						daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * PlayState.SONG.speed);
 						if (daNote.isSustainNote) {
 							//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
@@ -532,7 +532,7 @@ class EditorPlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
+			notes.sort(FlxSort.byY, ClientPrefs.downscroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 	}
 
@@ -910,7 +910,7 @@ class EditorPlayState extends MusicBeatState
 
 			if (!PlayState.isPixelStage)
 			{
-				numScore.antialiasing = ClientPrefs.globalAntialiasing;
+				numScore.antialiasing = ClientPrefs.antialiasing;
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			}
 			else
@@ -972,7 +972,7 @@ class EditorPlayState extends MusicBeatState
 				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
+			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middlescroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
 			babyArrow.alpha = targetAlpha;
 
 			if (player == 1)
@@ -981,7 +981,7 @@ class EditorPlayState extends MusicBeatState
 			}
 			else
 			{
-				if(ClientPrefs.middleScroll)
+				if(ClientPrefs.middlescroll)
 				{
 					babyArrow.x += 310;
 					if(i > 1) { //Up and Right

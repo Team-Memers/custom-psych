@@ -73,7 +73,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		//bg.color = 0xFFea71fd;
 		bg.alpha = 0.6;
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.antialiasing;
 		add(bg);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
