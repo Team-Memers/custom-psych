@@ -3448,6 +3448,8 @@ class PlayState extends MusicBeatState
 
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
+			case 'Change Stage':
+				//blank case for now
 			case 'Dadbattle Spotlight':
 				var val:Null<Int> = Std.parseInt(value1);
 				if(val == null) val = 0;
