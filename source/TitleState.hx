@@ -401,7 +401,7 @@ class TitleState extends MusicBeatState
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = ClientPrefs.antialiasing;
+		ngSpr.antialiasing = ClientPrefs.globalAntialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 

@@ -224,7 +224,7 @@ class Note extends FlxSprite
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05;
 				if(PlayState.instance != null)
 				{
-					prevNote.scale.y *= PlayState.instance.scrollSpeed;
+					prevNote.scale.y *= PlayState.instance.songSpeed;
 				}
 
 				if(PlayState.isPixelStage) {

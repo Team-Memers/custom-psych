@@ -875,9 +875,9 @@ class EditorPlayState extends MusicBeatState
 		if (!PlayState.isPixelStage)
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
-			rating.antialiasing = ClientPrefs.antialiasing;
+			rating.antialiasing = ClientPrefs.globalAntialiasing;
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-			comboSpr.antialiasing = ClientPrefs.antialiasing;
+			comboSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		}
 		else
 		{
