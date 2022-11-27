@@ -39,16 +39,17 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Downscroll',
-			'Self explanatory.',
-			'downscroll',
-			'bool',
-			false);
+		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
+		var option:Option = new Option('Downscroll', //Name
+			'Self explanatory.', //Description
+			'downScroll', //Save data variable name
+			'bool', //Variable type
+			false); //Default value
 		addOption(option);
 
 		var option:Option = new Option('Centered Notes',
 			'Your strumline gets set to the middle of the screen.',
-			'middlescroll',
+			'middleScroll',
 			'bool',
 			false);
 		addOption(option);
@@ -76,7 +77,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		var option:Option = new Option('No Reset Button',
 			"Won't kill you upon pressing the reset button.",
-			'resetKey',
+			'noReset',
 			'bool',
 			true);
 		addOption(option);

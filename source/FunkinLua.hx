@@ -162,12 +162,12 @@ class FunkinLua {
 		set('gfSection', false);
 
 		// Gameplay settings
-		set('healthGain', PlayState.instance.healthGain);
-		set('healthLoss', PlayState.instance.healthLoss);
+		set('healthGainMult', PlayState.instance.healthGain);
+		set('healthLossMult', PlayState.instance.healthLoss);
 		set('playbackRate', PlayState.instance.playbackRate);
 		set('instakillOnMiss', PlayState.instance.instakillOnMiss);
-		set('cpuControlled', PlayState.instance.cpuControlled);
-		set('practiceMode', PlayState.instance.practiceMode);
+		set('botPlay', PlayState.instance.cpuControlled);
+		set('practice', PlayState.instance.practiceMode);
 
 		for (i in 0...4) {
 			set('defaultPlayerStrumX' + i, 0);
@@ -177,33 +177,33 @@ class FunkinLua {
 		}
 
 		// Default character positions woooo
-		set('BF_X', PlayState.instance.BF_X);
-		set('BF_Y', PlayState.instance.BF_Y);
-		set('DAD_X', PlayState.instance.DAD_X);
-		set('DAD_Y', PlayState.instance.DAD_Y);
-		set('GF_X', PlayState.instance.GF_X);
-		set('GF_Y', PlayState.instance.GF_Y);
+		set('defaultBoyfriendX', PlayState.instance.BF_X);
+		set('defaultBoyfriendY', PlayState.instance.BF_Y);
+		set('defaultOpponentX', PlayState.instance.DAD_X);
+		set('defaultOpponentY', PlayState.instance.DAD_Y);
+		set('defaultGirlfriendX', PlayState.instance.GF_X);
+		set('defaultGirlfriendY', PlayState.instance.GF_Y);
 
 		// Character shit
-		set('player1', PlayState.SONG.player1);
-		set('player2', PlayState.SONG.player2);
-		set('gfVersion', PlayState.SONG.gfVersion);
+		set('boyfriendName', PlayState.SONG.player1);
+		set('dadName', PlayState.SONG.player2);
+		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
-		set('downscroll', ClientPrefs.downscroll);
-		set('middlescroll', ClientPrefs.middlescroll);
+		set('downscroll', ClientPrefs.downScroll);
+		set('middlescroll', ClientPrefs.middleScroll);
 		set('framerate', ClientPrefs.framerate);
 		set('ghostTapping', ClientPrefs.ghostTapping);
 		set('hideHud', ClientPrefs.hideHud);
 		set('mechanics', ClientPrefs.mechanics);
 		set('timeBarType', ClientPrefs.timeBarType);
-		set('camZooms', ClientPrefs.camZooms);
+		set('cameraZoomOnBeat', ClientPrefs.camZooms);
 		set('flashingLights', ClientPrefs.flashing);
 		set('noteOffset', ClientPrefs.noteOffset);
 		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
-		set('resetKey', ClientPrefs.resetKey);
+		set('noResetButton', ClientPrefs.noReset);
 		set('lowQuality', ClientPrefs.lowQuality);
-		set('shaders', ClientPrefs.shaders);
+		set('shadersEnabled', ClientPrefs.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
 		set('buildTarget', 'windows');
@@ -1722,7 +1722,7 @@ class FunkinLua {
 			{
 				leSprite.loadGraphic(Paths.image(image));
 			}
-			leSprite.antialiasing = ClientPrefs.antialiasing;
+			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
@@ -1732,7 +1732,7 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 
 			loadFrames(leSprite, image, spriteType);
-			leSprite.antialiasing = ClientPrefs.antialiasing;
+			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
@@ -3290,7 +3290,7 @@ class ModchartSprite extends FlxSprite
 	public function new(?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);
-		antialiasing = ClientPrefs.antialiasing;
+		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 }
 

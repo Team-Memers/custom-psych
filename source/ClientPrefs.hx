@@ -7,16 +7,18 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
-	public static var downscroll:Bool = false;
-	public static var middlescroll:Bool = false;
+	public static var downScroll:Bool = false;
+	public static var middleScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
-	public static var antialiasing:Bool = true;
+	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
+	public static var cursing:Bool = true;
+	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var mechanics:Bool = true;
@@ -26,7 +28,7 @@ class ClientPrefs {
 	public static var timeBarType:String = 'Time Left';
 	public static var judgementCounter:Bool = false;
 	public static var watermarks:Bool = false;
-	public static var resetKey:Bool = false;
+	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
 	public static var hitsoundVolume:Float = 0;
@@ -34,7 +36,7 @@ class ClientPrefs {
 	public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
-		'scrollSpeed' => 1.0,
+		'scrollspeed' => 1.0,
 		/* anyone reading this, amod is multiplicative speed mod, cmod is constant speed mod, and xmod is bpm based speed mod.
 		an amod example would be chartSpeed * multiplier
 		cmod would just be constantSpeed = chartSpeed
@@ -44,7 +46,7 @@ class ClientPrefs {
 		oh yeah and you'd have to actually convert the difference to seconds which I already do, because this is based on beats and stuff. but it should work
 		just fine. but I wont implement it because I don't know how you handle sustains and other stuff like that.
 		oh yeah when you calculate the bps divide it by the songSpeed or rate because it wont scroll correctly when speeds exist. */
-		'playbackRate' => 1.0,
+		'songspeed' => 1.0,
 		'healthgain' => 1.0,
 		'healthloss' => 1.0,
 		'instakill' => false,
@@ -92,12 +94,12 @@ class ClientPrefs {
 	}
 
 	public static function saveSettings() {
-		FlxG.save.data.downscroll = downscroll;
-		FlxG.save.data.middlescroll = middlescroll;
+		FlxG.save.data.downScroll = downScroll;
+		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.opponentStrums = opponentStrums;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
-		FlxG.save.data.antialiasing = antialiasing;
+		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
@@ -110,7 +112,7 @@ class ClientPrefs {
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.judgementCounter = judgementCounter;
 		FlxG.save.data.watermarks = watermarks;
-		FlxG.save.data.resetKey = resetKey;
+		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
 		FlxG.save.data.mechanics = mechanics;
 		FlxG.save.data.comboOffset = comboOffset;
@@ -155,8 +157,8 @@ class ClientPrefs {
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
 		}
-		if(FlxG.save.data.antialiasing != null) {
-			antialiasing = FlxG.save.data.antialiasing;
+		if(FlxG.save.data.globalAntialiasing != null) {
+			globalAntialiasing = FlxG.save.data.globalAntialiasing;
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
@@ -195,8 +197,8 @@ class ClientPrefs {
 		if(FlxG.save.data.timeBarType != null) {
 			timeBarType = FlxG.save.data.timeBarType;
 		}
-		if(FlxG.save.data.resetKey != null) {
-			resetKey = FlxG.save.data.resetKey;
+		if(FlxG.save.data.noReset != null) {
+			noReset = FlxG.save.data.noReset;
 		}
 		if(FlxG.save.data.healthBarAlpha != null) {
 			healthBarAlpha = FlxG.save.data.healthBarAlpha;
