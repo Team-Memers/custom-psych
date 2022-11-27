@@ -72,7 +72,7 @@ class ModsMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.antialiasing;
 		add(bg);
 		bg.screenCenter();
 
