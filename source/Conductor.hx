@@ -29,7 +29,7 @@ class Conductor
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public static function judgeNote(note:Note, diff:Float=0):Rating // die
+	public static function judgeNote(note:Note, diff:Float=0) // die
 	{
 		//tryna do MS based judgment due to popular demand
 		var timingWindows:Array<Int> = [ClientPrefs.sickWindow, ClientPrefs.goodWindow, ClientPrefs.badWindow];
