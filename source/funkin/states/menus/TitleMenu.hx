@@ -59,7 +59,7 @@ class TitleState extends funkin.utility.MusicBeatState
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
+	var credTextShit:funkin.utility.Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
 	
