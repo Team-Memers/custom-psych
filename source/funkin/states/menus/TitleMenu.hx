@@ -17,7 +17,7 @@ import openfl.display.BitmapData;
 import sys.FileSystem;
 import sys.io.File;
 #end
-import options.GraphicsSettingsSubState;
+import funkin.states.options.GraphicsSettingsMenu;
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
@@ -49,7 +49,7 @@ typedef TitleData =
 	backgroundSprite:String,
 	bpm:Int
 }
-class TitleState extends MusicBeatState
+class TitleState extends funkin.utility.MusicBeatState
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
