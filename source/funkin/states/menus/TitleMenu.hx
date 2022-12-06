@@ -231,7 +231,7 @@ class TitleState extends funkin.utility.MusicBeatState
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
-	var swagShader:ColorSwap = null;
+	var swagShader:funkin.utility.ColorSwap = null;
 
 	function startIntro()
 	{
