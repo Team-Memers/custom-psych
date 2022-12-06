@@ -29,7 +29,7 @@ class Conductor
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public static function judgeNote(note:funkin.utility.Note, diff:Float=0):Rating // die
+	public static function judgeNote(note:funkin.utility.gameplay.Note, diff:Float=0):Rating // die
 	{
 		var data:Array<Rating> = funkin.states.PlayState.instance.ratingsData; //shortening cuz fuck u
 		for(i in 0...data.length-1) //skips last window (Shit)
