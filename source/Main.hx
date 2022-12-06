@@ -1,4 +1,4 @@
-package;
+package funkin;
 
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
@@ -19,7 +19,7 @@ import openfl.display.StageScaleMode;
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
-import Discord.DiscordClient;
+import funkin.utility.Discord.DiscordClient;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
