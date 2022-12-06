@@ -6,7 +6,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
 
-class ClientPrefs {
+class Preferences {
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
