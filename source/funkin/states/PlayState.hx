@@ -46,7 +46,7 @@ import funkin.states.editors.Charter;
 import funkin.states.editors.CharacterEditor;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
-import funkin.utility.Note.EventNote;
+import funkin.utility.gameplay.Note.EventNote;
 import openfl.events.KeyboardEvent;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
@@ -59,6 +59,7 @@ import funkin.utility.FunkinLua;
 import funkin.utility.DialogueBoxPsych;
 import funkin.utility.Conductor.Rating;
 import funkin.states.menus.MainMenu;
+import funkin.utility.gameplay.Character;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -1516,7 +1517,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		playbackRate = value;
 		FlxAnimationController.globalSpeed = value;
 		trace('Anim speed: ' + FlxAnimationController.globalSpeed);
-		funkin.utility.Conductor.safeZoneOffset = (funkin.utility.Preferences.safeFrames / 60) * 1000 * value;
+		Conductor.safeZoneOffset = (Preferences.safeFrames / 60) * 1000 * value;
 		setOnLuas('playbackRate', playbackRate);
 		return value;
 	}
@@ -2422,10 +2423,10 @@ class PlayState extends funkin.utility.MusicBeatState
 	{
 		// FlxG.log.add(ChartParser.parse());
 
-		songSpeed = funkin.utility.Preferences.getGameplaySetting('scrollspeed', 1);
+		songSpeed = Preferences.getGameplaySetting('scrollspeed', 1);
 
 		var songData = SONG;
-		funkin.utility.Conductor.changeBPM(songData.bpm);
+		Conductor.changeBPM(songData.bpm);
 
 		curSong = songData.song;
 

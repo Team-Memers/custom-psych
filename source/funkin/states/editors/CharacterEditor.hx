@@ -49,7 +49,7 @@ class CharacterEditor extends funkin.utility.MusicBeatState
 	var ghostChar:Character;
 	var textAnim:FlxText;
 	var bgLayer:FlxTypedGroup<FlxSprite>;
-	var charLayer:FlxTypedGroup<Character>;
+	var charLayer:FlxTypedGroup<funkin.utility.gameplay.Character>;
 	var dumbTexts:FlxTypedGroup<FlxText>;
 	//var animList:Array<String> = [];
 	var curAnim:Int = 0;
@@ -72,7 +72,7 @@ class CharacterEditor extends funkin.utility.MusicBeatState
 	private var camMenu:FlxCamera;
 
 	var changeBGbutton:FlxButton;
-	var leHealthIcon:HealthIcon;
+	var leHealthIcon:funkin.utility.HealthIcon;
 	var characterList:Array<String> = [];
 
 	var cameraFollowPointer:FlxSprite;

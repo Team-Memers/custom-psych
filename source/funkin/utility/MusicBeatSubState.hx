@@ -1,4 +1,4 @@
-package funkin.subStates;
+package funkin.utility;
 
 import funkin.utility.Conductor.BPMChangeEvent;
 import flixel.FlxG;
@@ -24,7 +24,7 @@ class MusicBeatSubstate extends FlxSubState
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
-		return PlayerSettings.player1.controls;
+		return funkin.utility.PlayerSettings.player1.controls;
 
 	override function update(elapsed:Float)
 	{

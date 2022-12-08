@@ -44,6 +44,9 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
+import funkin.states.PlayState;
+import funkin.utility.gameplay.Note;
+import funkin.utility.gameplay.StrumNote;
 
 using StringTools;
 #if sys
@@ -110,8 +113,8 @@ class Charter extends funkin.utility.MusicBeatState
 
 	var camPos:FlxObject;
 	var strumLine:FlxSprite;
-	var quant:AttachedSprite;
-	var strumLineNotes:FlxTypedGroup<StrumNote>;
+	var quant:funkin.utility.AttachedSprite;
+	var strumLineNotes:FlxTypedGroup<funkin.utility.gameplay.StrumNote>;
 	var curSong:String = 'Test';
 	var amountSteps:Int = 0;
 	var bullshitUI:FlxGroup;
