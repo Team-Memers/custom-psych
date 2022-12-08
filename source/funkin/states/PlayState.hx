@@ -4426,7 +4426,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		if(!cpuControlled && startedCountdown && !paused && key > -1)
 		{
-			var spr:.StrumNote = playerStrums.members[key];
+			var spr:StrumNote = playerStrums.members[key];
 			if(spr != null)
 			{
 				spr.playAnim('static');
@@ -4792,7 +4792,7 @@ class PlayState extends funkin.utility.MusicBeatState
 
 	public function spawnNoteSplashOnNote(note:Note) {
 		if(Preferences.noteSplashes && note != null) {
-			var strum:.StrumNote = playerStrums.members[note.noteData];
+			var strum:StrumNote = playerStrums.members[note.noteData];
 			if(strum != null) {
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
 			}
@@ -5210,7 +5210,7 @@ class PlayState extends funkin.utility.MusicBeatState
 	}
 
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
-		var spr:.StrumNote = null;
+		var spr:StrumNote = null;
 		if(isDad) {
 			spr = strumLineNotes.members[id];
 		} else {
