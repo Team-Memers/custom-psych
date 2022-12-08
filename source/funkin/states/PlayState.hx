@@ -99,9 +99,9 @@ class PlayState extends funkin.utility.MusicBeatState
 	private var isCameraOnForcedPos:Bool = false;
 
 	#if (haxe >= "4.0.0")
-	public var boyfriendMap:Map<String, \Boyfriend> = new Map();
-	public var dadMap:Map<String, \Character> = new Map();
-	public var gfMap:Map<String, \Character> = new Map();
+	public var boyfriendMap:Map<String, Boyfriend> = new Map();
+	public var dadMap:Map<String, Character> = new Map();
+	public var gfMap:Map<String, Character> = new Map();
 	public var variables:Map<String, Dynamic> = new Map();
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
