@@ -1,6 +1,6 @@
 package funkin.utility.gameplay;
 
-import flixel.FlxG;8
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 
