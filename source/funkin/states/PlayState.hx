@@ -4819,7 +4819,7 @@ class PlayState extends funkin.utility.MusicBeatState
 			}
 		}
 
-		var splash:.NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
 		grpNoteSplashes.add(splash);
 	}
