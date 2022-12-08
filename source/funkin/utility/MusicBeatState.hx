@@ -14,7 +14,7 @@ import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
-import funkin.states.PlayState;
+//import funkin.states.PlayState;
 import funkin.utility.Conductor.Conductor;
 import funkin.utility.CustomFadeTransition;
 
