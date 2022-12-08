@@ -9,8 +9,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import funkin.states.PlayState;
 
-class GameOverMenu extends funkin.utility.MusicBeatSubstate
+class GameOverMenu extends funkin.utility.MusicBeatSubState
 {
 	public var boyfriend:funkin.utility.gameplay.Boyfriend;
 	var camFollow:FlxPoint;
@@ -37,7 +38,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 	override function create()
 	{
 		instance = this;
-		funkin.states.PlayState.instance.callOnLuas('onGameOverStart', []);
+		PlayState.instance.callOnLuas('onGameOverStart', []);
 
 		super.create();
 	}
@@ -46,7 +47,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 	{
 		super();
 
-		funkin.states.PlayState.instance.setOnLuas('inGameOver', true);
+		PlayState.instance.setOnLuas('inGameOver', true);
 
 		funkin.utility.Conductor.songPosition = 0;
 
@@ -76,7 +77,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		funkin.states.PlayState.instance.callOnLuas('onUpdate', [elapsed]);
+		PlayState.instance.callOnLuas('onUpdate', [elapsed]);
 		if(updateCamera) {
 			var lerpVal:Float = funkin.utility.Utility.boundTo(elapsed * 0.6, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
@@ -90,18 +91,18 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 		if (controls.BACK)
 		{
 			FlxG.sound.music.stop();
-			funkin.states.PlayState.deathCounter = 0;
-			funkin.states.PlayState.seenCutscene = false;
-			funkin.states.PlayState.chartingMode = false;
+			PlayState.deathCounter = 0;
+			PlayState.seenCutscene = false;
+			PlayState.chartingMode = false;
 
 			funkin.utility.WeekData.loadTheFirstEnabledMod();
-			if (funkin.states.PlayState.isStoryMode)
+			if (PlayState.isStoryMode)
 				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.StoryMenu());
 			else
 				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.FreeplayMenu());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			funkin.states.PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
+			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
 		}
 
 		if (boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name == 'firstDeath')
@@ -115,7 +116,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 
 			if (boyfriend.animation.curAnim.finished && !playingDeathSound)
 			{
-				if (funkin.states.PlayState.SONG.stage == 'tank')
+				if (PlayState.SONG.stage == 'tank')
 				{
 					playingDeathSound = true;
 					coolStartDeath(0.2);
@@ -142,7 +143,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 		{
 			funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
 		}
-		funkin.states.PlayState.instance.callOnLuas('onUpdatePost', [elapsed]);
+		PlayState.instance.callOnLuas('onUpdatePost', [elapsed]);
 	}
 
 	override function beatHit()
@@ -174,7 +175,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubstate
 					funkin.utility.MusicBeatState.resetState();
 				});
 			});
-			funkin.states.PlayState.instance.callOnLuas('onGameOverConfirm', [true]);
+			PlayState.instance.callOnLuas('onGameOverConfirm', [true]);
 		}
 	}
 }

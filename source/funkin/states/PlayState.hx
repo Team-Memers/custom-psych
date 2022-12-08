@@ -65,6 +65,13 @@ import funkin.utility.gameplay.Boyfriend;
 import funkin.utility.gameplay.Character;
 import funkin.utility.DialogueBox;
 import funkin.utility.DialogueBoxPsych;
+import funkin.utility.Conductor;
+import funkin.stages.TankmenBG;
+import funkin.stages.BGSprite;
+import funkin.stages.PhillyGlow;
+import funkin.utility.gameplay.Note;
+import funkin.utility.gameplay.StrumNote;
+import funkin.utility.gameplay.NoteSplash;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -168,10 +175,10 @@ class PlayState extends funkin.utility.MusicBeatState
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
 
-	public var strumLineNotes:FlxTypedGroup<funkin.utility.gameplay.StrumNote>;
-	public var opponentStrums:FlxTypedGroup<funkin.utility.gameplay.StrumNote>;
-	public var playerStrums:FlxTypedGroup<funkin.utility.gameplay.StrumNote>;
-	public var grpNoteSplashes:FlxTypedGroup<funkin.utility.gameplay.NoteSplash>;
+	public var strumLineNotes:FlxTypedGroup<StrumNote>;
+	public var opponentStrums:FlxTypedGroup<StrumNote>;
+	public var playerStrums:FlxTypedGroup<StrumNote>;
+	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -222,47 +229,47 @@ class PlayState extends funkin.utility.MusicBeatState
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
 
-	var dadbattleBlack:funkin.stages.BGSprite;
-	var dadbattleLight:funkin.stages.BGSprite;
+	var dadbattleBlack:BGSprite;
+	var dadbattleLight:BGSprite;
 	var dadbattleSmokes:FlxSpriteGroup;
 
-	var halloweenBG:funkin.stages.BGSprite;
-	var halloweenWhite:funkin.stages.BGSprite;
+	var halloweenBG:BGSprite;
+	var halloweenWhite:BGSprite;
 
 	var phillyLightsColors:Array<FlxColor>;
-	var phillyWindow:funkin.stages.BGSprite;
-	var phillyStreet:funkin.stages.BGSprite;
-	var phillyTrain:funkin.stages.BGSprite;
+	var phillyWindow:BGSprite;
+	var phillyStreet:BGSprite;
+	var phillyTrain:BGSprite;
 	var blammedLightsBlack:FlxSprite;
-	var phillyWindowEvent:funkin.stages.BGSprite;
+	var phillyWindowEvent:BGSprite;
 	var trainSound:FlxSound;
 
-	var phillyGlowGradient:funkin.stages.PhillyGlow.PhillyGlowGradient;
-	var phillyGlowParticles:FlxTypedGroup<funkin.stages.PhillyGlow.PhillyGlowParticle>;
+	var phillyGlowGradient:PhillyGlow.PhillyGlowGradient;
+	var phillyGlowParticles:FlxTypedGroup<PhillyGlow.PhillyGlowParticle>;
 
 	var limoKillingState:Int = 0;
-	var limo:funkin.stages.BGSprite;
-	var limoMetalPole:funkin.stages.BGSprite;
-	var limoLight:funkin.stages.BGSprite;
-	var limoCorpse:funkin.stages.BGSprite;
-	var limoCorpseTwo:funkin.stages.BGSprite;
-	var bgLimo:funkin.stages.BGSprite;
-	var grpLimoParticles:FlxTypedGroup<funkin.stages.BGSprite>;
-	var grpLimoDancers:FlxTypedGroup<funkin.stages.BackgroundDancer>;
-	var fastCar:funkin.stages.BGSprite;
+	var limo:BGSprite;
+	var limoMetalPole:BGSprite;
+	var limoLight:BGSprite;
+	var limoCorpse:BGSprite;
+	var limoCorpseTwo:BGSprite;
+	var bgLimo:BGSprite;
+	var grpLimoParticles:FlxTypedGroup<BGSprite>;
+	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
+	var fastCar:BGSprite;
 
-	var upperBoppers:funkin.stages.BGSprite;
-	var bottomBoppers:funkin.stages.BGSprite;
-	var santa:funkin.stages.BGSprite;
+	var upperBoppers:BGSprite;
+	var bottomBoppers:BGSprite;
+	var santa:BGSprite;
 	var heyTimer:Float;
 
-	var bgGirls:funkin.stages.BackgroundGirls;
-	var bgGhouls:funkin.stages.BGSprite;
+	var bgGirls:BackgroundGirls;
+	var bgGhouls:BGSprite;
 
-	var tankWatchtower:funkin.stages.BGSprite;
-	var tankGround:funkin.stages.BGSprite;
-	var tankmanRun:FlxTypedGroup<funkin.stages.TankmenBG>;
-	var foregroundSprites:FlxTypedGroup<funkin.stages.BGSprite>;
+	var tankWatchtower:BGSprite;
+	var tankGround:BGSprite;
+	var tankmanRun:FlxTypedGroup<TankmenBG>;
+	var foregroundSprites:FlxTypedGroup<BGSprite>;
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;

@@ -40,6 +40,7 @@ import funkin.utility.Paths;
 import funkin.utility.MusicBeatState;
 import funkin.utility.Utility;
 import funkin.states.menus.GameOverMenu;
+import funkin.utility.gameplay.StrumNote;
 
 #if (!flash && sys)
 import flixel.addons.display.FlxRuntimeShader;
@@ -160,7 +161,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', MainMenuMenu.psychEngineVersion.trim());
+		set('version', funkin.states.menus.MainMenu.psychEngineVersion.trim());
 
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -915,7 +916,7 @@ class FunkinLua {
 			PlayState.SONG = Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
 			PlayState.instance.persistentUpdate = false;
-			LoadingState.loadAndSwitchState(new PlayState());
+			funkin.states.Loading.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.pause();
 			FlxG.sound.music.volume = 0;

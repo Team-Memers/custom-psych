@@ -164,7 +164,7 @@ class CustomDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements I
 	 * @param	UIControlCallback	Used internally by FlxUI
 	 */
 	public function new(X:Float = 0, Y:Float = 0, DataList:Array<StrNameLabel>, ?Callback:String->Void, ?Header:FlxUIDropDownHeader,
-			?DropPanel:FlxUI9SliceSprite, ?ButtonList:Array<FlxUIButton>, ?UIControlCallback:Bool->FlxUIDropDownMenuCustom->Void)
+			?DropPanel:FlxUI9SliceSprite, ?ButtonList:Array<FlxUIButton>, ?UIControlCallback:Bool->CustomDropDownMenu->Void)
 	{
 		super(X, Y);
 		callback = Callback;
