@@ -1,4 +1,4 @@
-package;
+package funkin.states.menus;
 
 import funkin.utility.Discord.DiscordClient;
 import flash.text.TextField;

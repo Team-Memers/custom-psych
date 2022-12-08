@@ -911,8 +911,8 @@ class FunkinLua {
 			if (difficultyNum == -1)
 				difficultyNum = PlayState.storyDifficulty;
 
-			var poop = Highscore.formatSong(name, difficultyNum);
-			PlayState.SONG = Song.loadFromJson(poop, name);
+			var poop = funkin.utility.HighScore.formatSong(name, difficultyNum);
+			PlayState.SONG = funkin.utility.Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
 			PlayState.instance.persistentUpdate = false;
 			funkin.states.Loading.loadAndSwitchState(new PlayState());
@@ -1541,7 +1541,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "restartSong", function(?skipTransition:Bool = false) {
 			PlayState.instance.persistentUpdate = false;
-			PauseSubState.restartSong(skipTransition);
+			funkin.states.menus.PauseMenu.restartSong(skipTransition);
 			return true;
 		});
 		Lua_helper.add_callback(lua, "exitSong", function(?skipTransition:Bool = false) {

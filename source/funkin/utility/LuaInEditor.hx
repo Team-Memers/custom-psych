@@ -41,7 +41,7 @@ import funkin.utility.Discord;
 
 using StringTools;
 
-class EditorLua {
+class LuaInEditor {
 	public static var Function_Stop = 1;
 	public static var Function_Continue = 0;
 

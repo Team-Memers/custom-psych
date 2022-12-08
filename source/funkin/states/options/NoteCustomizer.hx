@@ -25,7 +25,7 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class NotesSubState extends MusicBeatSubstate
+class NoteCustomizer extends funkin.utility.MusicBeatSubState
 {
 	private static var curSelected:Int = 0;
 	private static var typeSelected:Int = 0;

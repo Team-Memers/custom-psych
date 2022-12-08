@@ -22,10 +22,11 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
+import funkin.utility.Paths;
 
 using StringTools;
 
-class OptionsState extends MusicBeatState
+class OptionsMenu extends funkin.utility.MusicBeatState
 {
 	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Offset and Combo Placement', 'Graphics', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -35,17 +36,17 @@ class OptionsState extends MusicBeatState
 	function openSelectedSubstate(label:String) {
 		switch(label) {
 			case 'Note Colors':
-				openSubState(new options.NotesSubState());
+				openSubState(new funkin.states.options.NoteCustomizer());
 			case 'Controls':
-				openSubState(new options.ControlsSubState());
+				openSubState(new funkin.states.options.ControlsMenu());
 			case 'Graphics':
-				openSubState(new options.GraphicsSettingsSubState());
+				openSubState(new funkin.statesoptions.GraphicsSettingsMenu());
 			case 'Visuals and UI':
-				openSubState(new options.VisualsUISubState());
+				openSubState(new funkin.states.options.VisualsUIMenu());
 			case 'Gameplay':
-				openSubState(new options.GameplaySettingsSubState());
+				openSubState(new funkin.states.options.GameplaySettingsMenu());
 			case 'Adjust Offset and Combo Placement':
-				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
+				LoadingState.loadAndSwitchState(new funkin.states.options.NoteOffsetMenu());
 		}
 	}
 

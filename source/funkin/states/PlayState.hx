@@ -73,6 +73,8 @@ import funkin.utility.gameplay.Note;
 import funkin.utility.gameplay.StrumNote;
 import funkin.utility.gameplay.NoteSplash;
 import funkin.utility.AttachedSprite;
+import funkin.utility.HealthIcon;
+import funkin.utility.Paths;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -220,8 +222,8 @@ class PlayState extends funkin.utility.MusicBeatState
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
 
-	public var iconP1:funkin.utility.HealthIcon;
-	public var iconP2:funkin.utility.HealthIcon;
+	public var iconP1:HealthIcon;
+	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
@@ -350,7 +352,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		debugKeysChart = Preferences.copyKey(Preferences.keyBinds.get('debug_1'));
 		debugKeysCharacter = Preferences.copyKey(Preferences.keyBinds.get('debug_2'));
 		playbackRate = Preferences.getGameplaySetting('songspeed', 1);
-		PauseSubState.songName = null; //Reset to default
+		funkin.states.menus.PauseMenu.songName = null; //Reset to default
 
 		keysArray = [
 			Preferences.copyKey(Preferences.keyBinds.get('note_left')),
@@ -1395,8 +1397,8 @@ class PlayState extends funkin.utility.MusicBeatState
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
 
-		if (PauseSubState.songName != null) {
-			precacheList.set(PauseSubState.songName, 'music');
+		if (funkin.states.menus.PauseMenu.songName != null) {
+			precacheList.set(funkin.states.menus.PauseMenu.songName, 'music');
 		} else if(Preferences.pauseMusic != 'None') {
 			precacheList.set(Paths.formatToSongPath(Preferences.pauseMusic), 'music');
 		}
@@ -3356,7 +3358,7 @@ class PlayState extends funkin.utility.MusicBeatState
 			FlxG.sound.music.pause();
 			vocals.pause();
 		}
-		openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		openSubState(new funkin.states.menus.PauseMenu(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		//}
 
 		DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
@@ -3367,7 +3369,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		persistentUpdate = false;
 		paused = true;
 		cancelMusicFadeTween();
-		MusicBeatState.switchState(new ChartingState());
+		MusicBeatState.switchState(new funkin.states.editors.Charter());
 		chartingMode = true;
 
 		DiscordClient.changePresence("Chart Editor", null, null, true);

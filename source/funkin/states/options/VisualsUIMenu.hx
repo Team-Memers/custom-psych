@@ -25,7 +25,7 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class VisualsUISubState extends BaseOptionsMenu
+class VisualsUIMenu extends funkin.utility.OptionsFunctionality
 {
 	public function new()
 	{

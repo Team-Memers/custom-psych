@@ -16,7 +16,7 @@ import flixel.math.FlxPoint;
 
 using StringTools;
 
-class NoteOffsetState extends MusicBeatState
+class NoteOffsetMenu extends funkin.utility.MusicBeatState
 {
 	var boyfriend:Character;
 	var gf:Character;

@@ -15,7 +15,7 @@ import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
 import funkin.states.PlayState;
-import funkin.utility.Conductor;
+import funkin.utility.Conductor.Conductor;
 import funkin.utility.CustomFadeTransition;
 
 class MusicBeatState extends FlxUIState

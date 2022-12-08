@@ -15,7 +15,7 @@ import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
 
-class PauseMenu extends funkin.substates.MusicBeatSubstate
+class PauseMenu extends funkin.Utility.MusicBeatSubState
 {
 	var grpMenuShit:FlxTypedGroup<funkin.utility.Alphabet>;
 

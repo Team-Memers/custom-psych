@@ -25,7 +25,7 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class ControlsSubState extends MusicBeatSubstate {
+class ControlsMenu extends funkin.utility.MusicBeatSubState {
 	private static var curSelected:Int = 1;
 	private static var curAlt:Bool = false;
 

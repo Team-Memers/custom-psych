@@ -50,7 +50,7 @@ class CharacterEditor extends funkin.utility.MusicBeatState
 	var ghostChar:Character;
 	var textAnim:FlxText;
 	var bgLayer:FlxTypedGroup<FlxSprite>;
-	var charLayer:FlxTypedGroup<funkin.utility.gameplay.Character>;
+	var charLayer:FlxTypedGroup<Character>;
 	var dumbTexts:FlxTypedGroup<FlxText>;
 	//var animList:Array<String> = [];
 	var curAnim:Int = 0;

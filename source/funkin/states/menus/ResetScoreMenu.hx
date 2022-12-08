@@ -7,7 +7,7 @@ import flixel.util.FlxColor;
 
 using StringTools;
 
-class ResetScoreMenu extends funkin.utility.MusicBeatSubstate
+class ResetScoreMenu extends funkin.utility.MusicBeatSubState
 {
 	var bg:FlxSprite;
 	var alphabetArray:Array<Alphabet> = [];

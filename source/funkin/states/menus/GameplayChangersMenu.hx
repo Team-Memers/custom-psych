@@ -25,7 +25,7 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class GameplayChangersMenu extends funkin.subStates.MusicBeatSubstate
+class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 {
 	private var curOption:GameplayOption = null;
 	private var curSelected:Int = 0;

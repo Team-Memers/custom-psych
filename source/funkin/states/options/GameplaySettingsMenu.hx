@@ -25,7 +25,7 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class GameplaySettingsSubState extends BaseOptionsMenu
+class GameplaySettingsMenu extends funkin.utility.OptionsFunctionality
 {
 	public function new()
 	{

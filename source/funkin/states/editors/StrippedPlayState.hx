@@ -22,7 +22,7 @@ import funkin.utility.FunkinLua;
 
 using StringTools;
 
-class StrippedPlayState extends MusicBeatState
+class StrippedPlayState extends funkin.utility.MusicBeatState
 {
 	// Yes, this is mostly a copy of PlayState, it's kinda dumb to make a direct copy of it but... ehhh
 	private var strumLine:FlxSprite;
