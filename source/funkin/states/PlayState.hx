@@ -72,6 +72,7 @@ import funkin.stages.PhillyGlow;
 import funkin.utility.gameplay.Note;
 import funkin.utility.gameplay.StrumNote;
 import funkin.utility.gameplay.NoteSplash;
+import funkin.utility.AttachedSprite;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -163,8 +164,8 @@ class PlayState extends funkin.utility.MusicBeatState
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
 
-	public var notes:FlxTypedGroup<funkin.utility.gameplay.Note>;
-	public var unspawnNotes:Array<funkin.utility.gameplay.Note> = [];
+	public var notes:FlxTypedGroup<Note>;
+	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 
 	private var strumLine:FlxSprite;
@@ -189,11 +190,11 @@ class PlayState extends funkin.utility.MusicBeatState
 	public var health:Float = 1;
 	public var combo:Int = 0;
 
-	private var healthBarBG:funkin.utility.AttachedSprite;
+	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
 
-	private var timeBarBG:funkin.utility.AttachedSprite;
+	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = [];
@@ -413,7 +414,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
-		grpNoteSplashes = new FlxTypedGroup<funkin.utility.gameplay.NoteSplash>();
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
@@ -1057,7 +1058,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
 
-		strumLineNotes = new FlxTypedGroup<funkin.utility.gameplay.StrumNote>();
+		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
 		add(grpNoteSplashes);
 
@@ -1067,12 +1068,12 @@ class PlayState extends funkin.utility.MusicBeatState
 			timeTxt.y += 3;
 		}
 
-		var splash:funkin.utility.gameplay.NoteSplash = new NoteSplash(100, 100, 0);
+		var splash:NoteSplash = new NoteSplash(100, 100, 0);
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.0;
 
-		opponentStrums = new FlxTypedGroup<funkin.utility.gameplay.StrumNote>();
-		playerStrums = new FlxTypedGroup<funkin.utility.gameplay.StrumNote>();
+		opponentStrums = new FlxTypedGroup<StrumNote>();
+		playerStrums = new FlxTypedGroup<StrumNote>();
 
 		// startCountdown();
 
@@ -2273,7 +2274,7 @@ class PlayState extends funkin.utility.MusicBeatState
 					case 4:
 				}
 
-				notes.forEachAlive(function(note:funkin.utility.gameplay.Note) {
+				notes.forEachAlive(function(note:Note) {
 					if(Preferences.opponentStrums || note.mustPress)
 					{
 						note.copyAlpha = false;
@@ -2308,7 +2309,7 @@ class PlayState extends funkin.utility.MusicBeatState
 	{
 		var i:Int = unspawnNotes.length - 1;
 		while (i >= 0) {
-			var daNote:funkin.utility.gameplay.Note = unspawnNotes[i];
+			var daNote:Note = unspawnNotes[i];
 			if(daNote.strumTime - 350 < time)
 			{
 				daNote.active = false;
@@ -2324,7 +2325,7 @@ class PlayState extends funkin.utility.MusicBeatState
 
 		i = notes.length - 1;
 		while (i >= 0) {
-			var daNote:funkin.utility.gameplay.Note = notes.members[i];
+			var daNote:Note = notes.members[i];
 			if(daNote.strumTime - 350 < time)
 			{
 				daNote.active = false;
@@ -2451,7 +2452,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
 
-		notes = new FlxTypedGroup<funkin.utility.gameplay.Note>();
+		notes = new FlxTypedGroup<Note>();
 		add(notes);
 
 		var noteData:Array<SwagSection>;
@@ -2503,18 +2504,18 @@ class PlayState extends funkin.utility.MusicBeatState
 					gottaHitNote = !section.mustHitSection;
 				}
 
-				var oldNote:funkin.utility.gameplay.Note;
+				var oldNote:Note;
 				if (unspawnNotes.length > 0)
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 				else
 					oldNote = null;
 
-				var swagNote:funkin.utility.gameplay.Note = new Note(daStrumTime, daNoteData, oldNote);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
-				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
+				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = funkin.states.editors.Charter.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
 				swagNote.scrollFactor.set();
 
@@ -2529,7 +2530,7 @@ class PlayState extends funkin.utility.MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:funkin.utility.gameplay.Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -2692,7 +2693,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		return 0;
 	}
 
-	function sortByShit(Obj1:funkin.utility.gameplay.Note, Obj2:funkin.utility.gameplay.Note):Int
+	function sortByShit(Obj1:Note, Obj2:Note):Int
 	{
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 	}
@@ -2715,7 +2716,7 @@ class PlayState extends funkin.utility.MusicBeatState
 				else if(Preferences.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:funkin.utility.gameplay.StrumNote = new StrumNote(Preferences.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
+			var babyArrow:StrumNote = new StrumNote(Preferences.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
 			babyArrow.downScroll = Preferences.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
@@ -3167,7 +3168,7 @@ class PlayState extends funkin.utility.MusicBeatState
 
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
-				var dunceNote:funkin.utility.gameplay.Note = unspawnNotes[0];
+				var dunceNote:Note = unspawnNotes[0];
 				notes.insert(0, dunceNote);
 				dunceNote.spawned=true;
 				callOnLuas('onSpawnNote', [notes.members.indexOf(dunceNote), dunceNote.noteData, dunceNote.noteType, dunceNote.isSustainNote]);
@@ -3189,9 +3190,9 @@ class PlayState extends funkin.utility.MusicBeatState
 			if(startedCountdown)
 			{
 				var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
-				notes.forEachAlive(function(daNote:funkin.utility.gameplay.Note)
+				notes.forEachAlive(function(daNote:Note)
 				{
-					var strumGroup:FlxTypedGroup<funkin.utility.gameplay.StrumNote> = playerStrums;
+					var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 					if(!daNote.mustPress) strumGroup = opponentStrums;
 
 					var strumX:Float = strumGroup.members[daNote.noteData].x;
@@ -3243,7 +3244,7 @@ class PlayState extends funkin.utility.MusicBeatState
 									daNote.y -= 19;
 								}
 							}
-							daNote.y += (funkin.utility.gameplay.Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
+							daNote.y += (Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
 							daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (songSpeed - 1);
 						}
 					}
@@ -3263,7 +3264,7 @@ class PlayState extends funkin.utility.MusicBeatState
 						}
 					}
 
-					var center:Float = strumY + funkin.utility.gameplay.Note.swagWidth / 2;
+					var center:Float = strumY + Note.swagWidth / 2;
 					if(strumGroup.members[daNote.noteData].sustainReduce && daNote.isSustainNote && (daNote.mustPress || !daNote.ignoreNote) &&
 						(!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 					{
@@ -3309,7 +3310,7 @@ class PlayState extends funkin.utility.MusicBeatState
 			}
 			else
 			{
-				notes.forEachAlive(function(daNote:funkin.utility.gameplay.Note)
+				notes.forEachAlive(function(daNote:Note)
 				{
 					daNote.canBeHit = false;
 					daNote.wasGoodHit = false;
@@ -3915,7 +3916,7 @@ class PlayState extends funkin.utility.MusicBeatState
 
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
-			notes.forEach(function(daNote:funkin.utility.gameplay.Note) {
+			notes.forEach(function(daNote:Note) {
 				if(daNote.strumTime < songLength - Conductor.safeZoneOffset) {
 					health -= 0.05 * healthLoss;
 				}
@@ -4080,7 +4081,7 @@ class PlayState extends funkin.utility.MusicBeatState
 
 	public function KillNotes() {
 		while(notes.length > 0) {
-			var daNote:funkin.utility.gameplay.Note = notes.members[0];
+			var daNote:Note = notes.members[0];
 			daNote.active = false;
 			daNote.visible = false;
 
@@ -4120,7 +4121,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		}
 	}
 
-	private function popUpScore(note:funkin.utility.gameplay.Note = null):Void
+	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + Preferences.ratingOffset);
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
@@ -4341,12 +4342,12 @@ class PlayState extends funkin.utility.MusicBeatState
 				var canMiss:Bool = !Preferences.ghostTapping;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
-				var pressNotes:Array<funkin.utility.gameplay.Note> = [];
+				var pressNotes:Array<Note> = [];
 				//var notesDatas:Array<Int> = [];
 				var notesStopped:Bool = false;
 
-				var sortedNotesList:Array<funkin.utility.gameplay.Note> = [];
-				notes.forEachAlive(function(daNote:funkin.utility.gameplay.Note)
+				var sortedNotesList:Array<Note> = [];
+				notes.forEachAlive(function(daNote:Note)
 				{
 					if (strumsBlocked[daNote.noteData] != true && daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
 					{
@@ -4398,7 +4399,7 @@ class PlayState extends funkin.utility.MusicBeatState
 				Conductor.songPosition = lastTime;
 			}
 
-			var spr:funkin.utility.gameplay.StrumNote = playerStrums.members[key];
+			var spr:StrumNote = playerStrums.members[key];
 			if(strumsBlocked[key] != true && spr != null && spr.animation.curAnim.name != 'confirm')
 			{
 				spr.playAnim('pressed');
@@ -4409,7 +4410,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		//trace('pressed: ' + controlArray);
 	}
 
-	function sortHitNotes(a:funkin.utility.gameplay.Note, b:funkin.utility.gameplay.Note):Int
+	function sortHitNotes(a:Note, b:Note):Int
 	{
 		if (a.lowPriority && !b.lowPriority)
 			return 1;
@@ -4425,7 +4426,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		if(!cpuControlled && startedCountdown && !paused && key > -1)
 		{
-			var spr:funkin.utility.gameplay.StrumNote = playerStrums.members[key];
+			var spr:.StrumNote = playerStrums.members[key];
 			if(spr != null)
 			{
 				spr.playAnim('static');
@@ -4478,7 +4479,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		if (startedCountdown && !boyfriend.stunned && generatedMusic)
 		{
 			// rewritten inputs???
-			notes.forEachAlive(function(daNote:funkin.utility.gameplay.Note)
+			notes.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit
@@ -4527,9 +4528,9 @@ class PlayState extends funkin.utility.MusicBeatState
 		return ret;
 	}
 
-	function noteMiss(daNote:funkin.utility.gameplay.Note, badHit:Bool = false):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
+	function noteMiss(daNote:Note, badHit:Bool = false):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
 		//Dupe note remove
-		notes.forEachAlive(function(note:funkin.utility.gameplay.Note) {
+		notes.forEachAlive(function(note:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
 				note.kill();
 				notes.remove(note, true);
@@ -4623,7 +4624,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		callOnLuas('noteMissPress', [direction]);
 	}
 
-	function opponentNoteHit(note:funkin.utility.gameplay.Note):Void
+	function opponentNoteHit(note:Note):Void
 	{
 		if (Paths.formatToSongPath(SONG.song) != 'tutorial')
 			camZooming = true;
@@ -4675,7 +4676,7 @@ class PlayState extends funkin.utility.MusicBeatState
 		}
 	}
 
-	function goodNoteHit(note:funkin.utility.gameplay.Note, badHit:Bool = false):Void
+	function goodNoteHit(note:Note, badHit:Bool = false):Void
 	{
 		if (!note.wasGoodHit)
 		{
@@ -4789,16 +4790,16 @@ class PlayState extends funkin.utility.MusicBeatState
 		}
 	}
 
-	public function spawnNoteSplashOnNote(note:funkin.utility.gameplay.Note) {
+	public function spawnNoteSplashOnNote(note:Note) {
 		if(Preferences.noteSplashes && note != null) {
-			var strum:funkin.utility.gameplay.StrumNote = playerStrums.members[note.noteData];
+			var strum:.StrumNote = playerStrums.members[note.noteData];
 			if(strum != null) {
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
 			}
 		}
 	}
 
-	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:funkin.utility.gameplay.Note = null) {
+	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 
@@ -4818,7 +4819,7 @@ class PlayState extends funkin.utility.MusicBeatState
 			}
 		}
 
-		var splash:funkin.utility.gameplay.NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+		var splash:.NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
 		grpNoteSplashes.add(splash);
 	}
@@ -5209,7 +5210,7 @@ class PlayState extends funkin.utility.MusicBeatState
 	}
 
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
-		var spr:funkin.utility.gameplay.StrumNote = null;
+		var spr:.StrumNote = null;
 		if(isDad) {
 			spr = strumLineNotes.members[id];
 		} else {
