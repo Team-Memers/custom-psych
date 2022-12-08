@@ -47,6 +47,7 @@ import openfl.utils.ByteArray;
 import funkin.states.PlayState;
 import funkin.utility.gameplay.Note;
 import funkin.utility.gameplay.StrumNote;
+import funkin.utility.HealthIcon;
 
 using StringTools;
 #if sys

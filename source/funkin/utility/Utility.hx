@@ -17,7 +17,7 @@ import openfl.utils.Assets;
 
 using StringTools;
 
-class CoolUtil
+class Utility
 {
 	public static var defaultDifficulties:Array<String> = [
 		'Hard',

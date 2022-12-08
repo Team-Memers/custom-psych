@@ -13,6 +13,8 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
 import flixel.FlxSprite;
+import funkin.utility.Utility;
+import funkin.utility.Paths;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -469,7 +471,7 @@ class Paths
 		var path:String = 'modsList.txt';
 		if(FileSystem.exists(path))
 		{
-			var list:Array<String> = funkin.utility.Utility.coolTextFile(path);
+			var list:Array<String> = Utility.coolTextFile(path);
 			for (i in list)
 			{
 				var dat = i.split("|");

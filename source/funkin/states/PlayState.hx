@@ -63,6 +63,8 @@ import funkin.utility.gameplay.Character;
 import funkin.utility.Preferences;
 import funkin.utility.gameplay.Boyfriend;
 import funkin.utility.gameplay.Character;
+import funkin.utility.DialogueBox;
+import funkin.utility.DialogueBoxPsych;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;

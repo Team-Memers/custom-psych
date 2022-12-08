@@ -30,7 +30,7 @@ import funkin.utility.Paths;
 
 using StringTools;
 
-class BaseOptionsMenu extends MusicBeatSubstate
+class OptionsFunctionality extends funkin.utility.MusicBeatSubState
 {
 	private var curOption:Option = null;
 	private var curSelected:Int = 0;

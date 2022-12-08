@@ -9,6 +9,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import funkin.utility.Section.SwagSection;
+import funkin.stages.TankmenBG;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;

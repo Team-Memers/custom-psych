@@ -16,8 +16,7 @@ import flixel.FlxCamera;
 import flixel.FlxBasic;
 import funkin.states.PlayState;
 import funkin.utility.Conductor;
-
-
+import funkin.utility.CustomFadeTransition;
 
 class MusicBeatState extends FlxUIState
 {
@@ -174,7 +173,7 @@ class MusicBeatState extends FlxUIState
 	function getBeatsOnSection()
 	{
 		var val:Null<Float> = 4;
-		if(funkin.states.PlayState.SONG != null && funkin.states.PlayState.SONG.notes[curSection] != null) val = funkin.states.PlayState.SONG.notes[curSection].sectionBeats;
+		if(PlayState.SONG != null && PlayState.SONG.notes[curSection] != null) val = PlayState.SONG.notes[curSection].sectionBeats;
 		return val == null ? 4 : val;
 	}
 }
