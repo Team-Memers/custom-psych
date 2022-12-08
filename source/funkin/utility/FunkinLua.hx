@@ -40,6 +40,7 @@ import funkin.utility.MusicBeatState;
 import funkin.utility.Utility;
 import funkin.states.menus.GameOverMenu;
 import funkin.utility.gameplay.StrumNote;
+import funkin.states.PlayState;
 
 #if (!flash && sys)
 import flixel.addons.display.FlxRuntimeShader;
