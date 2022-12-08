@@ -19,11 +19,11 @@ import lime.utils.Assets;
 
 using StringTools;
 
-class CreditsState extends MusicBeatState
+class CreditsMenu extends funkin.utility.MusicBeatState
 {
 	var curSelected:Int = -1;
 
-	private var grpOptions:FlxTypedGroup<Alphabet>;
+	private var grpOptions:FlxTypedGroup<funkin.utility.Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
 	private var creditsStuff:Array<Array<String>> = [];
 
@@ -42,24 +42,24 @@ class CreditsState extends MusicBeatState
 		FlxG.stage.application.window.title = 'FNF: Psych Engine - Credits Menu';
 
 		persistentUpdate = true;
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(funkin.utility.Paths.image('menuDesat'));
 		add(bg);
 		bg.screenCenter();
 		bg.alpha = 0.6;
 		
-		grpOptions = new FlxTypedGroup<Alphabet>();
+		grpOptions = new FlxTypedGroup<funkin.utility.Alphabet>();
 		add(grpOptions);
 
 		#if MODS_ALLOWED
 		var path:String = 'modsList.txt';
 		if(FileSystem.exists(path))
 		{
-			var leMods:Array<String> = CoolUtil.coolTextFile(path);
+			var leMods:Array<String> = funkin.utility.Utility.coolTextFile(path);
 			for (i in 0...leMods.length)
 			{
 				if(leMods.length > 1 && leMods[0].length > 0) {
 					var modSplit:Array<String> = leMods[i].split('|');
-					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()) && !modsAdded.contains(modSplit[0]))
+					if(!funkin.utility.Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()) && !modsAdded.contains(modSplit[0]))
 					{
 						if(modSplit[1] == '1')
 							pushModCreditsToList(modSplit[0]);
@@ -70,7 +70,7 @@ class CreditsState extends MusicBeatState
 			}
 		}
 
-		var arrayOfFolders:Array<String> = Paths.getModDirectories();
+		var arrayOfFolders:Array<String> = funkin.utility.Paths.getModDirectories();
 		arrayOfFolders.push('');
 		for (folder in arrayOfFolders)
 		{
@@ -114,7 +114,7 @@ class CreditsState extends MusicBeatState
 		for (i in 0...creditsStuff.length)
 		{
 			var isSelectable:Bool = !unselectableCheck(i);
-			var optionText:Alphabet = new Alphabet(FlxG.width / 2, 300, creditsStuff[i][0], !isSelectable);
+			var optionText:funkin.utility.Alphabet = new Alphabet(FlxG.width / 2, 300, creditsStuff[i][0], !isSelectable);
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
 			optionText.changeX = false;
@@ -124,17 +124,17 @@ class CreditsState extends MusicBeatState
 			if(isSelectable) {
 				if(creditsStuff[i][5] != null)
 				{
-					Paths.currentModDirectory = creditsStuff[i][5];
+					funkin.utility.Paths.currentModDirectory = creditsStuff[i][5];
 				}
 
-				var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
+				var icon:funkin.utility.AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
 	
 				// using a FlxGroup is too much fuss!
 				iconArray.push(icon);
 				add(icon);
-				Paths.currentModDirectory = '';
+				funkin.utility.Paths.currentModDirectory = '';
 
 				if(curSelected == -1) curSelected = i;
 			}
@@ -150,7 +150,7 @@ class CreditsState extends MusicBeatState
 		add(descBox);
 
 		descText = new FlxText(50, FlxG.height + offsetThing - 25, 1180, "", 32);
-		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+		descText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 		descText.scrollFactor.set();
 		//descText.borderSize = 2.4;
 		descBox.sprTracker = descText;
@@ -212,15 +212,15 @@ class CreditsState extends MusicBeatState
 			}
 
 			if(controls.ACCEPT && (creditsStuff[curSelected][3] == null || creditsStuff[curSelected][3].length > 4)) {
-				CoolUtil.browserLoad(creditsStuff[curSelected][3]);
+				funkin.utility.Utility.browserLoad(creditsStuff[curSelected][3]);
 			}
 			if (controls.BACK)
 			{
 				if(colorTween != null) {
 					colorTween.cancel();
 				}
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new MainMenuState());
+				FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'));
+				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MainMenu());
 				quitting = true;
 			}
 		}
@@ -229,7 +229,7 @@ class CreditsState extends MusicBeatState
 		{
 			if(!item.bold)
 			{
-				var lerpVal:Float = CoolUtil.boundTo(elapsed * 12, 0, 1);
+				var lerpVal:Float = funkin.utility.Utility.boundTo(elapsed * 12, 0, 1);
 				if(item.targetY == 0)
 				{
 					var lastX:Float = item.x;
@@ -248,7 +248,7 @@ class CreditsState extends MusicBeatState
 	var moveTween:FlxTween = null;
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 0.4);
 		do {
 			curSelected += change;
 			if (curSelected < 0)
@@ -302,8 +302,8 @@ class CreditsState extends MusicBeatState
 		if(modsAdded.contains(folder)) return;
 
 		var creditsFile:String = null;
-		if(folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
-		else creditsFile = Paths.mods('data/credits.txt');
+		if(folder != null && folder.trim().length > 0) creditsFile = funkin.utility.Paths.mods(folder + '/data/credits.txt');
+		else creditsFile = funkin.utility.Paths.mods('data/credits.txt');
 
 		if (FileSystem.exists(creditsFile))
 		{

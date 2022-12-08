@@ -33,12 +33,12 @@ class CutsceneHandler extends FlxBasic
 		{
 			if(music != null)
 			{
-				FlxG.sound.playMusic(Paths.music(music), 0, false);
+				FlxG.sound.playMusic(funkin.utility.Paths.music(music), 0, false);
 				FlxG.sound.music.fadeIn();
 			}
 			if(onStart != null) onStart();
 		});
-		PlayState.instance.add(this);
+		funkin.states.PlayState.instance.add(this);
 	}
 
 	private var cutsceneTime:Float = 0;
@@ -47,7 +47,7 @@ class CutsceneHandler extends FlxBasic
 	{
 		super.update(elapsed);
 
-		if(FlxG.state != PlayState.instance || !firstFrame)
+		if(FlxG.state != funkin.states.PlayState.instance || !firstFrame)
 		{
 			firstFrame = true;
 			return;
@@ -62,13 +62,13 @@ class CutsceneHandler extends FlxBasic
 			for (spr in objects)
 			{
 				spr.kill();
-				PlayState.instance.remove(spr);
+				funkin.states.PlayState.instance.remove(spr);
 				spr.destroy();
 			}
 			
 			kill();
 			destroy();
-			PlayState.instance.remove(this);
+			funkin.states.PlayState.instance.remove(this);
 		}
 		
 		while(timedEvents.length > 0 && timedEvents[0][0] <= cutsceneTime)

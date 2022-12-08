@@ -40,7 +40,7 @@ class HealthIcon extends FlxSprite
 			var name:String = 'icons/' + char;
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-' + char; //Older versions of psych engine's support
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
-			var file:Dynamic = Paths.image(name);
+			var file:Dynamic = funkin.utility.Paths.image(name);
 
 			loadGraphic(file); //Load stupidly first for getting the file size
 			loadGraphic(file, true, Math.floor(width / 2), Math.floor(height)); //Then load it fr
@@ -52,7 +52,7 @@ class HealthIcon extends FlxSprite
 			animation.play(char);
 			this.char = char;
 
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = funkin.utility.Preferences.globalAntialiasing;
 			if(char.endsWith('-pixel')) {
 				antialiasing = false;
 			}

@@ -16,7 +16,7 @@ import sys.FileSystem;
 
 using StringTools;
 
-class MasterEditorMenu extends MusicBeatState
+class MasterEditorMenu extends funkin.utility.MusicBeatState
 {
 	var options:Array<String> = [
 		'Week Editor',
@@ -26,7 +26,7 @@ class MasterEditorMenu extends MusicBeatState
 		'Character Editor',
 		'Chart Editor'
 	];
-	private var grpTexts:FlxTypedGroup<Alphabet>;
+	private var grpTexts:FlxTypedGroup<funkin.utility.Alphabet>;
 	private var directories:Array<String> = [null];
 
 	private var curSelected = 0;
@@ -46,12 +46,12 @@ class MasterEditorMenu extends MusicBeatState
 		bg.color = 0xFF353535;
 		add(bg);
 
-		grpTexts = new FlxTypedGroup<Alphabet>();
+		grpTexts = new FlxTypedGroup<funkin.utility.Alphabet>();
 		add(grpTexts);
 
 		for (i in 0...options.length)
 		{
-			var leText:Alphabet = new Alphabet(90, 320, options[i], true);
+			var leText:funkin.utility.Alphabet = new Alphabet(90, 320, options[i], true);
 			leText.isMenuItem = true;
 			leText.targetY = i;
 			grpTexts.add(leText);
@@ -64,16 +64,16 @@ class MasterEditorMenu extends MusicBeatState
 		add(textBG);
 
 		directoryTxt = new FlxText(textBG.x, textBG.y + 4, FlxG.width, '', 32);
-		directoryTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
+		directoryTxt.setFormat(funkin.utility.Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		directoryTxt.scrollFactor.set();
 		add(directoryTxt);
 		
-		for (folder in Paths.getModDirectories())
+		for (folder in funkin.utility.Paths.getModDirectories())
 		{
 			directories.push(folder);
 		}
 
-		var found:Int = directories.indexOf(Paths.currentModDirectory);
+		var found:Int = directories.indexOf(funkin.utility.Paths.currentModDirectory);
 		if(found > -1) curDirectory = found;
 		changeDirectory();
 		#end
@@ -106,24 +106,24 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new MainMenuState());
+			funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MainMenu());
 		}
 
 		if (controls.ACCEPT)
 		{
 			switch(options[curSelected]) {
 				case 'Character Editor':
-					LoadingState.loadAndSwitchState(new CharacterEditorState(Character.DEFAULT_CHARACTER, false));
+					funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.CharacterEditor(Character.DEFAULT_CHARACTER, false));
 				case 'Week Editor':
-					MusicBeatState.switchState(new WeekEditorState());
+					funkin.utility.MusicBeatState.switchState(new funkin.states.editors.WeekEditor());
 				case 'Menu Character Editor':
-					MusicBeatState.switchState(new MenuCharacterEditorState());
+					funkin.utility.MusicBeatState.switchState(new funkin.states.editors.MenuCharacterEditor());
 				case 'Dialogue Portrait Editor':
-					LoadingState.loadAndSwitchState(new DialogueCharacterEditorState(), false);
+					funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.DialogueCharacterEditor(), false);
 				case 'Dialogue Editor':
-					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
+					funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.DialogueEditor(), false);
 				case 'Chart Editor'://felt it would be cool maybe
-					LoadingState.loadAndSwitchState(new ChartingState(), false);
+					funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.Charter(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
@@ -151,7 +151,7 @@ class MasterEditorMenu extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;
 
@@ -164,7 +164,7 @@ class MasterEditorMenu extends MusicBeatState
 	#if MODS_ALLOWED
 	function changeDirectory(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 0.4);
 
 		curDirectory += change;
 
@@ -173,13 +173,13 @@ class MasterEditorMenu extends MusicBeatState
 		if(curDirectory >= directories.length)
 			curDirectory = 0;
 	
-		WeekData.setDirectoryFromWeek();
+		funkin.utility.WeekData.setDirectoryFromWeek();
 		if(directories[curDirectory] == null || directories[curDirectory].length < 1)
 			directoryTxt.text = '< No Mod Directory Loaded >';
 		else
 		{
-			Paths.currentModDirectory = directories[curDirectory];
-			directoryTxt.text = '< Loaded Mod Directory: ' + Paths.currentModDirectory + ' >';
+			funkin.utility.Paths.currentModDirectory = directories[curDirectory];
+			directoryTxt.text = '< Loaded Mod Directory: ' + funkin.utility.Paths.currentModDirectory + ' >';
 		}
 		directoryTxt.text = directoryTxt.text.toUpperCase();
 	}

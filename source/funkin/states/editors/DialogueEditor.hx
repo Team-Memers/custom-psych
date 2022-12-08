@@ -32,7 +32,7 @@ import sys.io.File;
 
 using StringTools;
 
-class DialogueEditorState extends MusicBeatState
+class DialogueEditor extends funkin.utility.MusicBeatState
 {
 	var character:DialogueCharacter;
 	var box:FlxSprite;
@@ -70,7 +70,7 @@ class DialogueEditorState extends MusicBeatState
 		box = new FlxSprite(70, 370);
 		box.frames = Paths.getSparrowAtlas('speech_bubble');
 		box.scrollFactor.set();
-		box.antialiasing = ClientPrefs.globalAntialiasing;
+		box.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		box.animation.addByPrefix('normal', 'speech bubble normal', 24);
 		box.animation.addByPrefix('angry', 'AHH speech bubble', 24);
 		box.animation.addByPrefix('center', 'speech bubble middle', 24);
@@ -84,21 +84,21 @@ class DialogueEditorState extends MusicBeatState
 		FlxG.mouse.visible = true;
 
 		var addLineText:FlxText = new FlxText(10, 10, FlxG.width - 20, 'Press O to remove the current dialogue line, Press P to add another line after the current one.', 8);
-		addLineText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		addLineText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		addLineText.scrollFactor.set();
 		add(addLineText);
 
 		selectedText = new FlxText(10, 32, FlxG.width - 20, '', 8);
-		selectedText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		selectedText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		selectedText.scrollFactor.set();
 		add(selectedText);
 
 		animText = new FlxText(10, 62, FlxG.width - 20, '', 8);
-		animText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		animText.setFormat(funkin.utilityPaths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		animText.scrollFactor.set();
 		add(animText);
 		
-		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, DEFAULT_TEXT);
+		daText = new TypedAlphabet(funkin.utility.DialogueBoxPsych.DEFAULT_TEXT_X, funkin.utility.DialogueBoxPsych.DEFAULT_TEXT_Y, DEFAULT_TEXT);
 		daText.scaleX = 0.7;
 		daText.scaleY = 0.7;
 		add(daText);
@@ -197,21 +197,21 @@ class DialogueEditorState extends MusicBeatState
 				}
 		}
 		box.animation.play(anim, true);
-		DialogueBoxPsych.updateBoxOffsets(box);
+		funkin.utility.DialogueBoxPsych.updateBoxOffsets(box);
 	}
 
 	function reloadCharacter() {
-		character.frames = Paths.getSparrowAtlas('dialogue/' + character.jsonFile.image);
+		character.frames = funkin.utility.Paths.getSparrowAtlas('dialogue/' + character.jsonFile.image);
 		character.jsonFile = character.jsonFile;
 		character.reloadAnimations();
-		character.setGraphicSize(Std.int(character.width * DialogueCharacter.DEFAULT_SCALE * character.jsonFile.scale));
+		character.setGraphicSize(Std.int(character.width * funkin.utility.DialogueCharacter.DEFAULT_SCALE * character.jsonFile.scale));
 		character.updateHitbox();
-		character.x = DialogueBoxPsych.LEFT_CHAR_X;
-		character.y = DialogueBoxPsych.DEFAULT_CHAR_Y;
+		character.x = funkin.utility.DialogueBoxPsych.LEFT_CHAR_X;
+		character.y = funkin.utility.DialogueBoxPsych.DEFAULT_CHAR_Y;
 
 		switch(character.jsonFile.dialogue_pos) {
 			case 'right':
-				character.x = FlxG.width - character.width + DialogueBoxPsych.RIGHT_CHAR_X;
+				character.x = FlxG.width - character.width + funkin.utility.DialogueBoxPsych.RIGHT_CHAR_X;
 			
 			case 'center':
 				character.x = FlxG.width / 2;
@@ -249,8 +249,8 @@ class DialogueEditorState extends MusicBeatState
 			characterAnimSpeed();
 		}
 
-		daText.y = DialogueBoxPsych.DEFAULT_TEXT_Y;
-		if(daText.rows > 2) daText.y -= DialogueBoxPsych.LONG_TEXT_ADD;
+		daText.y = funkin.utility.DialogueBoxPsych.DEFAULT_TEXT_Y;
+		if(daText.rows > 2) daText.y -= funkin.utility.DialogueBoxPsych.LONG_TEXT_ADD;
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -347,15 +347,15 @@ class DialogueEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.SPACE) {
 				reloadText(false);
 			}
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
+				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
+				FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'), 1);
 				transitioning = true;
 			}
 			var negaMult:Array<Int> = [1, -1];

@@ -30,7 +30,7 @@ import sys.io.File;
 
 using StringTools;
 
-class MenuCharacterEditorState extends MusicBeatState
+class MenuCharacterEditor extends funkin.utility.MusicBeatState
 {
 	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
 	var characterFile:MenuCharacterFile = null;
@@ -232,7 +232,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		var char:MenuCharacter = grpWeekCharacters.members[curTypeSelected];
 
 		char.alpha = 1;
-		char.frames = Paths.getSparrowAtlas('menucharacters/' + characterFile.image);
+		char.frames = funkin.utility.Paths.getSparrowAtlas('menucharacters/' + characterFile.image);
 		char.animation.addByPrefix('idle', characterFile.idle_anim, 24);
 		if(curTypeSelected == 1) char.animation.addByPrefix('confirm', characterFile.confirm_anim, 24, false);
 		char.flipX = (characterFile.flipX == true);
@@ -280,12 +280,12 @@ class MenuCharacterEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
+				FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'));
 			}
 
 			var shiftMult:Int = 1;

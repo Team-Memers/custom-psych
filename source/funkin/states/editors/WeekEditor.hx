@@ -33,29 +33,27 @@ import funkin.utility.WeekData;
 
 using StringTools;
 
-class WeekEditorState extends MusicBeatState
+class WeekEditor extends funkin.utility.MusicBeatState
 {
 	var txtWeekTitle:FlxText;
 	var bgSprite:FlxSprite;
 	var lock:FlxSprite;
 	var txtTracklist:FlxText;
-	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
-	var weekThing:MenuItem;
+	var grpWeekCharacters:FlxTypedGroup<funkin.utility.MenuCharacter>;
+	var weekThing:funkin.utility.MenuItem;
 	var missingFileText:FlxText;
 
 	var weekFile:WeekFile = null;
 	public function new(weekFile:WeekFile = null)
 	{
 		super();
-		this.weekFile = WeekData.createWeekFile();
+		this.weekFile = funkin.utility.WeekData.createWeekFile();
 		if(weekFile != null) this.weekFile = weekFile;
 		else weekFileName = 'week1';
 	}
 
 	override function create() {
-		#if desktop
 		FlxG.stage.application.window.title = 'FNF: Psych Engine - Editing a Week';
-		#end
 		
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
@@ -68,23 +66,23 @@ class WeekEditorState extends MusicBeatState
 
 		weekThing = new MenuItem(0, bgSprite.y + 396, weekFileName);
 		weekThing.y += weekThing.height + 20;
-		weekThing.antialiasing = ClientPrefs.globalAntialiasing;
+		weekThing.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		add(weekThing);
 
 		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
 		add(blackBarThingie);
 		
-		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
+		grpWeekCharacters = new FlxTypedGroup<funkin.utility.MenuCharacter>();
 		
 		lock = new FlxSprite();
 		lock.frames = ui_tex;
 		lock.animation.addByPrefix('lock', 'lock');
 		lock.animation.play('lock');
-		lock.antialiasing = ClientPrefs.globalAntialiasing;
+		lock.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		add(lock);
 		
 		missingFileText = new FlxText(0, 0, FlxG.width, "");
-		missingFileText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missingFileText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missingFileText.borderSize = 2;
 		missingFileText.visible = false;
 		add(missingFileText); 
@@ -92,7 +90,7 @@ class WeekEditorState extends MusicBeatState
 		var charArray:Array<String> = weekFile.weekCharacters;
 		for (char in 0...3)
 		{
-			var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
+			var weekCharacterThing:funkin.utility.MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
 			weekCharacterThing.y += 70;
 			grpWeekCharacters.add(weekCharacterThing);
 		}
@@ -101,13 +99,13 @@ class WeekEditorState extends MusicBeatState
 		add(bgSprite);
 		add(grpWeekCharacters);
 
-		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 435).loadGraphic(Paths.image('Menu_Tracks'));
-		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 435).loadGraphic(funkin.utility.Paths.image('Menu_Tracks'));
+		tracksSprite.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		add(tracksSprite);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
 		txtTracklist.alignment = CENTER;
-		txtTracklist.font = Paths.font("vcr.ttf");
+		txtTracklist.font = funkin.utility.Paths.font("vcr.ttf");
 		txtTracklist.color = 0xFFe55777;
 		add(txtTracklist);
 		add(txtWeekTitle);
@@ -146,7 +144,7 @@ class WeekEditorState extends MusicBeatState
 		add(loadWeekButton);
 		
 		var freeplayButton:FlxButton = new FlxButton(0, 650, "Freeplay", function() {
-			MusicBeatState.switchState(new WeekEditorFreeplayState(weekFile));
+			funkin.utility.MusicBeatState.switchState(new WeekEditorFreeplay(weekFile));
 			
 		});
 		freeplayButton.screenCenter(X);
@@ -334,9 +332,9 @@ class WeekEditorState extends MusicBeatState
 
 		var isMissing:Bool = true;
 		if(assetName != null && assetName.length > 0) {
-			if( #if MODS_ALLOWED FileSystem.exists(Paths.modsImages('menubackgrounds/menu_' + assetName)) || #end
-			Assets.exists(Paths.getPath('images/menubackgrounds/menu_' + assetName + '.png', IMAGE), IMAGE)) {
-				bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
+			if( #if MODS_ALLOWED FileSystem.exists(funkin.utility.Paths.modsImages('menubackgrounds/menu_' + assetName)) || #end
+			Assets.exists(funkin.utility.Paths.getPath('images/menubackgrounds/menu_' + assetName + '.png', IMAGE), IMAGE)) {
+				bgSprite.loadGraphic(funkin.utility.Paths.image('menubackgrounds/menu_' + assetName));
 				isMissing = false;
 			}
 		}
@@ -353,9 +351,9 @@ class WeekEditorState extends MusicBeatState
 		
 		var isMissing:Bool = true;
 		if(assetName != null && assetName.length > 0) {
-			if( #if MODS_ALLOWED FileSystem.exists(Paths.modsImages('storymenu/' + assetName)) || #end
-			Assets.exists(Paths.getPath('images/storymenu/' + assetName + '.png', IMAGE), IMAGE)) {
-				weekThing.loadGraphic(Paths.image('storymenu/' + assetName));
+			if( #if MODS_ALLOWED FileSystem.exists(funkin.utility.Paths.modsImages('storymenu/' + assetName)) || #end
+			Assets.exists(funkin.utility.Paths.getPath('images/storymenu/' + assetName + '.png', IMAGE), IMAGE)) {
+				weekThing.loadGraphic(funkin.utility.Paths.image('storymenu/' + assetName));
 				isMissing = false;
 			}
 		}
@@ -444,12 +442,12 @@ class WeekEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
+				FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'));
 			}
 		}
 
@@ -580,41 +578,41 @@ class WeekEditorState extends MusicBeatState
 	}
 }
 
-class WeekEditorFreeplayState extends MusicBeatState
+class WeekEditorFreeplay extends funkin.utility.MusicBeatState
 {
 	var weekFile:WeekFile = null;
 	public function new(weekFile:WeekFile = null)
 	{
 		super();
-		this.weekFile = WeekData.createWeekFile();
+		this.weekFile = funkin.utility.WeekData.createWeekFile();
 		if(weekFile != null) this.weekFile = weekFile;
 	}
 
 	var bg:FlxSprite;
 	private var grpSongs:FlxTypedGroup<Alphabet>;
-	private var iconArray:Array<HealthIcon> = [];
+	private var iconArray:Array<funkin.utility.HealthIcon> = [];
 
 	var curSelected = 0;
 
 	override function create() {
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg = new FlxSprite().loadGraphic(funkin.utility.Paths.image('menuDesat'));
+		bg.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 
 		bg.color = FlxColor.WHITE;
 		add(bg);
 
-		grpSongs = new FlxTypedGroup<Alphabet>();
+		grpSongs = new FlxTypedGroup<funkin.utility.Alphabet>();
 		add(grpSongs);
 
 		for (i in 0...weekFile.songs.length)
 		{
-			var songText:Alphabet = new Alphabet(90, 320, weekFile.songs[i][0], true);
+			var songText:funkin.utility.Alphabet = new Alphabet(90, 320, weekFile.songs[i][0], true);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
 			songText.snapToPosition();
 
-			var icon:HealthIcon = new HealthIcon(weekFile.songs[i][1]);
+			var icon:funkin.utility.HealthIcon = new HealthIcon(weekFile.songs[i][1]);
 			icon.sprTracker = songText;
 
 			// using a FlxGroup is too much fuss!
@@ -652,21 +650,21 @@ class WeekEditorFreeplayState extends MusicBeatState
 		add(blackBlack);
 
 		var loadWeekButton:FlxButton = new FlxButton(0, 685, "Load Week", function() {
-			WeekEditorState.loadWeek();
+			funkin.states.editors.WeekEditor.loadWeek();
 		});
 		loadWeekButton.screenCenter(X);
 		loadWeekButton.x -= 120;
 		add(loadWeekButton);
 		
 		var storyModeButton:FlxButton = new FlxButton(0, 685, "Story Mode", function() {
-			MusicBeatState.switchState(new WeekEditorState(weekFile));
+			funkin.utility.MusicBeatState.switchState(new funkin.states.editors.WeekEditor(weekFile));
 			
 		});
 		storyModeButton.screenCenter(X);
 		add(storyModeButton);
 	
 		var saveWeekButton:FlxButton = new FlxButton(0, 685, "Save Week", function() {
-			WeekEditorState.saveWeek(weekFile);
+			funkin.states.editors.WeekEditor.saveWeek(weekFile);
 		});
 		saveWeekButton.screenCenter(X);
 		saveWeekButton.x += 120;
@@ -750,7 +748,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 	}
 
 	function changeSelection(change:Int = 0) {
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;
 
@@ -790,12 +788,12 @@ class WeekEditorFreeplayState extends MusicBeatState
 	}
 
 	override function update(elapsed:Float) {
-		if(WeekEditorState.loadedWeek != null) {
+		if(funkin.states.editors.WeekEditor.loadedWeek != null) {
 			super.update(elapsed);
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new WeekEditorFreeplayState(WeekEditorState.loadedWeek));
-			WeekEditorState.loadedWeek = null;
+			funkin.utility.MusicBeatState.switchState(new funkin.states.editors.WeekEditorFreeplay(funkin.states.editors.WeekEditor.loadedWeek));
+			funkin.states.editors.WeekEditor.loadedWeek = null;
 			return;
 		}
 		
@@ -807,12 +805,12 @@ class WeekEditorFreeplayState extends MusicBeatState
 				iconInputText.hasFocus = false;
 			}
 		} else {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
+				FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'));
 			}
 
 			if(controls.UI_UP_P) changeSelection(-1);

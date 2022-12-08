@@ -11,7 +11,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 
-class FlashingState extends MusicBeatState
+class FlashingWarning extends funkin.utility.MusicBeatState
 {
 	public static var leftState:Bool = false;
 
@@ -44,19 +44,19 @@ class FlashingState extends MusicBeatState
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
 				if(!back) {
-					ClientPrefs.flashing = false;
-					ClientPrefs.saveSettings();
-					FlxG.sound.play(Paths.sound('confirmMenu'));
+					funkin.utility.Preferences.flashing = false;
+					funkin.utility.Preferences.saveSettings();
+					FlxG.sound.play(funkin.utility.Paths.sound('confirmMenu'));
 					FlxFlicker.flicker(warnText, 1, 0.1, false, true, function(flk:FlxFlicker) {
 						new FlxTimer().start(0.5, function (tmr:FlxTimer) {
-							MusicBeatState.switchState(new TitleState());
+							funkin.utility.MusicBeatState.switchState(new funkin.states.menus.TitleMenu());
 						});
 					});
 				} else {
-					FlxG.sound.play(Paths.sound('cancelMenu'));
+					FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'));
 					FlxTween.tween(warnText, {alpha: 0}, 1, {
 						onComplete: function (twn:FlxTween) {
-							MusicBeatState.switchState(new TitleState());
+							funkin.utility.MusicBeatState.switchState(new funkin.states.menus.TitleMenu());
 						}
 					});
 				}

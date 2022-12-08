@@ -1,8 +1,6 @@
 package funkin.states.editors;
 
-#if desktop
 import funkin.utility.Discord.DiscordClient;
-#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -29,14 +27,14 @@ import funkin.utility.DialogueBoxPsych;
 import flixel.FlxCamera;
 import flixel.group.FlxSpriteGroup;
 import lime.system.Clipboard;
-import funkin.Alphabet;
+import funkin.utility.Alphabet;
 #if sys
 import sys.io.File;
 #end
 
 using StringTools;
 
-class DialogueCharacterEditorState extends MusicBeatState
+class DialogueCharacterEditor extends funkin.utility.MusicBeatState
 {
 	var box:FlxSprite;
 	var daText:TypedAlphabet = null;
@@ -526,9 +524,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 		}
 
 		if(!blockInput && !animationDropDown.dropPanel.visible) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.SPACE && UI_mainbox.selected_tab_id == 'Character') {
 				character.playAnim(character.jsonFile.animations[curAnim].anim);
 				daText.resetDialogue();
@@ -673,7 +671,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
+				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
 				transitioning = true;
 			}

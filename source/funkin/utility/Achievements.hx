@@ -36,7 +36,7 @@ class Achievements {
 	public static function unlockAchievement(name:String):Void {
 		FlxG.log.add('Completed achievement "' + name +'"');
 		achievementsMap.set(name, true);
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+		FlxG.sound.play(funkin.utility.Paths.sound('confirmMenu'), 0.7);
 	}
 
 	public static function isAchievementUnlocked(name:String) {
@@ -74,7 +74,7 @@ class AttachedAchievement extends FlxSprite {
 		super(x, y);
 
 		changeAchievement(name);
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = funkin.utility.Preferences.globalAntialiasing;
 	}
 
 	public function changeAchievement(tag:String) {
@@ -84,9 +84,9 @@ class AttachedAchievement extends FlxSprite {
 
 	public function reloadAchievementImage() {
 		if(Achievements.isAchievementUnlocked(tag)) {
-			loadGraphic(Paths.image('achievements/' + tag));
+			loadGraphic(funkin.utility.Paths.image('achievements/' + tag));
 		} else {
-			loadGraphic(Paths.image('achievements/lockedachievement'));
+			loadGraphic(funkin.utility.Paths.image('achievements/lockedachievement'));
 		}
 		scale.set(0.7, 0.7);
 		updateHitbox();
@@ -106,7 +106,7 @@ class AchievementObject extends FlxSpriteGroup {
 	public function new(name:String, ?camera:FlxCamera = null)
 	{
 		super(x, y);
-		ClientPrefs.saveSettings();
+		funkin.utility.Preferences.saveSettings();
 
 		var id:Int = Achievements.getAchievementIndex(name);
 		var achievementBG:FlxSprite = new FlxSprite(60, 50).makeGraphic(420, 120, FlxColor.BLACK);
@@ -116,14 +116,14 @@ class AchievementObject extends FlxSpriteGroup {
 		achievementIcon.scrollFactor.set();
 		achievementIcon.setGraphicSize(Std.int(achievementIcon.width * (2 / 3)));
 		achievementIcon.updateHitbox();
-		achievementIcon.antialiasing = ClientPrefs.globalAntialiasing;
+		achievementIcon.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 
 		var achievementName:FlxText = new FlxText(achievementIcon.x + achievementIcon.width + 20, achievementIcon.y + 16, 280, Achievements.achievementsStuff[id][0], 16);
-		achievementName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
+		achievementName.setFormat(funkin.utility.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
 		achievementName.scrollFactor.set();
 
 		var achievementText:FlxText = new FlxText(achievementName.x, achievementName.y + 32, 280, Achievements.achievementsStuff[id][1], 16);
-		achievementText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
+		achievementText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
 		achievementText.scrollFactor.set();
 
 		add(achievementBG);

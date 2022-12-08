@@ -86,14 +86,14 @@ class TitleState extends funkin.utility.MusicBeatState
 
 	override public function create():Void
 	{
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
+		funkin.utility.Paths.clearStoredMemory();
+		funkin.utility.Paths.clearUnusedMemory();
 
 		#if LUA_ALLOWED
-		Paths.pushGlobalMods();
+		funkin.utility.Paths.pushGlobalMods();
 		#end
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
-		WeekData.loadTheFirstEnabledMod();
+		funkin.utility.WeekData.loadTheFirstEnabledMod();
 
 		//trace(path, FileSystem.exists(path));
 
@@ -118,7 +118,7 @@ class TitleState extends funkin.utility.MusicBeatState
 		FlxG.sound.volumeUpKeys = volumeUpKeys;
 		FlxG.keys.preventDefaultKeys = [TAB];
 
-		PlayerSettings.init();
+		funkin.utility.PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
@@ -129,17 +129,17 @@ class TitleState extends funkin.utility.MusicBeatState
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
-		ClientPrefs.loadPrefs();
+		funkin.utility.Preferences.loadPrefs();
 
 		#if CHECK_FOR_UPDATES
-		if(ClientPrefs.checkForUpdates && !closedState) {
+		if(funkin.utility.Preferences.checkForUpdates && !closedState) {
 			trace('checking for update');
 			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
 
 			http.onData = function (data:String)
 			{
 				updateVersion = data.split('\n')[0].trim();
-				var curVersion:String = MainMenuState.psychEngineVersion.trim();
+				var curVersion:String = funkin.states.menus.MainMenu.psychEngineVersion.trim();
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
 				if(updateVersion != curVersion) {
 					trace('versions arent matching!');
@@ -158,7 +158,7 @@ class TitleState extends funkin.utility.MusicBeatState
 		Highscore.load();
 
 		// IGNORE THIS!!!
-		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
+		titleJSON = Json.parse(funkin.utility.Paths.getTextFromFile('images/gfDanceTitle.json'));
 
 		#if TITLE_SCREEN_EASTER_EGG
 		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
@@ -192,19 +192,19 @@ class TitleState extends funkin.utility.MusicBeatState
 
 		if (FlxG.save.data.weekCompleted != null)
 		{
-			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
+			funkin.states.menus.StoryMenu.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		MusicBeatState.switchState(new FreeplayState());
+		funkin.utility.MusicBeatState.switchState(new funkin.states.menus.FreeplayMenu());
 		#elseif CHARTING
-		MusicBeatState.switchState(new ChartingState());
+		funkin.utility.MusicBeatState.switchState(new funkin.states.editors.Charter());
 		#else
-		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
+		if(FlxG.save.data.flashing == null && !funkin.states.warnings.FlashingWarning.leftState) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new FlashingState());
+			funkin.utility.MusicBeatState.switchState(new funkin.states.warnings.FlashingWarning());
 		} else {
 			if (!DiscordClient.isInitialized)
 			{
@@ -254,35 +254,35 @@ class TitleState extends funkin.utility.MusicBeatState
 			// https://github.com/HaxeFlixel/flixel-addons/pull/348
 
 			// var music:FlxSound = new FlxSound();
-			// music.loadStream(Paths.music('freakyMenu'));
+			// music.loadStream(funkin.utility.Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
 
 			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'), 0);
 			}
 		}
 
-		Conductor.changeBPM(titleJSON.bpm);
+		funkin.utility.Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
 
 		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none"){
-			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
+			bg.loadGraphic(funkin.utility.Paths.image(titleJSON.backgroundSprite));
 		}else{
 			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		}
 
-		// bg.antialiasing = ClientPrefs.globalAntialiasing;
+		// bg.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
 
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoBl.frames = funkin.utility.Paths.getSparrowAtlas('logoBumpin');
 
-		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
+		logoBl.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
@@ -299,19 +299,19 @@ class TitleState extends funkin.utility.MusicBeatState
 		{
 			#if TITLE_SCREEN_EASTER_EGG
 			case 'SHADOW':
-				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
+				gfDance.frames = funkin.utility.Paths.getSparrowAtlas('ShadowBump');
 				gfDance.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
 				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
 			case 'RIVER':
-				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
+				gfDance.frames = funkin.utility.Paths.getSparrowAtlas('RiverBump');
 				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 			case 'SHUBS':
-				gfDance.frames = Paths.getSparrowAtlas('ShubBump');
+				gfDance.frames = funkin.utility.Paths.getSparrowAtlas('ShubBump');
 				gfDance.animation.addByPrefix('danceLeft', 'Shub Title Bump', 24, false);
 				gfDance.animation.addByPrefix('danceRight', 'Shub Title Bump', 24, false);
 			case 'BBPANZU':
-				gfDance.frames = Paths.getSparrowAtlas('BBBump');
+				gfDance.frames = funkin.utility.Paths.getSparrowAtlas('BBBump');
 				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
 			#end
@@ -320,11 +320,11 @@ class TitleState extends funkin.utility.MusicBeatState
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-				gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
+				gfDance.frames = funkin.utility.Paths.getSparrowAtlas('gfDanceTitle');
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
-		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
+		gfDance.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 
 		add(gfDance);
 		gfDance.shader = swagShader.shader;
@@ -333,7 +333,7 @@ class TitleState extends funkin.utility.MusicBeatState
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if MODS_ALLOWED
-		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
+		var path = "mods/" + funkin.utility.Paths.currentModDirectory + "/images/titleEnter.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/titleEnter.png";
@@ -346,7 +346,7 @@ class TitleState extends funkin.utility.MusicBeatState
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 
-		titleText.frames = Paths.getSparrowAtlas('titleEnter');
+		titleText.frames = funkin.utility.Paths.getSparrowAtlas('titleEnter');
 		#end
 		var animFrames:Array<FlxFrame> = [];
 		@:privateAccess {
@@ -358,7 +358,7 @@ class TitleState extends funkin.utility.MusicBeatState
 			newTitle = true;
 			
 			titleText.animation.addByPrefix('idle', "ENTER IDLE", 24);
-			titleText.animation.addByPrefix('press', ClientPrefs.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
+			titleText.animation.addByPrefix('press', funkin.utility.Preferences.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
 		}
 		else {
 			newTitle = false;
@@ -367,15 +367,15 @@ class TitleState extends funkin.utility.MusicBeatState
 			titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		}
 		
-		titleText.antialiasing = ClientPrefs.globalAntialiasing;
+		titleText.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		// titleText.screenCenter(X);
 		add(titleText);
 
-		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
+		var logo:FlxSprite = new FlxSprite().loadGraphic(funkin.utility.Paths.image('logo'));
 		logo.screenCenter();
-		logo.antialiasing = ClientPrefs.globalAntialiasing;
+		logo.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		// add(logo);
 
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
@@ -387,7 +387,6 @@ class TitleState extends funkin.utility.MusicBeatState
 
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
-
 		credTextShit = new Alphabet(0, 0, "", true);
 		credTextShit.screenCenter();
 
@@ -395,13 +394,13 @@ class TitleState extends funkin.utility.MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
+		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(funkin.utility.Paths.image('newgrounds_logo'));
 		add(ngSpr);
 		ngSpr.visible = false;
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = ClientPrefs.globalAntialiasing;
+		ngSpr.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -415,7 +414,7 @@ class TitleState extends funkin.utility.MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
-		var fullText:String = Assets.getText(Paths.txt('introText'));
+		var fullText:String = Assets.getText(funkin.utility.Paths.txt('introText'));
 
 		var firstArray:Array<String> = fullText.split('\n');
 		var swagGoodArray:Array<Array<String>> = [];
@@ -451,7 +450,7 @@ class TitleState extends funkin.utility.MusicBeatState
 		}
 		
 		if (newTitle) {
-			titleTimer += CoolUtil.boundTo(elapsed, 0, 1);
+			titleTimer += funkin.utility.Utility.boundTo(elapsed, 0, 1);
 			if (titleTimer > 2) titleTimer -= 2;
 		}
 
@@ -478,8 +477,8 @@ class TitleState extends funkin.utility.MusicBeatState
 				
 				if(titleText != null) titleText.animation.play('press');
 
-				FlxG.camera.flash(ClientPrefs.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
-				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+				FlxG.camera.flash(funkin.utility.Preferences.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
+				FlxG.sound.play(funkin.utility.Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;
 				// FlxG.sound.music.stop();
@@ -487,13 +486,13 @@ class TitleState extends funkin.utility.MusicBeatState
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					if (mustUpdate) {
-						MusicBeatState.switchState(new OutdatedState());
+						funkin.utility.MusicBeatState.switchState(new funkin.states.warnings.OutdatedWarning());
 					} else {
-						MusicBeatState.switchState(new MainMenuState());
+						funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MainMenu());
 					}
 					closedState = true;
 				});
-				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
+				// FlxG.sound.play(funkin.utility.Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
@@ -517,7 +516,7 @@ class TitleState extends funkin.utility.MusicBeatState
 								FlxG.save.data.psychDevsEasterEgg = word;
 							FlxG.save.flush();
 
-							FlxG.sound.play(Paths.sound('ToggleJingle'));
+							FlxG.sound.play(funkin.utility.Paths.sound('ToggleJingle'));
 
 							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 							black.alpha = 0;
@@ -527,13 +526,13 @@ class TitleState extends funkin.utility.MusicBeatState
 								function(twn:FlxTween) {
 									FlxTransitionableState.skipNextTransIn = true;
 									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState());
+									funkin.utility.MusicBeatState.switchState(new funkin.states.menus.TitleMenu());
 								}
 							});
 							FlxG.sound.music.fadeOut();
-							if(FreeplayState.vocals != null)
+							if(funkin.states.menus.FreeplayMenu.vocals != null)
 							{
-								FreeplayState.vocals.fadeOut();
+								funkin.states.menus.FreeplayMenu.vocals.fadeOut();
 							}
 							closedState = true;
 							transitioning = true;
@@ -565,7 +564,7 @@ class TitleState extends funkin.utility.MusicBeatState
 	{
 		for (i in 0...textArray.length)
 		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
+			var money:funkin.utility.Alphabet = new Alphabet(0, 0, textArray[i], true);
 			money.screenCenter(X);
 			money.y += (i * 60) + 200 + offset;
 			if(credGroup != null && textGroup != null) {
@@ -578,7 +577,7 @@ class TitleState extends funkin.utility.MusicBeatState
 	function addMoreText(text:String, ?offset:Float = 0)
 	{
 		if(textGroup != null && credGroup != null) {
-			var coolText:Alphabet = new Alphabet(0, 0, text, true);
+			var coolText:funkin.utility.Alphabet = new Alphabet(0, 0, text, true);
 			coolText.screenCenter(X);
 			coolText.y += (textGroup.length * 60) + 200 + offset;
 			credGroup.add(coolText);
@@ -618,7 +617,7 @@ class TitleState extends funkin.utility.MusicBeatState
 			{
 				case 1:
 					//FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+					FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
@@ -701,13 +700,13 @@ class TitleState extends funkin.utility.MusicBeatState
 				switch(easteregg)
 				{
 					case 'RIVER':
-						sound = FlxG.sound.play(Paths.sound('JingleRiver'));
+						sound = FlxG.sound.play(funkin.utility.Paths.sound('JingleRiver'));
 					case 'SHUBS':
-						sound = FlxG.sound.play(Paths.sound('JingleShubs'));
+						sound = FlxG.sound.play(funkin.utility.Paths.sound('JingleShubs'));
 					case 'SHADOW':
-						FlxG.sound.play(Paths.sound('JingleShadow'));
+						FlxG.sound.play(funkin.utility.Paths.sound('JingleShadow'));
 					case 'BBPANZU':
-						sound = FlxG.sound.play(Paths.sound('JingleBB'));
+						sound = FlxG.sound.play(funkin.utility.Paths.sound('JingleBB'));
 
 					default: //Go back to normal ugly ass boring GF
 						remove(ngSpr);
@@ -716,7 +715,7 @@ class TitleState extends funkin.utility.MusicBeatState
 						skippedIntro = true;
 						playJingle = false;
 
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						return;
 				}
@@ -738,7 +737,7 @@ class TitleState extends funkin.utility.MusicBeatState
 					remove(credGroup);
 					FlxG.camera.flash(FlxColor.WHITE, 3);
 					sound.onComplete = function() {
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
 					};
@@ -758,9 +757,9 @@ class TitleState extends funkin.utility.MusicBeatState
 				if(easteregg == 'SHADOW')
 				{
 					FlxG.sound.music.fadeOut();
-					if(FreeplayState.vocals != null)
+					if(funkin.states.menus.FreeplayMenu.vocals != null)
 					{
-						FreeplayState.vocals.fadeOut();
+						funkin.states.menus.FreeplayMenu.vocals.fadeOut();
 					}
 				}
 				#end

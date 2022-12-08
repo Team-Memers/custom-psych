@@ -2,6 +2,7 @@ package funkin.utility;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import funkin.utility.Paths;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
@@ -37,7 +38,7 @@ class MenuCharacter extends FlxSprite
 		if(character == this.character) return;
 
 		this.character = character;
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		visible = true;
 
 		var dontPlayAnim:Bool = false;

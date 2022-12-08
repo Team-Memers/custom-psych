@@ -7,7 +7,7 @@ import flixel.util.FlxColor;
 
 using StringTools;
 
-class ResetScoreSubState extends MusicBeatSubstate
+class ResetScoreMenu extends funkin.utility.MusicBeatSubstate
 {
 	var bg:FlxSprite;
 	var alphabetArray:Array<Alphabet> = [];
@@ -31,9 +31,9 @@ class ResetScoreSubState extends MusicBeatSubstate
 
 		var name:String = song;
 		if(week > -1) {
-			name = WeekData.weeksLoaded.get(WeekData.weeksList[week]).weekName;
+			name = funkin.utility.WeekData.weeksLoaded.get(funkin.utility.WeekData.weeksList[week]).weekName;
 		}
-		name += ' (' + CoolUtil.difficulties[difficulty] + ')?';
+		name += ' (' + funkin.utility.Utility.difficulties[difficulty] + ')?';
 
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;
@@ -41,12 +41,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 		add(bg);
 
 		var tooLong:Float = (name.length > 18) ? 0.8 : 1; //Fucking Winter Horrorland
-		var text:Alphabet = new Alphabet(0, 180, "Reset the score of", true);
+		var text:funkin.utility.Alphabet = new Alphabet(0, 180, "Reset the score of", true);
 		text.screenCenter(X);
 		alphabetArray.push(text);
 		text.alpha = 0;
 		add(text);
-		var text:Alphabet = new Alphabet(0, text.y + 90, name, true);
+		var text:funkin.utility.Alphabet = new Alphabet(0, text.y + 90, name, true);
 		text.scaleX = tooLong;
 		text.screenCenter(X);
 		if(week == -1) text.x += 60 * tooLong;
@@ -54,7 +54,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		text.alpha = 0;
 		add(text);
 		if(week == -1) {
-			icon = new HealthIcon(character);
+			icon = new funkin.utility.HealthIcon(character);
 			icon.setGraphicSize(Std.int(icon.width * tooLong));
 			icon.updateHitbox();
 			icon.setPosition(text.x - icon.width + (10 * tooLong), text.y - 30);
@@ -85,22 +85,22 @@ class ResetScoreSubState extends MusicBeatSubstate
 		if(week == -1) icon.alpha += elapsed * 2.5;
 
 		if(controls.UI_LEFT_P || controls.UI_RIGHT_P) {
-			FlxG.sound.play(Paths.sound('scrollMenu'), 1);
+			FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 1);
 			onYes = !onYes;
 			updateOptions();
 		}
 		if(controls.BACK) {
-			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'), 1);
 			close();
 		} else if(controls.ACCEPT) {
 			if(onYes) {
 				if(week == -1) {
-					Highscore.resetSong(song, difficulty);
+					funkin.utility.Highscore.resetSong(song, difficulty);
 				} else {
-					Highscore.resetWeek(WeekData.weeksList[week], difficulty);
+					funkin.utility.Highscore.resetWeek(funkin.utility.WeekData.weeksList[week], difficulty);
 				}
 			}
-			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'), 1);
 			close();
 		}
 		super.update(elapsed);

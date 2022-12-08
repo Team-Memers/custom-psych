@@ -80,10 +80,10 @@ class DialogueCharacter extends FlxSprite
 		this.curCharacter = character;
 
 		reloadCharacterJson(character);
-		frames = Paths.getSparrowAtlas('dialogue/' + jsonFile.image);
+		frames = funkin.utility.Paths.getSparrowAtlas('dialogue/' + jsonFile.image);
 		reloadAnimations();
 
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		if(jsonFile.no_antialiasing == true) antialiasing = false;
 	}
 
@@ -92,18 +92,18 @@ class DialogueCharacter extends FlxSprite
 		var rawJson = null;
 
 		#if MODS_ALLOWED
-		var path:String = Paths.modFolders(characterPath);
+		var path:String = funkin.utility.Paths.modFolders(characterPath);
 		if (!FileSystem.exists(path)) {
-			path = Paths.getPreloadPath(characterPath);
+			path = funkin.utility.Paths.getPreloadPath(characterPath);
 		}
 
 		if(!FileSystem.exists(path)) {
-			path = Paths.getPreloadPath('images/dialogue/' + DEFAULT_CHARACTER + '.json');
+			path = funkin.utility.Paths.getPreloadPath('images/dialogue/' + DEFAULT_CHARACTER + '.json');
 		}
 		rawJson = File.getContent(path);
 
 		#else
-		var path:String = Paths.getPreloadPath(characterPath);
+		var path:String = funkin.utility.Paths.getPreloadPath(characterPath);
 		rawJson = Assets.getText(path);
 		#end
 		
@@ -190,7 +190,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		super();
 
 		if(song != null && song != '') {
-			FlxG.sound.playMusic(Paths.music(song), 0);
+			FlxG.sound.playMusic(funkin.utility.Paths.music(song), 0);
 			FlxG.sound.music.fadeIn(2, 0, 1);
 		}
 		
@@ -206,7 +206,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		box = new FlxSprite(70, 370);
 		box.frames = Paths.getSparrowAtlas('speech_bubble');
 		box.scrollFactor.set();
-		box.antialiasing = ClientPrefs.globalAntialiasing;
+		box.antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		box.animation.addByPrefix('normal', 'speech bubble normal', 24);
 		box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 		box.animation.addByPrefix('angry', 'AHH speech bubble', 24);
@@ -303,7 +303,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 			bgFade.alpha += 0.5 * elapsed;
 			if(bgFade.alpha > 0.5) bgFade.alpha = 0.5;
 
-			if(PlayerSettings.player1.controls.ACCEPT) {
+			if(funkin.utility.PlayerSettings.player1.controls.ACCEPT) {
 				if(!daText.finishedText) {
 					daText.finishText();
 					if(skipDialogueThing != null) {
@@ -334,7 +334,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 				} else {
 					startNextDialog();
 				}
-				FlxG.sound.play(Paths.sound(closeSound), closeVolume);
+				FlxG.sound.play(funkin.utility.Paths.sound(closeSound), closeVolume);
 			} else if(daText.finishedText) {
 				var char:DialogueCharacter = arrayCharacters[lastCharacter];
 				if(char != null && char.animation.curAnim != null && char.animationIsLoop() && char.animation.finished) {

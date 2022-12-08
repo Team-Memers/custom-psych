@@ -43,7 +43,7 @@ using StringTools;
 /**
 	*DEBUG MODE
  */
-class CharacterEditorState extends MusicBeatState
+class CharacterEditor extends funkin.utility.MusicBeatState
 {
 	var char:Character;
 	var ghostChar:Character;
@@ -247,7 +247,7 @@ class CharacterEditorState extends MusicBeatState
 
 			var widShit = Std.int(bgSky.width * 6);
 			var bgTrees:FlxSprite = new FlxSprite(repositionShit - 380, -800 - playerYDifference);
-			bgTrees.frames = Paths.getPackerAtlas('weeb/weebTrees');
+			bgTrees.frames = funkin.utility.Paths.getPackerAtlas('weeb/weebTrees');
 			bgTrees.animation.add('treeLoop', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 12);
 			bgTrees.animation.play('treeLoop');
 			bgTrees.scrollFactor.set(0.85, 0.85);
@@ -843,12 +843,6 @@ class CharacterEditorState extends MusicBeatState
 			char.frames = Paths.getSparrowAtlas(char.imageFile);
 		}
 
-
-
-
-
-
-
 		if(char.animationsArray != null && char.animationsArray.length > 0) {
 			for (anim in char.animationsArray) {
 				var animAnim:String = '' + anim.anim;
@@ -1048,16 +1042,21 @@ class CharacterEditorState extends MusicBeatState
 
 		#if MODS_ALLOWED
 		characterList = [];
-		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
-		for(mod in Paths.getGlobalMods())
-			directories.push(Paths.mods(mod + '/characters/'));
+		var directories:Array<String> = [funkin.utility.Paths.mods('characters/'), funkin.utility.Paths.mods(funkin.utility.Paths.currentModDirectory + '/characters/'), funkin.utility.Paths.getPreloadPath('characters/')];
+		
+		for(mod in funkin.utility.Paths.getGlobalMods())
+			directories.push(funkin.utility.Paths.mods(mod + '/characters/'));
+
 		for (i in 0...directories.length) {
 			var directory:String = directories[i];
+			
 			if(FileSystem.exists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
+
 					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
+
 						if(!charsLoaded.exists(charToCheck)) {
 							characterList.push(charToCheck);
 							charsLoaded.set(charToCheck, true);
@@ -1112,17 +1111,17 @@ class CharacterEditorState extends MusicBeatState
 				return;
 			}
 		}
-		FlxG.sound.muteKeys = TitleState.muteKeys;
-		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+		FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
+		FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
 
 		if(!charDropDown.dropPanel.visible) {
 			if (FlxG.keys.justPressed.ESCAPE) {
 				if(goToPlayState) {
-					MusicBeatState.switchState(new PlayState());
+					MusicBeatState.switchState(new funkin.states.PlayState());
 				} else {
-					MusicBeatState.switchState(new editors.MasterEditorMenu());
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
+					FlxG.sound.playMusic(funkin.utility.Paths.music('freakyMenu'));
 				}
 				FlxG.mouse.visible = false;
 				return;
@@ -1190,8 +1189,6 @@ class CharacterEditorState extends MusicBeatState
 				}
 
 				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
-
-
 
 				for (i in 0...controlArray.length) {
 					if(controlArray[i]) {

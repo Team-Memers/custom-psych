@@ -121,11 +121,11 @@ class Note extends FlxSprite
 
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
+		if (noteData > -1 && noteData < funkin.utility.Preferences.arrowHSV.length)
 		{
-			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
-			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
-			colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+			colorSwap.hue = funkin.utility.Preferences.arrowHSV[noteData][0] / 360;
+			colorSwap.saturation = funkin.utility.Preferences.arrowHSV[noteData][1] / 100;
+			colorSwap.brightness = funkin.utility.Preferences.arrowHSV[noteData][2] / 100;
 		}
 
 		if(noteData > -1 && noteType != value) {
@@ -172,11 +172,11 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (funkin.utility.Preferences.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
-		if(!inEditor) this.strumTime += ClientPrefs.noteOffset;
+		if(!inEditor) this.strumTime += funkin.utility.Preferences.noteOffset;
 
 		this.noteData = noteData;
 
@@ -203,7 +203,7 @@ class Note extends FlxSprite
 			alpha = 0.6;
 			multAlpha = 0.6;
 			hitsoundDisabled = true;
-			if(ClientPrefs.downScroll) flipY = true;
+			if(funkin.utility.Preferences.downScroll) flipY = true;
 
 			offsetX += width / 2;
 			copyAngle = false;
@@ -221,13 +221,13 @@ class Note extends FlxSprite
 			{
 				prevNote.animation.play(colArray[prevNote.noteData % 4] + 'hold');
 
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05;
+				prevNote.scale.y *= funkin.utility.Conductor.stepCrochet / 100 * 1.05;
 				if(PlayState.instance != null)
 				{
 					prevNote.scale.y *= PlayState.instance.songSpeed;
 				}
 
-				if(PlayState.isPixelStage) {
+				if(funkin.states.PlayState.isPixelStage) {
 					prevNote.scale.y *= 1.19;
 					prevNote.scale.y *= (6 / height); //Auto adjust note size
 				}
@@ -235,8 +235,8 @@ class Note extends FlxSprite
 				// prevNote.setGraphicSize();
 			}
 
-			if(PlayState.isPixelStage) {
-				scale.y *= PlayState.daPixelZoom;
+			if(funkin.states.PlayState.isPixelStage) {
+				scale.y *= funkin.states.PlayState.daPixelZoom;
 				updateHitbox();
 			}
 		} else if(!isSustainNote) {
@@ -273,24 +273,24 @@ class Note extends FlxSprite
 		var blahblah:String = arraySkin.join('/');
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
-				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
+				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah + 'ENDS'));
 				width = width / 4;
 				height = height / 2;
 				originalHeightForCalcs = height;
-				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
+				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
-				loadGraphic(Paths.image('pixelUI/' + blahblah));
+				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah));
 				width = width / 4;
 				height = height / 5;
-				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
+				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
 			}
-			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * funkin.states.PlayState.daPixelZoom));
 			loadPixelNoteAnims();
 			antialiasing = false;
 
 			if(isSustainNote) {
 				offsetX += lastNoteOffsetXForPixelAutoAdjusting;
-				lastNoteOffsetXForPixelAutoAdjusting = (width - 7) * (PlayState.daPixelZoom / 2);
+				lastNoteOffsetXForPixelAutoAdjusting = (width - 7) * (funkin.states.PlayState.daPixelZoom / 2);
 				offsetX -= lastNoteOffsetXForPixelAutoAdjusting;
 
 				/*if(animName != null && !animName.endsWith('end'))
@@ -301,9 +301,9 @@ class Note extends FlxSprite
 				}*/
 			}
 		} else {
-			frames = Paths.getSparrowAtlas(blahblah);
+			frames = funkin.utility.Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = funkin.utility.Preferences.globalAntialiasing;
 		}
 		if(isSustainNote) {
 			scale.y = lastScaleY;
@@ -314,7 +314,7 @@ class Note extends FlxSprite
 			animation.play(animName, true);
 
 		if(inEditor) {
-			setGraphicSize(ChartingState.GRID_SIZE, ChartingState.GRID_SIZE);
+			setGraphicSize(funkin.states.editors.Charter.GRID_SIZE, funkin.states.editors.Charter.GRID_SIZE);
 			updateHitbox();
 		}
 	}
@@ -349,22 +349,22 @@ class Note extends FlxSprite
 		if (mustPress)
 		{
 			// ok river
-			if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * lateHitMult)
-				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult))
+			if (strumTime > funkin.utility.Conductor.songPosition - (funkin.utility.Conductor.safeZoneOffset * lateHitMult)
+				&& strumTime < funkin.utility.Conductor.songPosition + (funkin.utility.Conductor.safeZoneOffset * earlyHitMult))
 				canBeHit = true;
 			else
 				canBeHit = false;
 
-			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
+			if (strumTime < funkin.utility.Conductor.songPosition - funkin.utility.Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
 		}
 		else
 		{
 			canBeHit = false;
 
-			if (strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult))
+			if (strumTime < funkin.utility.Conductor.songPosition + (funkin.utility.Conductor.safeZoneOffset * earlyHitMult))
 			{
-				if((isSustainNote && prevNote.wasGoodHit) || strumTime <= Conductor.songPosition)
+				if((isSustainNote && prevNote.wasGoodHit) || strumTime <= funkin.utility.Conductor.songPosition)
 					wasGoodHit = true;
 			}
 		}
