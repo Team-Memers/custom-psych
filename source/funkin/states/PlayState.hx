@@ -60,6 +60,9 @@ import funkin.utility.DialogueBoxPsych;
 import funkin.utility.Conductor.Rating;
 import funkin.states.menus.MainMenu;
 import funkin.utility.gameplay.Character;
+import funkin.utility.Preferences;
+import funkin.utility.gameplay.Boyfriend;
+import funkin.utility.gameplay.Character;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;

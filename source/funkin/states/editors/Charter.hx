@@ -44,6 +44,9 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
+import funkin.states.PlayState;
+import funkin.utility.gameplay.Note;
+import funkin.utility.gameplay.StrumNote;
 
 using StringTools;
 #if sys

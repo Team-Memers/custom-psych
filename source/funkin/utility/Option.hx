@@ -20,8 +20,6 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
-import funkin.utility.Alphabet;
-import funkin.utility.Preferences;
 
 using StringTools;
 
@@ -38,7 +36,7 @@ class Option
 	public var showBoyfriend:Bool = false;
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
 
-	private var variable:String = null; //Variable from Preferences.hx
+	private var variable:String = null; //Variable from ClientPrefs.hx
 	public var defaultValue:Dynamic = null;
 
 	public var curOption:Int = 0; //Don't change this
@@ -111,11 +109,11 @@ class Option
 
 	public function getValue():Dynamic
 	{
-		return Reflect.getProperty(Preferences, variable);
+		return Reflect.getProperty(ClientPrefs, variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		Reflect.setProperty(Preferences, variable, value);
+		Reflect.setProperty(ClientPrefs, variable, value);
 	}
 
 	public function setChild(child:Alphabet)

@@ -33,7 +33,6 @@ import funkin.utility.gameplay.Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
-import funkin.utility.CustomDropDownMenu;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -415,7 +414,7 @@ class CharacterEditorState extends MusicBeatState
 			"scale": 1
 		}';
 
-	var charDropDown:CustomDropDownMenu;
+	var charDropDown:FlxUIDropDownMenuCustom;
 	function addSettingsUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Settings";

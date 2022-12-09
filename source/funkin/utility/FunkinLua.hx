@@ -33,6 +33,11 @@ import flixel.math.FlxMath;
 import flixel.util.FlxSave;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.system.FlxAssets.FlxShader;
+import funkin.states.PlayState;
+import funkin.utility.Preferences;
+import funkin.utility.Conductor;
+import funkin.utility.Paths;
+import funkin.utility.MusicBeatState;
 
 #if (!flash && sys)
 import flixel.addons.display.FlxRuntimeShader;
@@ -125,7 +130,7 @@ class FunkinLua {
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
 
-		var difficultyName:String = Utility.difficulties[PlayState.storyDifficulty];
+		var difficultyName:String = CoolUtil.difficulties[PlayState.storyDifficulty];
 		set('difficultyName', difficultyName);
 		set('difficultyPath', Paths.formatToSongPath(difficultyName));
 		set('weekRaw', PlayState.storyWeek);
@@ -153,7 +158,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', funkin.states.menus.MainMenu.psychEngineVersion.trim());
+		set('version', MainMenuState.psychEngineVersion.trim());
 
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -1510,10 +1515,10 @@ class FunkinLua {
 			Paths.returnGraphic(name); who the fuck uses precacheImage
 		});*/
 		Lua_helper.add_callback(lua, "precacheSound", function(name:String) {
-			Utility.precacheSound(name);
+			CoolUtil.precacheSound(name);
 		});
 		Lua_helper.add_callback(lua, "precacheMusic", function(name:String) {
-			Utility.precacheMusic(name);
+			CoolUtil.precacheMusic(name);
 		});
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
 			var value1:String = arg1;
@@ -1550,9 +1555,9 @@ class FunkinLua {
 				CustomFadeTransition.nextCamera = null;
 
 			if(PlayState.isStoryMode)
-				MusicBeatState.switchState(new funkin.states.menus.StoryMenu());
+				MusicBeatState.switchState(new StoryMenuState());
 			else
-				MusicBeatState.switchState(new funkin.states.menus.FreeplayMenu());
+				MusicBeatState.switchState(new FreeplayState());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.changedDifficulty = false;
@@ -1874,7 +1879,7 @@ class FunkinLua {
 					{
 						if(PlayState.instance.isDead)
 						{
-							GameOverMenu.instance.insert(GameOverMenu.instance.members.indexOf(GameOverMenu.instance.boyfriend), shit);
+							GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), shit);
 						}
 						else
 						{
@@ -3276,7 +3281,7 @@ class FunkinLua {
 
 	public static inline function getInstance()
 	{
-		return PlayState.instance.isDead ? GameOverMenu.instance : PlayState.instance;
+		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
 }
 
@@ -3326,7 +3331,7 @@ class DebugLuaText extends FlxText
 	}
 }
 
-class CustomSubstate extends MusicBeatSubstate
+class CustomSubstate extends funkin.utility.MusicBeatSubstate
 {
 	public static var name:String = 'unnamed';
 	public static var instance:CustomSubstate;

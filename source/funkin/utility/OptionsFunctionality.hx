@@ -25,7 +25,7 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class OptionsFunctionality extends funkin.utility.MusicBeatSubState
+class BaseOptionsMenu extends MusicBeatSubstate
 {
 	private var curOption:Option = null;
 	private var curSelected:Int = 0;
