@@ -25,13 +25,13 @@ class Conductor
 	public static var offset:Float = 0;
 
 	//public static var safeFrames:Int = 10;
-	public static var safeZoneOffset:Float = (funkin.utility.Preferences.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
+	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public static function judgeNote(note:funkin.utility.gameplay.Note, diff:Float=0):Rating // die
+	public static function judgeNote(note:Note, diff:Float=0):Rating // die
 	{
-		var data:Array<Rating> = funkin.states.PlayState.instance.ratingsData; //shortening cuz fuck u
+		var data:Array<Rating> = PlayState.instance.ratingsData; //shortening cuz fuck u
 		for(i in 0...data.length-1) //skips last window (Shit)
 		{
 			if (diff <= data[i].hitWindow)
