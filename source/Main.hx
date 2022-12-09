@@ -13,13 +13,14 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
+import funkin.utility.Preferences;
 
 //crash handler stuff
 #if CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
-import Discord.DiscordClient;
+import funkin.utility.Discord.DiscordClient;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
@@ -83,7 +84,7 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 	
-		ClientPrefs.loadDefaultKeys();
+		Preferences.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
@@ -91,7 +92,7 @@ class Main extends Sprite
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
-			fpsVar.visible = ClientPrefs.showFPS;
+			fpsVar.visible = Preferences.showFPS;
 		}
 
 		FlxG.autoPause = false;
@@ -143,7 +144,7 @@ class Main extends Sprite
 			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: newVol}, 0.5);
 
 		// Conserve power by lowering draw framerate when unfocused
-		FlxG.updateFramerate = Std.int(ClientPrefs.framerate / 2);
+		FlxG.updateFramerate = Std.int(Preferences.framerate / 2);
 	}
 
 	function onWindowFocusIn()
@@ -162,7 +163,7 @@ class Main extends Sprite
 			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: oldVol}, 0.5);
 
 		// Bring framerate back when focused
-		FlxG.updateFramerate = ClientPrefs.framerate;
+		FlxG.updateFramerate = Preferences.framerate;
 	}
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
