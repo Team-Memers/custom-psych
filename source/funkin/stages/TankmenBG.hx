@@ -25,7 +25,7 @@ class TankmenBG extends FlxSprite
 		animation.addByPrefix('shot', 'John Shot ' + FlxG.random.int(1, 2), 24, false);
 		animation.play('run');
 		animation.curAnim.curFrame = FlxG.random.int(0, animation.curAnim.frames.length - 1);
-		antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		antialiasing = ClientPrefs.globalAntialiasing;
 
 		updateHitbox();
 		setGraphicSize(Std.int(0.8 * width));
@@ -50,7 +50,7 @@ class TankmenBG extends FlxSprite
 
 		if(animation.curAnim.name == "run")
 		{
-			var speed:Float = (funkin.utility.Conductor.songPosition - strumTime) * tankSpeed;
+			var speed:Float = (Conductor.songPosition - strumTime) * tankSpeed;
 			if(goingRight)
 				x = (0.02 * FlxG.width - endingOffset) + speed;
 			else

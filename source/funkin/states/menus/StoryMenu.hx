@@ -19,7 +19,7 @@ import funkin.utility.WeekData;
 
 using StringTools;
 
-class StoryMenu extends funkin.utility.MusicBeatState
+class StoryMenuState extends MusicBeatState
 {
 	public static var weekCompleted:Map<String, Bool> = new Map<String, Bool>();
 
@@ -36,7 +36,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 	var txtTracklist:FlxText;
 
 	var grpWeekText:FlxTypedGroup<MenuItem>;
-	var grpWeekCharacters:FlxTypedGroup<funkin.utility.MenuCharacter>;
+	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
 
 	var grpLocks:FlxTypedGroup<FlxSprite>;
 
@@ -45,16 +45,16 @@ class StoryMenu extends funkin.utility.MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
-	var loadedWeeks:Array<funkin.utility.WeekData> = [];
+	var loadedWeeks:Array<WeekData> = [];
 
 	override function create()
 	{
-		funkin.utility.Paths.clearStoredMemory();
-		funkin.utility.Paths.clearUnusedMemory();
+		Paths.clearStoredMemory();
+		Paths.clearUnusedMemory();
 
-		funkin.states.PlayState.isStoryMode = true;
-		funkin.utility.WeekData.reloadWeekFiles(true);
-		if(curWeek >= funkin.utility.WeekData.weeksList.length) curWeek = 0;
+		PlayState.isStoryMode = true;
+		WeekData.reloadWeekFiles(true);
+		if(curWeek >= WeekData.weeksList.length) curWeek = 0;
 		persistentUpdate = persistentDraw = true;
 
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
@@ -66,22 +66,22 @@ class StoryMenu extends funkin.utility.MusicBeatState
 
 		var rankText:FlxText = new FlxText(0, 10);
 		rankText.text = 'RANK: GREAT';
-		rankText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 32);
+		rankText.setFormat(Paths.font("vcr.ttf"), 32);
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
-		var ui_tex = funkin.utility.Paths.getSparrowAtlas('campaign_menu_UI_assets');
+		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
 		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
 
-		grpWeekText = new FlxTypedGroup<funkin.utility.MenuItem>();
+		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
 
 		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
 		add(blackBarThingie);
 
-		grpWeekCharacters = new FlxTypedGroup<funkin.utility.MenuCharacter>();
+		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 
 		grpLocks = new FlxTypedGroup<FlxSprite>();
 		add(grpLocks);
@@ -90,15 +90,15 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 
 		var num:Int = 0;
-		for (i in 0...funkin.utility.WeekData.weeksList.length)
+		for (i in 0...WeekData.weeksList.length)
 		{
-			var weekFile:funkin.utility.WeekData = funkin.utility.WeekData.weeksLoaded.get(funkin.utility.WeekData.weeksList[i]);
-			var isLocked:Bool = weekIsLocked(funkin.utility.WeekData.weeksList[i]);
+			var weekFile:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
+			var isLocked:Bool = weekIsLocked(WeekData.weeksList[i]);
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
 				loadedWeeks.push(weekFile);
-				funkin.utility.WeekData.setDirectoryFromWeek(weekFile);
-				var weekThing:funkin.utility.MenuItem = new MenuItem(0, bgSprite.y + 396, funkin.utility.WeekData.weeksList[i]);
+				WeekData.setDirectoryFromWeek(weekFile);
+				var weekThing:MenuItem = new MenuItem(0, bgSprite.y + 396, WeekData.weeksList[i]);
 				weekThing.y += ((weekThing.height + 20) * num);
 				weekThing.targetY = num;
 				grpWeekText.add(weekThing);
@@ -115,18 +115,18 @@ class StoryMenu extends funkin.utility.MusicBeatState
 					lock.animation.addByPrefix('lock', 'lock');
 					lock.animation.play('lock');
 					lock.ID = i;
-					lock.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+					lock.antialiasing = ClientPrefs.globalAntialiasing;
 					grpLocks.add(lock);
 				}
 				num++;
 			}
 		}
 
-		funkin.utility.WeekData.setDirectoryFromWeek(loadedWeeks[0]);
+		WeekData.setDirectoryFromWeek(loadedWeeks[0]);
 		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
 		for (char in 0...3)
 		{
-			var weekCharacterThing:funkin.utility.MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
+			var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
 			weekCharacterThing.y += 70;
 			grpWeekCharacters.add(weekCharacterThing);
 		}
@@ -139,18 +139,18 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
-		leftArrow.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		leftArrow.antialiasing = ClientPrefs.globalAntialiasing;
 		difficultySelectors.add(leftArrow);
 
-		funkin.utility.Utility.difficulties = funkin.utility.Utility.defaultDifficulties.copy();
+		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
 		if(lastDifficultyName == '')
 		{
-			lastDifficultyName = funkin.utility.Utility.defaultDifficulty;
+			lastDifficultyName = CoolUtil.defaultDifficulty;
 		}
-		curDifficulty = Math.round(Math.max(0, funkin.utility.Utility.defaultDifficulties.indexOf(lastDifficultyName)));
+		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
 		
 		sprDifficulty = new FlxSprite(0, leftArrow.y);
-		sprDifficulty.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		sprDifficulty.antialiasing = ClientPrefs.globalAntialiasing;
 		difficultySelectors.add(sprDifficulty);
 
 		rightArrow = new FlxSprite(leftArrow.x + 376, leftArrow.y);
@@ -158,15 +158,15 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
-		rightArrow.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		rightArrow.antialiasing = ClientPrefs.globalAntialiasing;
 		difficultySelectors.add(rightArrow);
 
 		add(bgYellow);
 		add(bgSprite);
 		add(grpWeekCharacters);
 
-		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 425).loadGraphic(funkin.utility.Paths.image('Menu_Tracks'));
-		tracksSprite.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 425).loadGraphic(Paths.image('Menu_Tracks'));
+		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
 		add(tracksSprite);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
@@ -193,7 +193,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 	override function update(elapsed:Float)
 	{
 		// scoreText.setFormat('VCR OSD Mono', 32);
-		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, funkin.utility.Preferences.boundTo(elapsed * 30, 0, 1)));
+		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 30, 0, 1)));
 		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
@@ -207,18 +207,18 @@ class StoryMenu extends funkin.utility.MusicBeatState
 			if (upP)
 			{
 				changeWeek(-1);
-				FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'));
+				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 
 			if (downP)
 			{
 				changeWeek(1);
-				FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'));
+				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 
 			if(FlxG.mouse.wheel != 0)
 			{
-				FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 0.4);
+				FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 				changeWeek(-FlxG.mouse.wheel);
 				changeDifficulty();
 			}
@@ -243,7 +243,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 			if(FlxG.keys.justPressed.CONTROL)
 			{
 				persistentUpdate = false;
-				openSubState(new GameplayChangers());
+				openSubState(new GameplayChangersSubstate());
 			}
 			else if(controls.RESET)
 			{
@@ -283,7 +283,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		{
 			if (stopspamming == false)
 			{
-				FlxG.sound.play(funkin.utility.Paths.sound('confirmMenu'));
+				FlxG.sound.play(Paths.sound('confirmMenu'));
 
 				grpWeekText.members[curWeek].startFlashing();
 
@@ -305,25 +305,25 @@ class StoryMenu extends funkin.utility.MusicBeatState
 			}
 
 			// Nevermind that's stupid lmao
-			funkin.states.PlayState.storyPlaylist = songArray;
-			funkin.states.PlayState.isStoryMode = true;
+			PlayState.storyPlaylist = songArray;
+			PlayState.isStoryMode = true;
 			selectedWeek = true;
 
 			var diffic = CoolUtil.getDifficultyFilePath(curDifficulty);
 			if(diffic == null) diffic = '';
 
-			funkin.states.PlayState.storyDifficulty = curDifficulty;
+			PlayState.storyDifficulty = curDifficulty;
 
-			funkin.states.PlayState.SONG = funkin.utility.Song.loadFromJson(funkin.states.PlayState.storyPlaylist[0].toLowerCase() + diffic, funkin.states.PlayState.storyPlaylist[0].toLowerCase());
-			funkin.states.PlayState.campaignScore = 0;
-			funkin.states.PlayState.campaignMisses = 0;
+			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+			PlayState.campaignScore = 0;
+			PlayState.campaignMisses = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				funkin.states.Loading.loadAndSwitchState(new funkin.states.PlayState(), true);
-				funkin.states.menus.FreeplayMenu.destroyFreeplayVocals();
+				LoadingState.loadAndSwitchState(new PlayState(), true);
+				FreeplayState.destroyFreeplayVocals();
 			});
 		} else {
-			FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'));
+			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 	}
 
@@ -333,14 +333,14 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = funkin.utility.Utility.difficulties.length-1;
-		if (curDifficulty >= funkin.utility.Utility.difficulties.length)
+			curDifficulty = CoolUtil.difficulties.length-1;
+		if (curDifficulty >= CoolUtil.difficulties.length)
 			curDifficulty = 0;
 
 		WeekData.setDirectoryFromWeek(loadedWeeks[curWeek]);
 
-		var diff:String = funkin.utility.Utility.difficulties[curDifficulty];
-		var newImage:FlxGraphic = funkin.utility.Paths.image('menudifficulties/' + funkin.utility.Paths.formatToSongPath(diff));
+		var diff:String = CoolUtil.difficulties[curDifficulty];
+		var newImage:FlxGraphic = Paths.image('menudifficulties/' + Paths.formatToSongPath(diff));
 		//trace(Paths.currentModDirectory + ', menudifficulties/' + Paths.formatToSongPath(diff));
 
 		if(sprDifficulty.graphic != newImage)
@@ -359,7 +359,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		}
 		lastDifficultyName = diff;
 
-		intendedScore = funkin.utility.Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
+		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
 	}
 
 	var lerpScore:Int = 0;
@@ -374,8 +374,8 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		if (curWeek < 0)
 			curWeek = loadedWeeks.length - 1;
 
-		var leWeek:funkin.utility.WeekData = loadedWeeks[curWeek];
-		funkin.utility.WeekData.setDirectoryFromWeek(leWeek);
+		var leWeek:WeekData = loadedWeeks[curWeek];
+		WeekData.setDirectoryFromWeek(leWeek);
 
 		var leName:String = leWeek.storyName;
 		txtWeekTitle.text = leName.toUpperCase();
@@ -401,10 +401,10 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		} else {
 			bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
 		}
-		funkin.states.PlayState.storyWeek = curWeek;
+		PlayState.storyWeek = curWeek;
 
-		funkin.utility.Utility.difficulties = funkin.utility.Utility.defaultDifficulties.copy();
-		var diffStr:String = funkin.utility.WeekData.getCurrentWeek().difficulties;
+		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
+		var diffStr:String = WeekData.getCurrentWeek().difficulties;
 		if(diffStr != null) diffStr = diffStr.trim(); //Fuck you HTML5
 		difficultySelectors.visible = unlocked;
 
@@ -424,20 +424,20 @@ class StoryMenu extends funkin.utility.MusicBeatState
 
 			if(diffs.length > 0 && diffs[0].length > 0)
 			{
-				funkin.utility.Utility.difficulties = diffs;
+				CoolUtil.difficulties = diffs;
 			}
 		}
 		
-		if(funkin.utility.Utility.difficulties.contains(funkin.utility.Utility.defaultDifficulty))
+		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
 		{
-			curDifficulty = Math.round(Math.max(0, funkin.utility.Utility.defaultDifficulties.indexOf(funkin.utility.Utility.defaultDifficulty)));
+			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
 		}
 		else
 		{
 			curDifficulty = 0;
 		}
 
-		var newPos:Int = funkin.utility.Utility.difficulties.indexOf(lastDifficultyName);
+		var newPos:Int = CoolUtil.difficulties.indexOf(lastDifficultyName);
 		//trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
 		if(newPos > -1)
 		{
@@ -447,7 +447,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 	}
 
 	function weekIsLocked(name:String):Bool {
-		var leWeek:WeekData = funkin.utility.WeekData.weeksLoaded.get(name);
+		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
 		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore)));
 	}
 
@@ -458,7 +458,7 @@ class StoryMenu extends funkin.utility.MusicBeatState
 			grpWeekCharacters.members[i].changeCharacter(weekArray[i]);
 		}
 
-		var leWeek:funkin.utility.WeekData = loadedWeeks[curWeek];
+		var leWeek:WeekData = loadedWeeks[curWeek];
 		var stringThing:Array<String> = [];
 		for (i in 0...leWeek.songs.length) {
 			stringThing.push(leWeek.songs[i][0]);
@@ -475,6 +475,6 @@ class StoryMenu extends funkin.utility.MusicBeatState
 		txtTracklist.screenCenter(X);
 		txtTracklist.x -= FlxG.width * 0.35;
 
-		intendedScore = funkin.utility.Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
+		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
 	}
 }

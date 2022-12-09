@@ -3,7 +3,7 @@ package funkin.utility;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 
-class AttachedText extends funkin.utility.Alphabet
+class AttachedText extends Alphabet
 {
 	public var offsetX:Float = 0;
 	public var offsetY:Float = 0;

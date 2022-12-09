@@ -22,7 +22,7 @@ import funkin.utility.FunkinLua;
 
 using StringTools;
 
-class StrippedPlayState extends funkin.utility.MusicBeatState
+class EditorPlayState extends MusicBeatState
 {
 	// Yes, this is mostly a copy of PlayState, it's kinda dumb to make a direct copy of it but... ehhh
 	private var strumLine:FlxSprite;
@@ -61,7 +61,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 
-	public static var instance:StrippedPlayState;
+	public static var instance:EditorPlayState;
 
 	override function create()
 	{
@@ -72,20 +72,20 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		FlxG.stage.application.window.title = 'FNF: Psych Engine - Playtesting ' + PlayState.SONG;
 		#end*/
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(funkin.utility.Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.color = FlxColor.GRAY;
 		add(bg);
 
 		keysArray = [
-			ClientPrefs.copyKey(funkin.utility.Preferences.keyBinds.get('note_left')),
-			ClientPrefs.copyKey(funkin.utility.Preferences.keyBinds.get('note_down')),
-			ClientPrefs.copyKey(funkin.utility.Preferences.keyBinds.get('note_up')),
-			ClientPrefs.copyKey(funkin.utility.Preferences.keyBinds.get('note_right'))
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
 		];
 		
-		strumLine = new FlxSprite(funkin.utility.Preferences.middleScroll ? funkin.states.PlayState.STRUM_X_MIDDLESCROLL : funkin.states.PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
-		if(funkin.utility.Preferences.downScroll) strumLine.y = FlxG.height - 150;
+		strumLine = new FlxSprite(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
+		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 		
 		comboGroup = new FlxTypedGroup<FlxSprite>();
@@ -111,17 +111,17 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.0;
 		
-		if (funkin.states.PlayState.SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(funkin.utility.Paths.voices(PlayState.SONG.song));
+		if (PlayState.SONG.needsVoices)
+			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 		else
 			vocals = new FlxSound();
 
 		generateSong(PlayState.SONG.song);
 		#if (LUA_ALLOWED && MODS_ALLOWED)
 		for (notetype in noteTypeMap.keys()) {
-			var luaToLoad:String = funkin.utility.Paths.modFolders('custom_notetypes/' + notetype + '.lua');
+			var luaToLoad:String = Paths.modFolders('custom_notetypes/' + notetype + '.lua');
 			if(sys.FileSystem.exists(luaToLoad)) {
-				var lua:funkin.utility.LuaInEditor = new funkin.utility.LuaInEditor(luaToLoad);
+				var lua:editors.EditorLua = new editors.EditorLua(luaToLoad);
 				new FlxTimer().start(0.1, function (tmr:FlxTimer) {
 					lua.stop();
 					lua = null;
@@ -133,32 +133,32 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		noteTypeMap = null;
 
 		scoreTxt = new FlxText(10, FlxG.height - 50, FlxG.width - 20, "Hits: 0 | Combo Breaks: 0", 20);
-		scoreTxt.setFormat(funkin.utility.Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
-		scoreTxt.visible = !.hideHud;
+		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 		
 		sectionTxt = new FlxText(10, 580, FlxG.width - 20, "Measure: 0", 20);
-		sectionTxt.setFormat(funkin.utility.Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		sectionTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		sectionTxt.scrollFactor.set();
 		sectionTxt.borderSize = 1.25;
 		add(sectionTxt);
 		
 		beatTxt = new FlxText(10, sectionTxt.y + 30, FlxG.width - 20, "Beat: 0", 20);
-		beatTxt.setFormat(funkin.utility.Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		beatTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		beatTxt.scrollFactor.set();
 		beatTxt.borderSize = 1.25;
 		add(beatTxt);
 
 		stepTxt = new FlxText(10, beatTxt.y + 30, FlxG.width - 20, "Step: 0", 20);
-		stepTxt.setFormat(funkin.utility.Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		stepTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		stepTxt.scrollFactor.set();
 		stepTxt.borderSize = 1.25;
 		add(stepTxt);
 
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press ESC to Go Back to Chart Editor', 16);
-		tipText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
 		tipText.scrollFactor.set();
 		add(tipText);
@@ -174,22 +174,22 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 	}
 
 	function sayGo() {
-		var go:FlxSprite = new FlxSprite().loadGraphic(funkin.utility.Paths.image('go'));
+		var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image('go'));
 		go.scrollFactor.set();
 
 		go.updateHitbox();
 
 		go.screenCenter();
-		go.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		go.antialiasing = ClientPrefs.globalAntialiasing;
 		add(go);
-		FlxTween.tween(go, {y: go.y += 100, alpha: 0}, funkin.utility.Conductor.crochet / 1000, {
+		FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 			ease: FlxEase.cubeInOut,
 			onComplete: function(twn:FlxTween)
 			{
 				go.destroy();
 			}
 		});
-		FlxG.sound.play(funkin.utility.Paths.sound('introGo'), 0.6);
+		FlxG.sound.play(Paths.sound('introGo'), 0.6);
 	}
 
 	//var songScore:Int = 0;
@@ -198,14 +198,14 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 	var startingSong:Bool = true;
 	private function generateSong(dataPath:String):Void
 	{
-		FlxG.sound.playMusic(funkin.utility.Paths.inst(funkin.states.PlayState.SONG.song), 0, false);
+		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0, false);
 		FlxG.sound.music.pause();
 		FlxG.sound.music.onComplete = endSong;
 		vocals.pause();
 		vocals.volume = 0;
 
-		var songData = funkin.states.PlayState.SONG;
-		funkin.utility.Conductor.changeBPM(songData.bpm);
+		var songData = PlayState.SONG;
+		Conductor.changeBPM(songData.bpm);
 		
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -235,22 +235,22 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 							gottaHitNote = !section.mustHitSection;
 						}
 
-						var oldNote:funkin.utility.gameplay.Note;
+						var oldNote:Note;
 						if (unspawnNotes.length > 0)
 							oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 						else
 							oldNote = null;
 
-						var swagNote:funkin.utility.gameplay.Note = new Note(daStrumTime, daNoteData, oldNote);
+						var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 						swagNote.mustPress = gottaHitNote;
 						swagNote.sustainLength = songNotes[2];
 						swagNote.noteType = songNotes[3];
-						if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = funkin.states.editors.Charter.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
+						if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 						swagNote.scrollFactor.set();
 
 						var susLength:Float = swagNote.sustainLength;
 
-						susLength = susLength / funkin.utility.Conductor.stepCrochet;
+						susLength = susLength / Conductor.stepCrochet;
 						unspawnNotes.push(swagNote);
 
 						var floorSus:Int = Math.floor(susLength);
@@ -259,7 +259,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 							{
 								oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-								var sustainNote:funkin.utility.gameplay.Note = new Note(daStrumTime + (funkin.utility.Conductor.stepCrochet * susNote) + (funkin.utility.Conductor.stepCrochet / FlxMath.roundDecimal(funkin.states.PlayState.SONG.speed, 2)), daNoteData, oldNote, true);
+								var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(PlayState.SONG.speed, 2)), daNoteData, oldNote, true);
 								sustainNote.mustPress = gottaHitNote;
 								sustainNote.noteType = swagNote.noteType;
 								sustainNote.scrollFactor.set();
@@ -269,7 +269,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 								{
 									sustainNote.x += FlxG.width / 2; // general offset
 								}
-								else if(funkin.utility.Preferences.middleScroll)
+								else if(ClientPrefs.middleScroll)
 								{
 									sustainNote.x += 310;
 									if(daNoteData > 1)
@@ -284,7 +284,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 						{
 							swagNote.x += FlxG.width / 2; // general offset
 						}
-						else if(funkin.utility.Preferences.middleScroll)
+						else if(ClientPrefs.middleScroll)
 						{
 							swagNote.x += 310;
 							if(daNoteData > 1) //Up and Right
@@ -323,7 +323,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 	}
 
 	private function endSong() {
-		funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.Charter());
+		LoadingState.loadAndSwitchState(new editors.ChartingState());
 	}
 
 	public var noteKillOffset:Float = 350;
@@ -333,28 +333,28 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		{
 			FlxG.sound.music.pause();
 			vocals.pause();
-			funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.Charter());
+			LoadingState.loadAndSwitchState(new editors.ChartingState());
 		}
 
 		if (startingSong) {
 			timerToStart -= elapsed * 1000;
-			funkin.utility.Conductor.songPosition = startPos - timerToStart;
+			Conductor.songPosition = startPos - timerToStart;
 			if(timerToStart < 0) {
 				startSong();
 			}
 		} else {
-			funkin.utility.Conductor.songPosition += elapsed * 1000;
+			Conductor.songPosition += elapsed * 1000;
 		}
 
 		if (unspawnNotes[0] != null)
 		{
 			var time:Float = spawnTime;
-			if(funkin.states.PlayState.SONG.speed < 1) time /= funkin.states.PlayState.SONG.speed;
+			if(PlayState.SONG.speed < 1) time /= PlayState.SONG.speed;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
-			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - funkin.utility.Conductor.songPosition < time)
+			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
-				var dunceNote:funkin.utility.gameplay.Note = unspawnNotes[0];
+				var dunceNote:Note = unspawnNotes[0];
 				notes.insert(0, dunceNote);
 				dunceNote.spawned = true;
 
@@ -365,8 +365,8 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		
 		if (generatedMusic)
 		{
-			var fakeCrochet:Float = (60 / funkin.states.PlayState.SONG.bpm) * 1000;
-			notes.forEachAlive(function(daNote:funkin.utility.gameplay.Note)
+			var fakeCrochet:Float = (60 / PlayState.SONG.bpm) * 1000;
+			notes.forEachAlive(function(daNote:Note)
 			{
 				/*if (daNote.y > FlxG.height)
 				{
@@ -404,21 +404,21 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 					daNote.x = strumX;
 				}
 				if(daNote.copyY) {
-					if (funkin.utility.Preferences.downScroll) {
-						daNote.y = (strumY + 0.45 * (funkin.utility.Conductor.songPosition - daNote.strumTime) * funkin.states.PlayState.SONG.speed);
+					if (ClientPrefs.downScroll) {
+						daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * PlayState.SONG.speed);
 						if (daNote.isSustainNote) {
 							//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
 							if (daNote.animation.curAnim.name.endsWith('end')) {
-								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * funkin.states.PlayState.SONG.speed + (46 * (funkin.states.PlayState.SONG.speed - 1));
-								daNote.y -= 46 * (1 - (fakeCrochet / 600)) * funkin.states.PlayState.SONG.speed;
-								if(funkin.states.PlayState.isPixelStage) {
+								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * PlayState.SONG.speed + (46 * (PlayState.SONG.speed - 1));
+								daNote.y -= 46 * (1 - (fakeCrochet / 600)) * PlayState.SONG.speed;
+								if(PlayState.isPixelStage) {
 									daNote.y += 8;
 								} else {
 									daNote.y -= 19;
 								}
 							} 
-							daNote.y += (funkin.utility.gameplay.Note.swagWidth / 2) - (60.5 * (funkin.states.PlayState.SONG.speed - 1));
-							daNote.y += 27.5 * ((funkin.states.PlayState.SONG.bpm / 100) - 1) * (funkin.states.PlayState.SONG.speed - 1);
+							daNote.y += (Note.swagWidth / 2) - (60.5 * (PlayState.SONG.speed - 1));
+							daNote.y += 27.5 * ((PlayState.SONG.bpm / 100) - 1) * (PlayState.SONG.speed - 1);
 
 							if(daNote.mustPress || !daNote.ignoreNote)
 							{
@@ -434,7 +434,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 							}
 						}
 					} else {
-						daNote.y = (strumY - 0.45 * (funkin.utility.Conductor.songPosition - daNote.strumTime) * funkin.states.PlayState.SONG.speed);
+						daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * PlayState.SONG.speed);
 
 						if(daNote.mustPress || !daNote.ignoreNote)
 						{
@@ -454,7 +454,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 
 				if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
 				{
-					if (funkin.states.PlayState.SONG.needsVoices)
+					if (PlayState.SONG.needsVoices)
 						vocals.volume = 1;
 
 					var time:Float = 0.15;
@@ -472,14 +472,14 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 					}
 				}
 
-				if (funkin.utility.Conductor.songPosition > (noteKillOffset / funkin.states.PlayState.SONG.speed) + daNote.strumTime)
+				if (Conductor.songPosition > (noteKillOffset / PlayState.SONG.speed) + daNote.strumTime)
 				{
 					if (daNote.mustPress)
 					{
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
 							//Dupe note remove
-							notes.forEachAlive(function(note:funkin.utility.gameplay.Note) {
+							notes.forEachAlive(function(note:Note) {
 								if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 10) {
 									note.kill();
 									notes.remove(note, true);
@@ -532,14 +532,14 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.sort(FlxSort.byY, funkin.utility.Preferences.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
+			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 	}
 
 	override function stepHit()
 	{
 		super.stepHit();
-		if (FlxG.sound.music.time > funkin.utility.Conductor.songPosition + 20 || FlxG.sound.music.time < funkin.utility.Conductor.songPosition - 20)
+		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
 		{
 			resyncVocals();
 		}
@@ -550,8 +550,8 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		vocals.pause();
 
 		FlxG.sound.music.play();
-		funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
-		vocals.time = funkin.utility.Conductor.songPosition;
+		Conductor.songPosition = FlxG.sound.music.time;
+		vocals.time = Conductor.songPosition;
 		vocals.play();
 	}
 	private function onKeyPress(event:KeyboardEvent):Void
@@ -560,15 +560,15 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		//trace('Pressed: ' + eventKey);
 
-		if (key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || funkin.utility.Preferences.controllerMode))
+		if (key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
 		{
 			if(generatedMusic)
 			{
 				//more accurate hit time for the ratings?
-				var lastTime:Float = funkin.utility.Conductor.songPosition;
-				funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
+				var lastTime:Float = Conductor.songPosition;
+				Conductor.songPosition = FlxG.sound.music.time;
 
-				var canMiss:Bool = !funkin.utility.Preferences.ghostTapping;
+				var canMiss:Bool = !ClientPrefs.ghostTapping;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
 				var pressNotes:Array<Note> = [];
@@ -576,8 +576,8 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 				var notesStopped:Bool = false;
 
 				//trace('test!');
-				var sortedNotesList:Array<funkin.utility.gameplay.Note> = [];
-				notes.forEachAlive(function(daNote:funkin.utility.Note)
+				var sortedNotesList:Array<Note> = [];
+				notes.forEachAlive(function(daNote:Note)
 				{
 					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote)
 					{
@@ -619,7 +619,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 				Conductor.songPosition = lastTime;
 			}
 
-			var spr:funkin.utility.gameplay.StrumNote = playerStrums.members[key];
+			var spr:StrumNote = playerStrums.members[key];
 			if(spr != null && spr.animation.curAnim.name != 'confirm')
 			{
 				spr.playAnim('pressed');
@@ -628,7 +628,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		}
 	}
 
-	function sortHitNotes(a:funkin.utility.gameplay.Note, b:funkin.utility.gameplay.Note):Int
+	function sortHitNotes(a:Note, b:Note):Int
 	{
 		if (a.lowPriority && !b.lowPriority)
 			return 1;
@@ -644,7 +644,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		if(key > -1)
 		{
-			var spr:funkin.utility.gameplay.StrumNote = playerStrums.members[key];
+			var spr:StrumNote = playerStrums.members[key];
 			if(spr != null)
 			{
 				spr.playAnim('static');
@@ -682,7 +682,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
 		
 		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(funkin.utility.Preferences.controllerMode)
+		if(ClientPrefs.controllerMode)
 		{
 			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
 			if(controlArray.contains(true))
@@ -710,7 +710,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(funkin.utility.Preferences.controllerMode)
+		if(ClientPrefs.controllerMode)
 		{
 			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
 			if(controlArray.contains(true))
@@ -725,7 +725,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 	}
 
 	var combo:Int = 0;
-	function goodNoteHit(note:funkin.utility.gameplay.Note):Void
+	function goodNoteHit(note:Note):Void
 	{
 		if (!note.wasGoodHit)
 		{
@@ -759,7 +759,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 				songHits++;
 			}
 
-			playerStrums.forEach(function(spr:funkin.utility.gameplay.StrumNote)
+			playerStrums.forEach(function(spr:StrumNote)
 			{
 				if (Math.abs(note.noteData) == spr.ID)
 				{
@@ -786,15 +786,15 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		//songScore -= 10;
 		songMisses++;
 
-		FlxG.sound.play(funkin.utility.Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
+		FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 		vocals.volume = 0;
 	}
 
 	var COMBO_X:Float = 400;
 	var COMBO_Y:Float = 340;
-	private function popUpScore(note:funkin.utility.gameplay.Note = null):Void
+	private function popUpScore(note:Note = null):Void
 	{
-		var noteDiff:Float = Math.abs(note.strumTime - funkin.utility.Conductor.songPosition + funkin.utility.Preferences.ratingOffset);
+		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 
 		vocals.volume = 1;
 
@@ -810,17 +810,17 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 
 		var daRating:String = "sick";
 
-		if (noteDiff > funkin.utility.Conductor.safeZoneOffset * 0.75)
+		if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'shit';
 			//score = 50;
 		}
-		else if (noteDiff > funkin.utility.Conductor.safeZoneOffset * 0.5)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.5)
 		{
 			daRating = 'bad';
 			//score = 100;
 		}
-		else if (noteDiff > funkin.utility.Conductor.safeZoneOffset * 0.25)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.25)
 		{
 			daRating = 'good';
 			//score = 200;
@@ -843,36 +843,36 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
-		if (funkin.states.PlayState.isPixelStage)
+		if (PlayState.isPixelStage)
 		{
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
 
-		rating.loadGraphic(funkin.utility.Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
+		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
-		rating.visible = !funkin.utility.Preferences.hideHud;
-		rating.x += funkin.utility.Preferences.comboOffset[0];
-		rating.y -= funkin.utility.Preferences.comboOffset[1];
+		rating.visible = !ClientPrefs.hideHud;
+		rating.x += ClientPrefs.comboOffset[0];
+		rating.y -= ClientPrefs.comboOffset[1];
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(funkin.utility.Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
-		comboSpr.visible = !funkin.utility.Preferences.hideHud;
-		comboSpr.x += funkin.utility.Preferences.comboOffset[0];
-		comboSpr.y -= funkin.utility.Preferences.comboOffet[1];
+		comboSpr.visible = !ClientPrefs.hideHud;
+		comboSpr.x += ClientPrefs.comboOffset[0];
+		comboSpr.y -= ClientPrefs.comboOffset[1];
 
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		comboGroup.add(rating);
 
-		if (!funkin.states.PlayState.isPixelStage)
+		if (!PlayState.isPixelStage)
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			rating.antialiasing = ClientPrefs.globalAntialiasing;
@@ -881,8 +881,8 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		}
 		else
 		{
-			rating.setGraphicSize(Std.int(rating.width * funkin.states.PlayState.daPixelZoom * 0.85));
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * funkin.states.PlayState.daPixelZoom * 0.85));
+			rating.setGraphicSize(Std.int(rating.width * PlayState.daPixelZoom * 0.85));
+			comboSpr.setGraphicSize(Std.int(comboSpr.width * PlayState.daPixelZoom * 0.85));
 		}
 
 		comboSpr.updateHitbox();
@@ -900,29 +900,29 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(funkin.utility.Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
 
-			numScore.x += funkin.utility.Preferences.comboOffset[2];
-			numScore.y -= funkin.utility.Preferences.comboOffset[3];
+			numScore.x += ClientPrefs.comboOffset[2];
+			numScore.y -= ClientPrefs.comboOffset[3];
 
-			if (!funkin.states.PlayState.isPixelStage)
+			if (!PlayState.isPixelStage)
 			{
-				numScore.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+				numScore.antialiasing = ClientPrefs.globalAntialiasing;
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			}
 			else
 			{
-				numScore.setGraphicSize(Std.int(numScore.width * funkin.states.PlayState.daPixelZoom));
+				numScore.setGraphicSize(Std.int(numScore.width * PlayState.daPixelZoom));
 			}
 			numScore.updateHitbox();
 
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
-			numScore.visible = !funkin.utility.Preferences.hideHud;
+			numScore.visible = !ClientPrefs.hideHud;
 
 			insert(members.indexOf(strumLineNotes), numScore);
 
@@ -931,7 +931,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 				{
 					numScore.destroy();
 				},
-				startDelay: funkin.utility.Conductor.crochet * 0.002
+				startDelay: Conductor.crochet * 0.002
 			});
 
 			daLoop++;
@@ -945,7 +945,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		// comboGroup.add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {
-			startDelay: funkin.utility.Conductor.crochet * 0.001
+			startDelay: Conductor.crochet * 0.001
 		});
 
 		FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
@@ -956,7 +956,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 
 				rating.destroy();
 			},
-			startDelay: funkin.utility.Conductor.crochet * 0.001
+			startDelay: Conductor.crochet * 0.001
 		});
 	}
 
@@ -968,11 +968,11 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 			var targetAlpha:Float = 1;
 			if (player < 1)
 			{
-				if(!funkin.utility.Preferences.opponentStrums) targetAlpha = 0;
-				else if(funkin.utility.Preferences.middleScroll) targetAlpha = 0.35;
+				if(!ClientPrefs.opponentStrums) targetAlpha = 0;
+				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:funkin.utility.gameplay.StrumNote = new StrumNote(funkin.utility.Preferences.middleScroll ? funkin.states.PlayState.STRUM_X_MIDDLESCROLL : funkin.states.PlayState.STRUM_X, strumLine.y, i, player);
+			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
 			babyArrow.alpha = targetAlpha;
 
 			if (player == 1)
@@ -981,7 +981,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 			}
 			else
 			{
-				if(funkin.utility.Preferences.middleScroll)
+				if(ClientPrefs.middleScroll)
 				{
 					babyArrow.x += 310;
 					if(i > 1) { //Up and Right
@@ -999,7 +999,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 
 	// For Opponent's notes glow
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
-		var spr:funkin.utility.gameplay.StrumNote = null;
+		var spr:StrumNote = null;
 		if(isDad) {
 			spr = strumLineNotes.members[id];
 		} else {
@@ -1014,22 +1014,22 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 
 
 	// Note splash shit, duh
-	function spawnNoteSplashOnNote(note:funkin.utility.gameplay.Note) {
-		if(funkin.utility.Preferences.noteSplashes && note != null) {
-			var strum:funkin.utility.gameplay.StrumNote = playerStrums.members[note.noteData];
+	function spawnNoteSplashOnNote(note:Note) {
+		if(ClientPrefs.noteSplashes && note != null) {
+			var strum:StrumNote = playerStrums.members[note.noteData];
 			if(strum != null) {
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
 			}
 		}
 	}
 
-	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:funkin.utility.gameplay.Note = null) {
+	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'noteSplashes';
-		if(funkin.states.PlayState.SONG.splashSkin != null && funkin.states.PlayState.SONG.splashSkin.length > 0) skin = funkin.states.PlayState.SONG.splashSkin;
+		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		
-		var hue:Float = funkin.utility.Preferences.arrowHSV[data % 4][0] / 360;
-		var sat:Float = funkin.utility.Preferences.arrowHSV[data % 4][1] / 100;
-		var brt:Float = funkin.utility.Preferences.arrowHSV[data % 4][2] / 100;
+		var hue:Float = ClientPrefs.arrowHSV[data % 4][0] / 360;
+		var sat:Float = ClientPrefs.arrowHSV[data % 4][1] / 100;
+		var brt:Float = ClientPrefs.arrowHSV[data % 4][2] / 100;
 		if(note != null) {
 			skin = note.noteSplashTexture;
 			hue = note.noteSplashHue;
@@ -1037,7 +1037,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 			brt = note.noteSplashBrt;
 		}
 
-		var splash:funkin.utility.gameplay.NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
 		grpNoteSplashes.add(splash);
 	}
@@ -1047,7 +1047,7 @@ class StrippedPlayState extends funkin.utility.MusicBeatState
 		vocals.stop();
 		vocals.destroy();
 
-		if(!funkin.utility.Preferences.controllerMode)
+		if(!ClientPrefs.controllerMode)
 		{
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);

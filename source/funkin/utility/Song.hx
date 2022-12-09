@@ -4,7 +4,6 @@ import funkin.utility.Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
-import funkin.utility.Paths;
 
 #if sys
 import sys.io.File;
@@ -131,7 +130,7 @@ class Song
 				daBpm = songData.bpm; */
 
 		var songJson:Dynamic = parseJSONshit(rawJson);
-		if(jsonInput != 'events') funkin.stages.StageData.loadDirectory(songJson);
+		if(jsonInput != 'events') StageData.loadDirectory(songJson);
 		onLoadJson(songJson);
 		return songJson;
 	}

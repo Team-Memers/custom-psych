@@ -14,7 +14,7 @@ class NoteSplash extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'noteSplashes';
-		if(funkin.states.PlayState.SONG.splashSkin != null && funkin.states.PlayState.SONG.splashSkin.length > 0) skin = funkin.states.PlayState.SONG.splashSkin;
+		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 
 		loadAnims(skin);
 		
@@ -22,16 +22,16 @@ class NoteSplash extends FlxSprite
 		shader = colorSwap.shader;
 
 		setupNoteSplash(x, y, note);
-		antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
 	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
-		setPosition(x - funkin.utility.gameplay.Note.swagWidth * 0.95, y - funkin.utility.gameplay.Note.swagWidth);
+		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
 		if(texture == null) {
 			texture = 'noteSplashes';
-			if(funkin.states.PlayState.SONG.splashSkin != null && funkin.states.PlayState.SONG.splashSkin.length > 0) texture = funkin.states.PlayState.SONG.splashSkin;
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
 
 		if(textureLoaded != texture) {
@@ -48,7 +48,7 @@ class NoteSplash extends FlxSprite
 	}
 
 	function loadAnims(skin:String) {
-		frames = funkin.utility.Paths.getSparrowAtlas(skin);
+		frames = Paths.getSparrowAtlas(skin);
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
 			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);

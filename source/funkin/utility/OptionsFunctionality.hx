@@ -22,11 +22,6 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
-import funkin.utility.Preferences;
-import funkin.utility.Alphabet;
-import funkin.utility.AttachedText;
-import funkin.utility.Checkbox;
-import funkin.utility.Paths;
 
 using StringTools;
 
@@ -37,7 +32,7 @@ class OptionsFunctionality extends funkin.utility.MusicBeatSubState
 	private var optionsArray:Array<Option>;
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
-	private var checkboxGroup:FlxTypedGroup<Checkbox>;
+	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	private var boyfriend:Character = null;
@@ -59,7 +54,7 @@ class OptionsFunctionality extends funkin.utility.MusicBeatSubState
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.screenCenter();
-		bg.antialiasing = Preferences.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
 		// avoids lagspikes while scrolling through menus!
@@ -69,7 +64,7 @@ class OptionsFunctionality extends funkin.utility.MusicBeatSubState
 		grpTexts = new FlxTypedGroup<AttachedText>();
 		add(grpTexts);
 
-		checkboxGroup = new FlxTypedGroup<Checkbox>();
+		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
 		add(checkboxGroup);
 
 		descBox = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
@@ -98,7 +93,7 @@ class OptionsFunctionality extends funkin.utility.MusicBeatSubState
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
-				var checkbox:Checkbox = new Checkbox(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);

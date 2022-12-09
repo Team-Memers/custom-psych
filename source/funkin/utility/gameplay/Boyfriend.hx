@@ -7,7 +7,7 @@ import flixel.util.FlxTimer;
 
 using StringTools;
 
-class Boyfriend extends funkin.utility.gameplay.Character
+class Boyfriend extends Character
 {
 	public var startedDeath:Bool = false;
 

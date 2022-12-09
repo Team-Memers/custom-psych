@@ -16,7 +16,7 @@ import lime.utils.AssetManifest;
 
 import haxe.io.Path;
 
-class Loading extends funkin.utility.MusicBeatState
+class LoadingState extends MusicBeatState
 {
 	inline static var MIN_TIME = 1.0;
 
@@ -46,17 +46,17 @@ class Loading extends funkin.utility.MusicBeatState
 	{
 		var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d);
 		add(bg);
-		funkay = new FlxSprite(0, 0).loadGraphic(funkin.utility.Paths.getPath('images/funkay.png', IMAGE));
+		funkay = new FlxSprite(0, 0).loadGraphic(Paths.getPath('images/funkay.png', IMAGE));
 		funkay.setGraphicSize(0, FlxG.height);
 		funkay.updateHitbox();
-		funkay.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		funkay.antialiasing = ClientPrefs.globalAntialiasing;
 		add(funkay);
 		funkay.scrollFactor.set();
 		funkay.screenCenter();
 
 		loadBar = new FlxSprite(0, FlxG.height - 20).makeGraphic(FlxG.width, 10, 0xffff16d2);
 		loadBar.screenCenter(X);
-		loadBar.antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		loadBar.antialiasing = ClientPrefs.globalAntialiasing;
 		add(loadBar);
 		
 		initSongsManifest().onComplete
@@ -65,9 +65,9 @@ class Loading extends funkin.utility.MusicBeatState
 			{
 				callbacks = new MultiCallback(onLoad);
 				var introComplete = callbacks.add("introComplete");
-				/*if (funkin.states.PlayState.SONG != null) {
+				/*if (PlayState.SONG != null) {
 					checkLoadSong(getSongPath());
-					if (funkin.states.PlayState.SONG.needsVoices)
+					if (PlayState.SONG.needsVoices)
 						checkLoadSong(getVocalPath());
 				}*/
 				checkLibrary("shared");
@@ -132,43 +132,43 @@ class Loading extends funkin.utility.MusicBeatState
 		if (stopMusic && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 		
-		funkin.utility.MusicBeatState.switchState(target);
+		MusicBeatState.switchState(target);
 	}
 	
 	static function getSongPath()
 	{
-		return funkin.utility.Paths.inst(funkin.states.PlayState.SONG.song);
+		return Paths.inst(PlayState.SONG.song);
 	}
 	
 	static function getVocalPath()
 	{
-		return funkin.utility.Paths.voices(funkin.states.PlayState.SONG.song);
+		return Paths.voices(PlayState.SONG.song);
 	}
 	
 	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false)
 	{
-		funkin.utility.MusicBeatState.switchState(getNextState(target, stopMusic));
+		MusicBeatState.switchState(getNextState(target, stopMusic));
 	}
 	
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
 	{
 		var directory:String = 'shared';
-		var weekDir:String = funkin.stages.StageData.forceNextDirectory;
-		funkin.stages.StageData.forceNextDirectory = null;
+		var weekDir:String = StageData.forceNextDirectory;
+		StageData.forceNextDirectory = null;
 
 		if(weekDir != null && weekDir.length > 0 && weekDir != '') directory = weekDir;
 
-		funkin.utility.Paths.setCurrentLevel(directory);
+		Paths.setCurrentLevel(directory);
 		trace('Setting asset folder to ' + directory);
 
 		#if NO_PRELOAD_ALL
 		var loaded:Bool = false;
-		if (funkin.states.PlayState.SONG != null) {
-			loaded = isSoundLoaded(getSongPath()) && (!funkin.states.PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath())) && isLibraryLoaded("shared") && isLibraryLoaded(directory);
+		if (PlayState.SONG != null) {
+			loaded = isSoundLoaded(getSongPath()) && (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath())) && isLibraryLoaded("shared") && isLibraryLoaded(directory);
 		}
 		
 		if (!loaded)
-			return new funkin.states.Loading(target, stopMusic, directory);
+			return new LoadingState(target, stopMusic, directory);
 		#end
 		if (stopMusic && FlxG.sound.music != null)
 			FlxG.sound.music.stop();

@@ -25,15 +25,15 @@ import funkin.utility.Controls;
 
 using StringTools;
 
-class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
+class GameplayChangersSubstate extends MusicBeatSubstate
 {
 	private var curOption:GameplayOption = null;
 	private var curSelected:Int = 0;
 	private var optionsArray:Array<Dynamic> = [];
 
-	private var grpOptions:FlxTypedGroup<funkin.utility.Alphabet>;
-	private var checkboxGroup:FlxTypedGroup<funkin.utility.Checkbox>;
-	private var grpTexts:FlxTypedGroup<funkin.utility.AttachedText>;
+	private var grpOptions:FlxTypedGroup<Alphabet>;
+	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
+	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	function getOptions()
 	{
@@ -101,20 +101,20 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 		add(bg);
 
 		// avoids lagspikes while scrolling through menus!
-		grpOptions = new FlxTypedGroup<funkin.utility.Alphabet>();
+		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		grpTexts = new FlxTypedGroup<funkin.utility.AttachedText>();
+		grpTexts = new FlxTypedGroup<AttachedText>();
 		add(grpTexts);
 
-		checkboxGroup = new FlxTypedGroup<funkin.utility.Checkbox>();
+		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
 		add(checkboxGroup);
 		
 		getOptions();
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:funkin.utility.Alphabet = new Alphabet(200, 360, optionsArray[i].name, true);
+			var optionText:Alphabet = new Alphabet(200, 360, optionsArray[i].name, true);
 			optionText.isMenuItem = true;
 			optionText.scaleX = 0.8;
 			optionText.scaleY = 0.8;
@@ -125,7 +125,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 				optionText.x += 110;
 				optionText.startPosition.x += 110;
 				optionText.snapToPosition();
-				var checkbox:funkin.utility.Checkbox = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.offsetX -= 32;
 				checkbox.offsetY = -120;
@@ -133,7 +133,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 				checkboxGroup.add(checkbox);
 			} else {
 				optionText.snapToPosition();
-				var valueText:funkin.utility.AttachedText = new AttachedText(Std.string(optionsArray[i].getValue()), optionText.width, -72, true, 0.8);
+				var valueText:AttachedText = new AttachedText(Std.string(optionsArray[i].getValue()), optionText.width, -72, true, 0.8);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
 				valueText.ID = i;
@@ -163,13 +163,13 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 
 		if(FlxG.mouse.wheel != 0)
 		{
-			FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'), 0.2);
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 			changeSelection(-FlxG.mouse.wheel);
 		}
 
 		if (controls.BACK) {
 			close();
-			funkin.utility.Preferences.saveSettings();
+			ClientPrefs.saveSettings();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 
@@ -185,7 +185,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 			{
 				if(controls.ACCEPT)
 				{
-					FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'));
+					FlxG.sound.play(Paths.sound('scrollMenu'));
 					curOption.setValue((curOption.getValue() == true) ? false : true);
 					curOption.change();
 					reloadCheckboxes();
@@ -236,7 +236,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 							}
 							updateTextFrom(curOption);
 							curOption.change();
-							FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'));
+							FlxG.sound.play(Paths.sound('scrollMenu'));
 						} else if(curOption.type != 'string') {
 							holdValue = Math.max(curOption.minValue, Math.min(curOption.maxValue, holdValue + curOption.scrollSpeed * elapsed * (controls.UI_LEFT ? -1 : 1)));
 
@@ -289,7 +289,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 					}
 					leOption.change();
 				}
-				FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'));
+				FlxG.sound.play(Paths.sound('cancelMenu'));
 				reloadCheckboxes();
 			}
 		}
@@ -311,7 +311,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 	function clearHold()
 	{
 		if(holdTime > 0.5) {
-			FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'));
+			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		holdTime = 0;
 	}
@@ -342,7 +342,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 			}
 		}
 		curOption = optionsArray[curSelected]; //shorter lol
-		FlxG.sound.play(funkin.utility.Paths.sound('scrollMenu'));
+		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
 	function reloadCheckboxes() {
@@ -354,7 +354,7 @@ class GameplayChangersMenu extends funkin.utility.MusicBeatSubState
 
 class GameplayOption
 {
-	private var child:funkin.utility.Alphabet;
+	private var child:Alphabet;
 	public var text(get, set):String;
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
@@ -436,14 +436,14 @@ class GameplayOption
 
 	public function getValue():Dynamic
 	{
-		return funkin.utility.Preferences.gameplaySettings.get(variable);
+		return ClientPrefs.gameplaySettings.get(variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		funkin.utility.Preferences.gameplaySettings.set(variable, value);
+		ClientPrefs.gameplaySettings.set(variable, value);
 	}
 
-	public function setChild(child:funkin.utility.Alphabet)
+	public function setChild(child:Alphabet)
 	{
 		this.child = child;
 	}

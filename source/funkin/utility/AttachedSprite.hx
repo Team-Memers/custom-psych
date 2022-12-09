@@ -20,13 +20,13 @@ class AttachedSprite extends FlxSprite
 	{
 		super();
 		if(anim != null) {
-			frames = funkin.utility.Paths.getSparrowAtlas(file, library);
+			frames = Paths.getSparrowAtlas(file, library);
 			animation.addByPrefix('idle', anim, 24, loop);
 			animation.play('idle');
 		} else if(file != null) {
 			loadGraphic(Paths.image(file));
 		}
-		antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		antialiasing = ClientPrefs.globalAntialiasing;
 		scrollFactor.set();
 	}
 

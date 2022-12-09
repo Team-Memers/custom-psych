@@ -11,7 +11,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 
-class OutdatedWarning extends funkin.utility.MusicBeatState
+class OutdatedState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
@@ -25,8 +25,8 @@ class OutdatedWarning extends funkin.utility.MusicBeatState
 
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Sup bro, looks like you're running an   \n
-			outdated version of Psych Engine (" + funkin.states.menus.MainMenu.psychEngineVersion + "),\n
-			please update to " + funkin.states.menus.TitleMenu.updateVersion + "!\n
+			outdated version of Psych Engine (" + MainMenuState.psychEngineVersion + "),\n
+			please update to " + TitleState.updateVersion + "!\n
 			Press ESCAPE to proceed anyway.\n
 			\n
 			Thank you for using the Engine!",
@@ -41,7 +41,7 @@ class OutdatedWarning extends funkin.utility.MusicBeatState
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				funkin.utility.Utility.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
+				CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
 			}
 			else if(controls.BACK) {
 				leftState = true;
@@ -49,10 +49,10 @@ class OutdatedWarning extends funkin.utility.MusicBeatState
 
 			if(leftState)
 			{
-				FlxG.sound.play(funkin.utility.Paths.sound('cancelMenu'));
+				FlxG.sound.play(Paths.sound('cancelMenu'));
 				FlxTween.tween(warnText, {alpha: 0}, 1, {
 					onComplete: function (twn:FlxTween) {
-						funkin.utility.MusicBeatState.switchState(new funkin.states.menus.MainMenu());
+						MusicBeatState.switchState(new MainMenuState());
 					}
 				});
 			}

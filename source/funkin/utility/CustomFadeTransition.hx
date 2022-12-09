@@ -14,7 +14,7 @@ import flixel.FlxSubState;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
 
-class CustomFadeTransition extends funkin.utility.MusicBeatSubState {
+class CustomFadeTransition extends MusicBeatSubstate {
 	public static var finishCallback:Void->Void;
 	private var leTween:FlxTween = null;
 	public static var nextCamera:FlxCamera;
@@ -26,7 +26,7 @@ class CustomFadeTransition extends funkin.utility.MusicBeatSubState {
 		super();
 
 		this.isTransIn = isTransIn;
-		var zoom:Float = funkin.utility.Utility.boundTo(FlxG.camera.zoom, 0.05, 1);
+		var zoom:Float = CoolUtil.boundTo(FlxG.camera.zoom, 0.05, 1);
 		var width:Int = Std.int(FlxG.width / zoom);
 		var height:Int = Std.int(FlxG.height / zoom);
 		transGradient = FlxGradient.createGradientFlxSprite(width, height, (isTransIn ? [0x0, FlxColor.BLACK] : [FlxColor.BLACK, 0x0]));

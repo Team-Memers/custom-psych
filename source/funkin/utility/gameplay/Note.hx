@@ -124,11 +124,11 @@ class Note extends FlxSprite
 
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
-		if (noteData > -1 && noteData < Preferences.arrowHSV.length)
+		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 		{
-			colorSwap.hue = Preferences.arrowHSV[noteData][0] / 360;
-			colorSwap.saturation = Preferences.arrowHSV[noteData][1] / 100;
-			colorSwap.brightness = Preferences.arrowHSV[noteData][2] / 100;
+			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
+			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
+			colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
 		}
 
 		if(noteData > -1 && noteType != value) {
@@ -175,11 +175,11 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (Preferences.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
-		if(!inEditor) this.strumTime += Preferences.noteOffset;
+		if(!inEditor) this.strumTime += ClientPrefs.noteOffset;
 
 		this.noteData = noteData;
 
@@ -206,7 +206,7 @@ class Note extends FlxSprite
 			alpha = 0.6;
 			multAlpha = 0.6;
 			hitsoundDisabled = true;
-			if(Preferences.downScroll) flipY = true;
+			if(ClientPrefs.downScroll) flipY = true;
 
 			offsetX += width / 2;
 			copyAngle = false;
@@ -224,7 +224,7 @@ class Note extends FlxSprite
 			{
 				prevNote.animation.play(colArray[prevNote.noteData % 4] + 'hold');
 
-				prevNote.scale.y *= funkin.utility.Conductor.stepCrochet / 100 * 1.05;
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05;
 				if(PlayState.instance != null)
 				{
 					prevNote.scale.y *= PlayState.instance.songSpeed;
@@ -238,8 +238,8 @@ class Note extends FlxSprite
 				// prevNote.setGraphicSize();
 			}
 
-			if(funkin.states.PlayState.isPixelStage) {
-				scale.y *= funkin.states.PlayState.daPixelZoom;
+			if(PlayState.isPixelStage) {
+				scale.y *= PlayState.daPixelZoom;
 				updateHitbox();
 			}
 		} else if(!isSustainNote) {
@@ -287,13 +287,13 @@ class Note extends FlxSprite
 				height = height / 5;
 				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
 			}
-			setGraphicSize(Std.int(width * funkin.states.PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
 			antialiasing = false;
 
 			if(isSustainNote) {
 				offsetX += lastNoteOffsetXForPixelAutoAdjusting;
-				lastNoteOffsetXForPixelAutoAdjusting = (width - 7) * (funkin.states.PlayState.daPixelZoom / 2);
+				lastNoteOffsetXForPixelAutoAdjusting = (width - 7) * (PlayState.daPixelZoom / 2);
 				offsetX -= lastNoteOffsetXForPixelAutoAdjusting;
 
 				/*if(animName != null && !animName.endsWith('end'))
@@ -306,7 +306,7 @@ class Note extends FlxSprite
 		} else {
 			frames = Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();
-			antialiasing = Preferences.globalAntialiasing;
+			antialiasing = ClientPrefs.globalAntialiasing;
 		}
 		if(isSustainNote) {
 			scale.y = lastScaleY;
@@ -317,7 +317,7 @@ class Note extends FlxSprite
 			animation.play(animName, true);
 
 		if(inEditor) {
-			setGraphicSize(funkin.states.editors.Charter.GRID_SIZE, funkin.states.editors.Charter.GRID_SIZE);
+			setGraphicSize(ChartingState.GRID_SIZE, ChartingState.GRID_SIZE);
 			updateHitbox();
 		}
 	}
@@ -352,22 +352,22 @@ class Note extends FlxSprite
 		if (mustPress)
 		{
 			// ok river
-			if (strumTime > funkin.utility.Conductor.songPosition - (funkin.utility.Conductor.safeZoneOffset * lateHitMult)
-				&& strumTime < funkin.utility.Conductor.songPosition + (funkin.utility.Conductor.safeZoneOffset * earlyHitMult))
+			if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * lateHitMult)
+				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult))
 				canBeHit = true;
 			else
 				canBeHit = false;
 
-			if (strumTime < funkin.utility.Conductor.songPosition - funkin.utility.Conductor.safeZoneOffset && !wasGoodHit)
+			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
 		}
 		else
 		{
 			canBeHit = false;
 
-			if (strumTime < funkin.utility.Conductor.songPosition + (funkin.utility.Conductor.safeZoneOffset * earlyHitMult))
+			if (strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult))
 			{
-				if((isSustainNote && prevNote.wasGoodHit) || strumTime <= funkin.utility.Conductor.songPosition)
+				if((isSustainNote && prevNote.wasGoodHit) || strumTime <= Conductor.songPosition)
 					wasGoodHit = true;
 			}
 		}

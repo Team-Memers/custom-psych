@@ -60,7 +60,7 @@ import sys.io.File;
 @:access(flixel.system.FlxSound._sound)
 @:access(openfl.media.Sound.__buffer)
 
-class Charter extends funkin.utility.MusicBeatState
+class ChartingState extends MusicBeatState
 {
 	public static var noteTypeList:Array<String> = //Used for backwards compatibility with 0.1 - 0.3.2 charts, though, you should add your hardcoded custom note types here too.
 	[
@@ -203,6 +203,8 @@ class Charter extends funkin.utility.MusicBeatState
 		192
 	];
 
+
+
 	var text:String = "";
 	public static var vortex:Bool = false;
 	public var mouseQuant:Bool = false;
@@ -212,7 +214,7 @@ class Charter extends funkin.utility.MusicBeatState
 			_song = PlayState.SONG;
 		else
 		{
-			funkin.utility.Utility.difficulties = funkin.utility.Utility.defaultDifficulties.copy();
+			CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
 
 			_song = {
 				song: 'Test',
@@ -230,7 +232,7 @@ class Charter extends funkin.utility.MusicBeatState
 				validScore: false
 			};
 			addSection();
-			funkin.states.PlayState.SONG = _song;
+			PlayState.SONG = _song;
 		}
 
 		// Paths.clearMemory();
@@ -293,8 +295,8 @@ class Charter extends funkin.utility.MusicBeatState
 		currentSongName = Paths.formatToSongPath(_song.song);
 		loadSong();
 		reloadGridLayer();
-		funkin.utility.Conductor.changeBPM(_song.bpm);
-		funkin.utility.Conductor.mapBPMChanges(_song);
+		Conductor.changeBPM(_song.bpm);
+		Conductor.mapBPMChanges(_song);
 
 		bpmTxt = new FlxText(1000, 50, 0, "", 16);
 		bpmTxt.scrollFactor.set();
@@ -441,17 +443,17 @@ class Charter extends funkin.utility.MusicBeatState
 
 		var loadAutosaveBtn:FlxButton = new FlxButton(reloadSongJson.x, reloadSongJson.y + 30, 'Load Autosave', function()
 		{
-			funkin.states.PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
-			funkin.utility.MusicBeatState.resetState();
+			PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
+			MusicBeatState.resetState();
 		});
 
 		var loadEventJson:FlxButton = new FlxButton(loadAutosaveBtn.x, loadAutosaveBtn.y + 30, 'Load Events', function()
 		{
 
-			var songName:String = funkin.utility.Paths.formatToSongPath(_song.song);
-			var file:String = funkin.utility.Paths.json(songName + '/events');
+			var songName:String = Paths.formatToSongPath(_song.song);
+			var file:String = Paths.json(songName + '/events');
 			#if sys
-			if (#if MODS_ALLOWED FileSystem.exists(funkin.utility.Paths.modsJson(songName + '/events')) || #end FileSystem.exists(file))
+			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsJson(songName + '/events')) || #end FileSystem.exists(file))
 			#else
 			if (OpenFlAssets.exists(file))
 			#end
@@ -470,14 +472,14 @@ class Charter extends funkin.utility.MusicBeatState
 
 		var clear_events:FlxButton = new FlxButton(320, 310, 'Clear events', function()
 			{
-				openSubState(new funkin.utility.Prompt('This action will clear current progress.\n\nProceed?', 0, clearEvents, null,ignoreWarnings));
+				openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, clearEvents, null,ignoreWarnings));
 			});
 		clear_events.color = FlxColor.RED;
 		clear_events.label.color = FlxColor.WHITE;
 
 		var clear_notes:FlxButton = new FlxButton(320, clear_events.y + 30, 'Clear notes', function()
 			{
-				openSubState(new funkin.utility.Prompt('This action will clear current progress.\n\nProceed?', 0, function(){for (sec in 0..._song.notes.length) {
+				openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){for (sec in 0..._song.notes.length) {
 					_song.notes[sec].sectionNotes = [];
 				}
 				updateGrid();
@@ -488,7 +490,7 @@ class Charter extends funkin.utility.MusicBeatState
 		clear_notes.label.color = FlxColor.WHITE;
 
 		var stepperBPM:FlxUINumericStepper = new FlxUINumericStepper(10, 70, 1, 1, 1, 400, 3);
-		stepperBPM.value = funkin.utility.Conductor.bpm;
+		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
 		blockPressWhileTypingOnStepper.push(stepperBPM);
 
@@ -497,15 +499,15 @@ class Charter extends funkin.utility.MusicBeatState
 		stepperSpeed.name = 'song_speed';
 		blockPressWhileTypingOnStepper.push(stepperSpeed);
 		#if MODS_ALLOWED
-		var directories:Array<String> = [funkin.utility.Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
-		for(mod in funkin.utility.Paths.getGlobalMods())
-			directories.push(funkin.utility.Paths.mods(mod + '/characters/'));
+		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/characters/'));
 		#else
-		var directories:Array<String> = [funkin.utility.Paths.getPreloadPath('characters/')];
+		var directories:Array<String> = [Paths.getPreloadPath('characters/')];
 		#end
 
 		var tempMap:Map<String, Bool> = new Map<String, Bool>();
-		var characters:Array<String> = funkin.utility.Utility.coolTextFile(funkin.utility.Paths.txt('characterList'));
+		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
 		for (i in 0...characters.length) {
 			tempMap.set(characters[i], true);
 		}
@@ -553,15 +555,15 @@ class Charter extends funkin.utility.MusicBeatState
 		blockPressWhileScrolling.push(player2DropDown);
 
 		#if MODS_ALLOWED
-		var directories:Array<String> = [funkin.utility.Paths.mods('stages/'), funkin.utility.Paths.mods(Paths.currentModDirectory + '/stages/'), funkin.utility.Paths.getPreloadPath('stages/')];
+		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Paths.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
 		for(mod in Paths.getGlobalMods())
-			directories.push(funkin.utility.Paths.mods(mod + '/stages/'));
+			directories.push(Paths.mods(mod + '/stages/'));
 		#else
-		var directories:Array<String> = [funkin.utility.Paths.getPreloadPath('stages/')];
+		var directories:Array<String> = [Paths.getPreloadPath('stages/')];
 		#end
 
 		tempMap.clear();
-		var stageFile:Array<String> = funkin.utility.Utility.coolTextFile(funkin.utility.Paths.txt('stageList'));
+		var stageFile:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageList'));
 		var stages:Array<String> = [];
 		for (i in 0...stageFile.length) { //Prevent duplicates
 			var stageToCheck:String = stageFile[i];
@@ -598,20 +600,20 @@ class Charter extends funkin.utility.MusicBeatState
 		blockPressWhileScrolling.push(stageDropDown);
 		
 		tempMap.clear();
-		var difficulties:Array<String> = funkin.utility.Utility.difficulties;
+		var difficulties:Array<String> = CoolUtil.difficulties;
 		for (i in 0...difficulties.length) {
 			tempMap.set(difficulties[i], true);
 		}
-		currentDifficultyName = funkin.utility.Utility.difficulties[funkin.states.PlayState.storyDifficulty];
+		currentDifficultyName = CoolUtil.difficulties[PlayState.storyDifficulty];
 
 		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, gfVersionDropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(difficulties, true), function (difficulty:String)
 			{
 				var newDiff = difficulties[Std.parseInt(difficulty)];
 				if (newDiff != currentDifficultyName)
 				{
-					openSubState(new funkin.utility.Prompt('This action will clear current progress.\n\nProceed?', 0, function(){
+					openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){
 					currentDifficultyName = newDiff;
-					funkin.states.PlayState.storyDifficulty = Std.parseInt(difficulty);
+					PlayState.storyDifficulty = Std.parseInt(difficulty);
 					loadJson(_song.song.toLowerCase());
 					}, null,ignoreWarnings));
 				}
@@ -620,7 +622,7 @@ class Charter extends funkin.utility.MusicBeatState
 		difficultyDropDown.selectedLabel = currentDifficultyName;
 		blockPressWhileScrolling.push(difficultyDropDown);
 
-		var skin = funkin.states.PlayState.SONG.arrowSkin;
+		var skin = PlayState.SONG.arrowSkin;
 		if(skin == null) skin = '';
 		noteSkinInputText = new FlxUIInputText(player2DropDown.x, player2DropDown.y + 50, 150, skin, 8);
 		blockPressWhileTypingOn.push(noteSkinInputText);
@@ -712,7 +714,7 @@ class Charter extends funkin.utility.MusicBeatState
 		if(check_changeBPM.checked) {
 			stepperSectionBPM.value = _song.notes[curSec].bpm;
 		} else {
-			stepperSectionBPM.value = funkin.utility.Conductor.bpm;
+			stepperSectionBPM.value = Conductor.bpm;
 		}
 		stepperSectionBPM.name = 'section_bpm';
 		blockPressWhileTypingOnStepper.push(stepperSectionBPM);
@@ -754,7 +756,7 @@ class Charter extends funkin.utility.MusicBeatState
 				return;
 			}
 
-			var addToTime:Float = funkin.utility.Conductor.stepCrochet * (getSectionBeats() * 4 * (curSec - sectionToCopy));
+			var addToTime:Float = Conductor.stepCrochet * (getSectionBeats() * 4 * (curSec - sectionToCopy));
 			//trace('Time to add: ' + addToTime);
 
 			for (note in notesCopied)
@@ -845,7 +847,7 @@ class Charter extends funkin.utility.MusicBeatState
 				{
 					if(check_notesSec.checked)
 					{
-						var strum = note[0] + funkin.utility.Conductor.stepCrochet * (getSectionBeats(daSec) * 4 * value);	
+						var strum = note[0] + Conductor.stepCrochet * (getSectionBeats(daSec) * 4 * value);	
 	
 						var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
 						_song.notes[daSec].sectionNotes.push(copiedNote);
@@ -859,7 +861,7 @@ class Charter extends funkin.utility.MusicBeatState
 				var strumTime:Float = event[0];
 				if(endThing > event[0] && event[0] >= startThing)
 				{
-					strumTime += funkin.utility.Conductor.stepCrochet * (getSectionBeats(daSec) * 4 * value);
+					strumTime += Conductor.stepCrochet * (getSectionBeats(daSec) * 4 * value);
 					var copiedEventArray:Array<Dynamic> = [];
 					for (i in 0...event[1].length)
 					{
@@ -975,10 +977,10 @@ class Charter extends funkin.utility.MusicBeatState
 		var directories:Array<String> = [];
 
 		#if MODS_ALLOWED
-		directories.push(funkin.utility.Paths.mods('custom_notetypes/'));
-		directories.push(funkin.utility.Paths.mods(funkin.utility.Paths.currentModDirectory + '/custom_notetypes/'));
-		for(mod in funkin.utility.Paths.getGlobalMods())
-			directories.push(funkin.utility.Paths.mods(mod + '/custom_notetypes/'));
+		directories.push(Paths.mods('custom_notetypes/'));
+		directories.push(Paths.mods(Paths.currentModDirectory + '/custom_notetypes/'));
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/custom_notetypes/'));
 		#end
 
 		for (i in 0...directories.length) {
@@ -1037,10 +1039,10 @@ class Charter extends funkin.utility.MusicBeatState
 		var directories:Array<String> = [];
 
 		#if MODS_ALLOWED
-		directories.push(funkin.utility.Paths.mods('custom_events/'));
-		directories.push(funkin.utility.Paths.mods(funkin.utility.Paths.currentModDirectory + '/custom_events/'));
-		for(mod in funkin.utility.Paths.getGlobalMods())
-			directories.push(funkin.utility.Paths.mods(mod + '/custom_events/'));
+		directories.push(Paths.mods('custom_events/'));
+		directories.push(Paths.mods(Paths.currentModDirectory + '/custom_events/'));
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/custom_events/'));
 		#end
 
 		for (i in 0...directories.length) {
@@ -1411,7 +1413,7 @@ class Charter extends funkin.utility.MusicBeatState
 		}
 		generateSong();
 		FlxG.sound.music.pause();
-		funkin.utility.Conductor.songPosition = sectionStartTime();
+		Conductor.songPosition = sectionStartTime();
 		FlxG.sound.music.time = Conductor.songPosition;
 	}
 
@@ -1423,7 +1425,7 @@ class Charter extends funkin.utility.MusicBeatState
 		FlxG.sound.music.onComplete = function()
 		{
 			FlxG.sound.music.pause();
-			funkin.utility.Conductor.songPosition = 0;
+			Conductor.songPosition = 0;
 			if(vocals != null) {
 				vocals.pause();
 				vocals.time = 0;
@@ -1492,8 +1494,8 @@ class Charter extends funkin.utility.MusicBeatState
 			else if (wname == 'song_bpm')
 			{
 				tempBpm = nums.value;
-				funkin.utility.Conductor.mapBPMChanges(_song);
-				funkin.utility.Conductor.changeBPM(nums.value);
+				Conductor.mapBPMChanges(_song);
+				Conductor.changeBPM(nums.value);
 			}
 			else if (wname == 'note_susLength')
 			{
@@ -1597,7 +1599,7 @@ class Charter extends funkin.utility.MusicBeatState
 			FlxG.sound.music.time = 0;
 			changeSection();
 		}
-		funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
+		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = UI_songTitle.text;
 
 		strumLineUpdateY();
@@ -1708,9 +1710,9 @@ class Charter extends funkin.utility.MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = funkin.states.menus.TitleMenu.muteKeys;
-			FlxG.sound.volumeDownKeys = funkin.states.menus.TitleMenu.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = funkin.states.menus.TitleMenu.volumeUpKeys;
+			FlxG.sound.muteKeys = TitleState.muteKeys;
+			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 			for (dropDownMenu in blockPressWhileScrolling) {
 				if(dropDownMenu.dropPanel.visible) {
 					blockInput = true;
@@ -1724,19 +1726,19 @@ class Charter extends funkin.utility.MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				autosaveSong();
-				funkin.states.Loading.loadAndSwitchState(new funkin.states.editors.StrippedPlayState(sectionStartTime()));
+				LoadingState.loadAndSwitchState(new editors.EditorPlayState(sectionStartTime()));
 			}
 			if (FlxG.keys.justPressed.ENTER)
 			{
 				autosaveSong();
 				FlxG.mouse.visible = false;
-				funkin.states.PlayState.SONG = _song;
+				PlayState.SONG = _song;
 				FlxG.sound.music.stop();
 				if(vocals != null) vocals.stop();
 
 				//if(_song.stage == null) _song.stage = stageDropDown.selectedLabel;
 				StageData.loadDirectory(_song);
-				funkin.states.Loading.loadAndSwitchState(new PlayState());
+				LoadingState.loadAndSwitchState(new PlayState());
 			}
 
 			if(curSelectedNote != null && curSelectedNote[1] > -1) {
@@ -1821,11 +1823,11 @@ class Charter extends funkin.utility.MusicBeatState
 						var increase:Float = 1 / snap;
 						if (FlxG.mouse.wheel > 0)
 						{
-							var fuck:Float = funkin.utility.Utility.quantize(beat, snap) - increase;
-							FlxG.sound.music.time = funkin.utility.Conductor.beatToSeconds(fuck);
+							var fuck:Float = CoolUtil.quantize(beat, snap) - increase;
+							FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
 						}else{
-							var fuck:Float = funkin.utility.Utility.quantize(beat, snap) + increase;
-							FlxG.sound.music.time = funkin.utility.Conductor.beatToSeconds(fuck);
+							var fuck:Float = CoolUtil.quantize(beat, snap) + increase;
+							FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
 						}
 					}
 				if(vocals != null) {
@@ -1835,6 +1837,8 @@ class Charter extends funkin.utility.MusicBeatState
 			}
 
 			//ARROW VORTEX SHIT NO DEADASS
+
+
 
 			if (FlxG.keys.pressed.W || FlxG.keys.pressed.S)
 			{
@@ -1860,7 +1864,7 @@ class Charter extends funkin.utility.MusicBeatState
 			}
 
 			if(!vortex){
-				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN)
+				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 				{
 					FlxG.sound.music.pause();
 					updateCurStep();
@@ -1870,11 +1874,11 @@ class Charter extends funkin.utility.MusicBeatState
 					var increase:Float = 1 / snap;
 					if (FlxG.keys.pressed.UP)
 					{
-						var fuck:Float = funkin.utility.Utility.quantize(beat, snap) - increase; //(Math.floor((beat+snap) / snap) * snap);
-						FlxG.sound.music.time = funkin.utility.Conductor.beatToSeconds(fuck);
+						var fuck:Float = CoolUtil.quantize(beat, snap) - increase; //(Math.floor((beat+snap) / snap) * snap);
+						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
 					}else{
-						var fuck:Float = funkin.utility.Utility.quantize(beat, snap) + increase; //(Math.floor((beat+snap) / snap) * snap);
-						FlxG.sound.music.time = funkin.utility.Conductor.beatToSeconds(fuck);
+						var fuck:Float = CoolUtil.quantize(beat, snap) + increase; //(Math.floor((beat+snap) / snap) * snap);
+						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
 					}
 				}
 			}
@@ -1885,7 +1889,7 @@ class Charter extends funkin.utility.MusicBeatState
 				style = 3;
 			}
 
-			var conductorTime = funkin.utility.Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
+			var conductorTime = Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
 
 			//AWW YOU MADE IT SEXY <3333 THX SHADMAR
 
@@ -1936,11 +1940,11 @@ class Charter extends funkin.utility.MusicBeatState
 					var increase:Float = 1 / snap;
 					if (FlxG.keys.pressed.UP)
 					{
-						var fuck:Float = funkin.utility.Utility.quantize(beat, snap) - increase;
-						feces = funkin.utility.Conductor.beatToSeconds(fuck);
+						var fuck:Float = CoolUtil.quantize(beat, snap) - increase;
+						feces = Conductor.beatToSeconds(fuck);
 					}else{
-						var fuck:Float = funkin.utility.Utility.quantize(beat, snap) + increase; //(Math.floor((beat+snap) / snap) * snap);
-						feces = funkin.utility.Conductor.beatToSeconds(fuck);
+						var fuck:Float = CoolUtil.quantize(beat, snap) + increase; //(Math.floor((beat+snap) / snap) * snap);
+						feces = Conductor.beatToSeconds(fuck);
 					}
 					FlxTween.tween(FlxG.sound.music, {time:feces}, 0.1, {ease:FlxEase.circOut});
 					if(vocals != null) {
@@ -2009,7 +2013,7 @@ class Charter extends funkin.utility.MusicBeatState
 			FlxG.sound.music.time = 0;
 			changeSection();
 		}
-		funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
+		Conductor.songPosition = FlxG.sound.music.time;
 		strumLineUpdateY();
 		camPos.y = strumLine.y;
 		for (i in 0...8){
@@ -2041,7 +2045,7 @@ class Charter extends funkin.utility.MusicBeatState
 		vocals.pitch = playbackSpeed;
 
 		bpmTxt.text =
-		Std.string(FlxMath.roundDecimal(funkin.utility.Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
+		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
 		"\nMeasure: " + curSec +
 		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
 		"\n\nStep: " + curStep +
@@ -2062,7 +2066,7 @@ class Charter extends funkin.utility.MusicBeatState
 				}
 			}
 
-			if(note.strumTime <= funkin.utility.Conductor.songPosition) {
+			if(note.strumTime <= Conductor.songPosition) {
 				note.alpha = 0.4;
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
@@ -2077,7 +2081,7 @@ class Charter extends funkin.utility.MusicBeatState
 								soundToPlay = 'GF_' + Std.string(data + 1);
 							}
 
-							FlxG.sound.play(funkin.utility.Paths.sound(soundToPlay)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
+							FlxG.sound.play(Paths.sound(soundToPlay)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
 							playedSound[data] = true;
 						}
 
@@ -2091,16 +2095,16 @@ class Charter extends funkin.utility.MusicBeatState
 			}
 		});
 
-		if(metronome.checked && lastConductorPos != funkin.utility.Conductor.songPosition) {
+		if(metronome.checked && lastConductorPos != Conductor.songPosition) {
 			var metroInterval:Float = 60 / metronomeStepper.value;
-			var metroStep:Int = Math.floor(((funkin.utility.Conductor.songPosition + metronomeOffsetStepper.value) / metroInterval) / 1000);
+			var metroStep:Int = Math.floor(((Conductor.songPosition + metronomeOffsetStepper.value) / metroInterval) / 1000);
 			var lastMetroStep:Int = Math.floor(((lastConductorPos + metronomeOffsetStepper.value) / metroInterval) / 1000);
 			if(metroStep != lastMetroStep) {
 				FlxG.sound.play(Paths.sound('Metronome_Tick'));
 				//trace('Ticked');
 			}
 		}
-		lastConductorPos = funkin.utility.Conductor.songPosition;
+		lastConductorPos = Conductor.songPosition;
 		super.update(elapsed);
 	}
 
@@ -2208,7 +2212,7 @@ class Charter extends funkin.utility.MusicBeatState
 
 	function strumLineUpdateY()
 	{
-		strumLine.y = getYfromStrum((funkin.utility.Conductor.songPosition - sectionStartTime()) / zoomList[curZoom] % (Conductor.stepCrochet * 16)) / (getSectionBeats() / 4);
+		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) / zoomList[curZoom] % (Conductor.stepCrochet * 16)) / (getSectionBeats() / 4);
 	}
 
 	var waveformPrinted:Bool = true;
@@ -2443,13 +2447,13 @@ class Charter extends funkin.utility.MusicBeatState
 			songTime: 0,
 			bpm: 0
 		}
-		for (i in 0...funkin.utility.Conductor.bpmChangeMap.length)
+		for (i in 0...Conductor.bpmChangeMap.length)
 		{
-			if (FlxG.sound.music.time > funkin.utility.Conductor.bpmChangeMap[i].songTime)
-				lastChange = funkin.utility.Conductor.bpmChangeMap[i];
+			if (FlxG.sound.music.time > Conductor.bpmChangeMap[i].songTime)
+				lastChange = Conductor.bpmChangeMap[i];
 		}
 
-		curStep = lastChange.stepTime + Math.floor((FlxG.sound.music.time - lastChange.songTime + add) / funkin.utility.Conductor.stepCrochet);
+		curStep = lastChange.stepTime + Math.floor((FlxG.sound.music.time - lastChange.songTime + add) / Conductor.stepCrochet);
 		updateBeat();
 
 		return curStep;
@@ -2515,7 +2519,7 @@ class Charter extends funkin.utility.MusicBeatState
 		{
 			changeSection();
 		}
-		funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
+		Conductor.songPosition = FlxG.sound.music.time;
 		updateWaveform();
 	}
 
@@ -2555,18 +2559,18 @@ class Charter extends funkin.utility.MusicBeatState
 	function loadHealthIconFromCharacter(char:String) {
 		var characterPath:String = 'characters/' + char + '.json';
 		#if MODS_ALLOWED
-		var path:String = funkin.utility.Paths.modFolders(characterPath);
+		var path:String = Paths.modFolders(characterPath);
 		if (!FileSystem.exists(path)) {
-			path = funkin.utility.Paths.getPreloadPath(characterPath);
+			path = Paths.getPreloadPath(characterPath);
 		}
 
 		if (!FileSystem.exists(path))
 		#else
-		var path:String = funkin.utility.Paths.getPreloadPath(characterPath);
+		var path:String = Paths.getPreloadPath(characterPath);
 		if (!OpenFlAssets.exists(path))
 		#end
 		{
-			path = funkin.utility.Paths.getPreloadPath('characters/' + funkin.utility.gameplay.Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
+			path = Paths.getPreloadPath('characters/' + Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
 		}
 
 		#if MODS_ALLOWED
@@ -2575,7 +2579,7 @@ class Charter extends funkin.utility.MusicBeatState
 		var rawJson = OpenFlAssets.getText(path);
 		#end
 
-		var json:funkin.utility.gameplay.Character.CharacterFile = cast Json.parse(rawJson);
+		var json:Character.CharacterFile = cast Json.parse(rawJson);
 		return json.healthicon;
 	}
 
@@ -2625,14 +2629,14 @@ class Charter extends funkin.utility.MusicBeatState
 			for (i in 0...curSec)
 				if (_song.notes[i].changeBPM)
 					daBPM = _song.notes[i].bpm;
-			funkin.utility.Conductor.changeBPM(daBPM);
+			Conductor.changeBPM(daBPM);
 		}
 
 		// CURRENT SECTION
 		var beats:Float = getSectionBeats();
 		for (i in _song.notes[curSec].sectionNotes)
 		{
-			var note:funkin.utility.gameplay.Note = setupNoteData(i, false);
+			var note:Note = setupNoteData(i, false);
 			curRenderedNotes.add(note);
 			if (note.sustainLength > 0)
 			{
@@ -2645,7 +2649,7 @@ class Charter extends funkin.utility.MusicBeatState
 				if(typeInt == null) theType = '?';
 
 				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 100, theType, 24);
-				daText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				daText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 				daText.xAdd = -32;
 				daText.yAdd = 6;
 				daText.borderSize = 1;
@@ -2670,7 +2674,7 @@ class Charter extends funkin.utility.MusicBeatState
 				if(note.eventLength > 1) text = note.eventLength + ' Events:\n' + note.eventName;
 
 				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 12);
-				daText.setFormat(funkin.utility.Paths.font("vcr.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
+				daText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
 				daText.xAdd = -410;
 				daText.borderSize = 1;
 				if(note.eventLength > 1) daText.yAdd += 8;
@@ -2685,7 +2689,7 @@ class Charter extends funkin.utility.MusicBeatState
 		if(curSec < _song.notes.length-1) {
 			for (i in _song.notes[curSec+1].sectionNotes)
 			{
-				var note:funkin.utility.gameplay.Note = setupNoteData(i, true);
+				var note:Note = setupNoteData(i, true);
 				note.alpha = 0.6;
 				nextRenderedNotes.add(note);
 				if (note.sustainLength > 0)
@@ -2702,7 +2706,7 @@ class Charter extends funkin.utility.MusicBeatState
 		{
 			if(endThing > i[0] && i[0] >= startThing)
 			{
-				var note:funkin.utility.gameplay.Note = setupNoteData(i, true);
+				var note:Note = setupNoteData(i, true);
 				note.alpha = 0.6;
 				nextRenderedNotes.add(note);
 			}
@@ -2715,7 +2719,7 @@ class Charter extends funkin.utility.MusicBeatState
 		var daStrumTime = i[0];
 		var daSus:Dynamic = i[2];
 
-		var note:funkin.utility.gameplay.Note = new Note(daStrumTime, daNoteInfo % 4, null, null, true);
+		var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, null, true);
 		if(daSus != null) { //Common note
 			if(!Std.isOfType(i[3], String)) //Convert old note type to new note type format
 			{
@@ -2728,7 +2732,7 @@ class Charter extends funkin.utility.MusicBeatState
 			note.sustainLength = daSus;
 			note.noteType = i[3];
 		} else { //Event note
-			note.loadGraphic(funkin.utility.Paths.image('eventArrow'));
+			note.loadGraphic(Paths.image('eventArrow'));
 			note.eventName = getEventName(i[1]);
 			note.eventLength = i[1].length;
 			if(i[1].length < 2)
@@ -2771,8 +2775,8 @@ class Charter extends funkin.utility.MusicBeatState
 		return retStr;
 	}
 
-	function setupSusNote(note:funkin.utility.gameplay.Note, beats:Float):FlxSprite {
-		var height:Int = Math.floor(FlxMath.remapToRange(note.sustainLength, 0, funkin.utility.Conductor.stepCrochet * 16, 0, GRID_SIZE * 16 * zoomList[curZoom]) + (GRID_SIZE * zoomList[curZoom]) - GRID_SIZE / 2);
+	function setupSusNote(note:Note, beats:Float):FlxSprite {
+		var height:Int = Math.floor(FlxMath.remapToRange(note.sustainLength, 0, Conductor.stepCrochet * 16, 0, GRID_SIZE * 16 * zoomList[curZoom]) + (GRID_SIZE * zoomList[curZoom]) - GRID_SIZE / 2);
 		var minHeight:Int = Std.int((GRID_SIZE * zoomList[curZoom] / 2) + GRID_SIZE / 2);
 		if(height < minHeight) height = minHeight;
 		if(height < 1) height = 1; //Prevents error of invalid height
@@ -2781,13 +2785,13 @@ class Charter extends funkin.utility.MusicBeatState
 		var shader = colorSwap.shader;
 
 		var colorList:Array<String> = ['c24b99', '00ffff', '12fa05', 'f9393f'];
-		if (funkin.states.PlayState.isPixelStage) colorList = ['e276ff', '3dcaff', '71e300', 'ff884e'];
+		if (PlayState.isPixelStage) colorList = ['e276ff', '3dcaff', '71e300', 'ff884e'];
 		var susColor:Int = Std.parseInt('0xff' + colorList[note.noteData]);
 
-		var hueColor = funkin.utility.Preferences.arrowHSV[note.noteData][0] / 360;
-		var saturationColor = funkin.utility.Preferences.arrowHSV[note.noteData][1] / 100;
-		var brightnessColor = funkin.utility.Preferences.arrowHSV[note.noteData][2] / 100;
-		if (note.noteType == "Hurt Note") susColor = funkin.utility.Utility.dominantColor(note); //Make black if hurt note
+		var hueColor = ClientPrefs.arrowHSV[note.noteData][0] / 360;
+		var saturationColor = ClientPrefs.arrowHSV[note.noteData][1] / 100;
+		var brightnessColor = ClientPrefs.arrowHSV[note.noteData][2] / 100;
+		if (note.noteType == "Hurt Note") susColor = CoolUtil.dominantColor(note); //Make black if hurt note
 
 		var spr:FlxSprite = new FlxSprite(note.x + (GRID_SIZE * 0.5) - 4, note.y + GRID_SIZE / 2).makeGraphic(8, height, susColor);
 		if (note.noteType != "Hurt Note"){
@@ -2815,7 +2819,7 @@ class Charter extends funkin.utility.MusicBeatState
 		_song.notes.push(sec);
 	}
 
-	function selectNote(note:funkin.utility.gameplay.Note):Void
+	function selectNote(note:Note):Void
 	{
 		var noteDataToCheck:Int = note.noteData;
 
@@ -2849,7 +2853,7 @@ class Charter extends funkin.utility.MusicBeatState
 		updateNoteUI();
 	}
 
-	function deleteNote(note:funkin.utility.gameplay.Note):Void
+	function deleteNote(note:Note):Void
 	{
 		var noteDataToCheck:Int = note.noteData;
 		if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
@@ -2986,12 +2990,12 @@ class Charter extends funkin.utility.MusicBeatState
 	{
 		var leZoom:Float = zoomList[curZoom];
 		if(!doZoomCalc) leZoom = 1;
-		return FlxMath.remapToRange(strumTime, 0, 16 * funkin.utility.Conductor.stepCrochet, gridBG.y, gridBG.y + gridBG.height * leZoom);
+		return FlxMath.remapToRange(strumTime, 0, 16 * Conductor.stepCrochet, gridBG.y, gridBG.y + gridBG.height * leZoom);
 	}
 	
 	function getYfromStrumNotes(strumTime:Float, beats:Float):Float
 	{
-		var value:Float = strumTime / (beats * 4 * funkin.utility.Conductor.stepCrochet);
+		var value:Float = strumTime / (beats * 4 * Conductor.stepCrochet);
 		return GRID_SIZE * beats * 4 * zoomList[curZoom] * value + gridBG.y;
 	}
 
@@ -3011,16 +3015,16 @@ class Charter extends funkin.utility.MusicBeatState
 	{
 		//shitty null fix, i fucking hate it when this happens
 		//make it look sexier if possible
-		if (currentDifficultyName != funkin.utility.Utility.defaultDifficulty) {
+		if (currentDifficultyName != CoolUtil.defaultDifficulty) {
 			if(currentDifficultyName == null){
-				funkin.states.PlayState.SONG = funkin.utility.Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+				PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
 			}else{
-				funkin.states.PlayState.SONG = funkin.utility.Song.loadFromJson(song.toLowerCase() + "-" + currentDifficultyName, song.toLowerCase());
+				PlayState.SONG = Song.loadFromJson(song.toLowerCase() + "-" + currentDifficultyName, song.toLowerCase());
 			}
 		}else{
-			funkin.states.PlayState.SONG = funkin.utility.Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
 		}
-		funkin.utility.MusicBeatState.resetState();
+		MusicBeatState.resetState();
 	}
 
 	function autosaveSong():Void
@@ -3057,7 +3061,6 @@ class Charter extends funkin.utility.MusicBeatState
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + cock + ".json");
-			FlxG.autoPause = true;
 		}
 	}
 
@@ -3085,7 +3088,6 @@ class Charter extends funkin.utility.MusicBeatState
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data.trim(), "events.json");
-			FlxG.autoPause = true;
 		}
 	}
 
@@ -3096,7 +3098,6 @@ class Charter extends funkin.utility.MusicBeatState
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.notice("Successfully saved LEVEL DATA.");
-		FlxG.autoPause = false;
 	}
 
 	/**
@@ -3108,7 +3109,6 @@ class Charter extends funkin.utility.MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
-		FlxG.autoPause = false;
 	}
 
 	/**
@@ -3121,7 +3121,6 @@ class Charter extends funkin.utility.MusicBeatState
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.error("Problem saving Level data");
-		FlxG.autoPause = false;
 	}
 
 	function getSectionBeats(?section:Null<Int> = null)

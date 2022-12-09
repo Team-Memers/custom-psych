@@ -161,7 +161,7 @@ class Alphabet extends FlxSpriteGroup
 	{
 		if (isMenuItem)
 		{
-			var lerpVal:Float = Utility.boundTo(elapsed * 9.6, 0, 1);
+			var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
 			if(changeX)
 				x = FlxMath.lerp(x, (targetY * distancePerItem.x) + startPosition.x, lerpVal);
 			if(changeY)
@@ -329,7 +329,7 @@ class AlphaCharacter extends FlxSprite
 		super(x, y);
 		this.parent = parent;
 		image = 'alphabet';
-		antialiasing = funkin.utility.Preferences.globalAntialiasing;
+		antialiasing = ClientPrefs.globalAntialiasing;
 
 		var curLetter:Letter = allLetters.get('?');
 		var lowercase = character.toLowerCase();

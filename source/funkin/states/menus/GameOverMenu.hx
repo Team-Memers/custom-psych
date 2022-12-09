@@ -11,9 +11,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import funkin.states.PlayState;
 
-class GameOverMenu extends funkin.utility.MusicBeatSubState
+class GameOverSubstate extends MusicBeatSubstate
 {
-	public var boyfriend:funkin.utility.gameplay.Boyfriend;
+	public var boyfriend:Boyfriend;
 	var camFollow:FlxPoint;
 	var camFollowPos:FlxObject;
 	var updateCamera:Bool = false;
@@ -26,7 +26,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
 
-	public static var instance:GameOverMenu;
+	public static var instance:GameOverSubstate;
 
 	public static function resetVariables() {
 		characterName = 'bf-dead';
@@ -49,7 +49,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 
 		PlayState.instance.setOnLuas('inGameOver', true);
 
-		funkin.utility.Conductor.songPosition = 0;
+		Conductor.songPosition = 0;
 
 		boyfriend = new Boyfriend(x, y, characterName);
 		boyfriend.x += boyfriend.positionArray[0];
@@ -58,8 +58,8 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 
 		camFollow = new FlxPoint(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
 
-		FlxG.sound.play(funkin.utility.Paths.sound(deathSoundName));
-		funkin.utility.Conductor.changeBPM(100);
+		FlxG.sound.play(Paths.sound(deathSoundName));
+		Conductor.changeBPM(100);
 		// FlxG.camera.followLerp = 1;
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
@@ -79,7 +79,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 
 		PlayState.instance.callOnLuas('onUpdate', [elapsed]);
 		if(updateCamera) {
-			var lerpVal:Float = funkin.utility.Utility.boundTo(elapsed * 0.6, 0, 1);
+			var lerpVal:Float = CoolUtil.boundTo(elapsed * 0.6, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 		}
 
@@ -95,11 +95,11 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 			PlayState.seenCutscene = false;
 			PlayState.chartingMode = false;
 
-			funkin.utility.WeekData.loadTheFirstEnabledMod();
+			WeekData.loadTheFirstEnabledMod();
 			if (PlayState.isStoryMode)
-				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.StoryMenu());
+				MusicBeatState.switchState(new StoryMenuState());
 			else
-				funkin.utility.MusicBeatState.switchState(new funkin.states.menus.FreeplayMenu());
+				MusicBeatState.switchState(new FreeplayState());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
@@ -124,7 +124,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 					var exclude:Array<Int> = [];
 					//if(!ClientPrefs.cursing) exclude = [1, 3, 8, 13, 17, 21];
 
-					FlxG.sound.play(funkin.utility.Paths.sound('jeffGameover/jeffGameover-' + FlxG.random.int(1, 25, exclude)), 1, false, null, true, function() {
+					FlxG.sound.play(Paths.sound('jeffGameover/jeffGameover-' + FlxG.random.int(1, 25, exclude)), 1, false, null, true, function() {
 						if(!isEnding)
 						{
 							FlxG.sound.music.fadeIn(0.2, 1, 4);
@@ -141,7 +141,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 
 		if (FlxG.sound.music.playing)
 		{
-			funkin.utility.Conductor.songPosition = FlxG.sound.music.time;
+			Conductor.songPosition = FlxG.sound.music.time;
 		}
 		PlayState.instance.callOnLuas('onUpdatePost', [elapsed]);
 	}
@@ -157,7 +157,7 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 
 	function coolStartDeath(?volume:Float = 1):Void
 	{
-		FlxG.sound.playMusic(funkin.utility.Paths.music(loopSoundName), volume);
+		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
 	}
 
 	function endBullshit():Void
@@ -167,12 +167,12 @@ class GameOverMenu extends funkin.utility.MusicBeatSubState
 			isEnding = true;
 			boyfriend.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
-			FlxG.sound.play(funkin.utility.Paths.music(endSoundName));
+			FlxG.sound.play(Paths.music(endSoundName));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					funkin.utility.MusicBeatState.resetState();
+					MusicBeatState.resetState();
 				});
 			});
 			PlayState.instance.callOnLuas('onGameOverConfirm', [true]);

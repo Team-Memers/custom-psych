@@ -167,7 +167,7 @@ class Rating
 		this.name = name;
 		this.image = name;
 		this.counter = name + 's';
-		this.hitWindow = Reflect.field(funkin.utility.Preferences, name + 'Window');
+		this.hitWindow = Reflect.field(ClientPrefs, name + 'Window');
 		if(hitWindow == null)
 		{
 			hitWindow = 0;
@@ -176,6 +176,6 @@ class Rating
 
 	public function increase(blah:Int = 1)
 	{
-		Reflect.setField(funkin.states.PlayState.instance, counter, Reflect.field(funkin.states.PlayState.instance, counter) + blah);
+		Reflect.setField(PlayState.instance, counter, Reflect.field(PlayState.instance, counter) + blah);
 	}
 }

@@ -36,7 +36,7 @@ class StrumNote extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'NOTE_assets';
-		if(funkin.states.PlayState.SONG.arrowSkin != null && funkin.states.PlayState.SONG.arrowSkin.length > 1) skin = funkin.states.PlayState.SONG.arrowSkin;
+		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();
@@ -47,15 +47,15 @@ class StrumNote extends FlxSprite
 		var lastAnim:String = null;
 		if(animation.curAnim != null) lastAnim = animation.curAnim.name;
 
-		if(funkin.states.PlayState.isPixelStage)
+		if(PlayState.isPixelStage)
 		{
-			loadGraphic(funkin.utility.Paths.image('pixelUI/' + texture));
+			loadGraphic(Paths.image('pixelUI/' + texture));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(funkin.utility.Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
+			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
-			setGraphicSize(Std.int(width * funkin.states.PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
 			animation.add('green', [6]);
 			animation.add('red', [7]);
@@ -75,7 +75,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('purple', 'arrowLEFT');
 			animation.addByPrefix('red', 'arrowRIGHT');
 
-			antialiasing = funkin.utility.Preferences.globalAntialiasing;
+			antialiasing = ClientPrefs.globalAntialiasing;
 			setGraphicSize(Std.int(width * 0.7));
 
 			var lowerCaseAnim:String = dirArray[noteData % 4].toLowerCase();
@@ -93,7 +93,7 @@ class StrumNote extends FlxSprite
 
 	public function postAddedToGroup() {
 		playAnim('static');
-		x += funkin.utility.gameplay.Note.swagWidth * noteData;
+		x += Note.swagWidth * noteData;
 		x += 50;
 		x += ((FlxG.width / 2) * player);
 		ID = noteData;
@@ -108,7 +108,7 @@ class StrumNote extends FlxSprite
 			}
 		}
 		//if(animation.curAnim != null){ //my bad i was upset
-		if(animation.curAnim.name == 'confirm' && !funkin.states.PlayState.isPixelStage) {
+		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 			centerOrigin();
 		//}
 		}
@@ -125,14 +125,14 @@ class StrumNote extends FlxSprite
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 		} else {
-			if (noteData > -1 && noteData < funkin.utility.Preferences.arrowHSV.length)
+			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 			{
-				colorSwap.hue = funkin.utility.Preferences.arrowHSV[noteData][0] / 360;
-				colorSwap.saturation = funkin.utility.Preferences.arrowHSV[noteData][1] / 100;
-				colorSwap.brightness = funkin.utility.Preferences.arrowHSV[noteData][2] / 100;
+				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
+				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
+				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
 			}
 
-			if(animation.curAnim.name == 'confirm' && !funkin.states.PlayState.isPixelStage) {
+			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 				centerOrigin();
 			}
 		}

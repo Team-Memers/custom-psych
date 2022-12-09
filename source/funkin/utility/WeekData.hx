@@ -8,7 +8,6 @@ import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
 import haxe.format.JsonParser;
-import funkin.utility.Paths;
 
 using StringTools;
 
@@ -97,7 +96,7 @@ class WeekData {
 		var originalLength:Int = directories.length;
 		if(FileSystem.exists(modsListPath))
 		{
-			var stuff:Array<String> = funkin.utility.Utility.coolTextFile(modsListPath);
+			var stuff:Array<String> = CoolUtil.coolTextFile(modsListPath);
 			for (i in 0...stuff.length)
 			{
 				var splitName:Array<String> = stuff[i].trim().split('|');
@@ -161,7 +160,7 @@ class WeekData {
 		for (i in 0...directories.length) {
 			var directory:String = directories[i] + 'weeks/';
 			if(FileSystem.exists(directory)) {
-				var listOfWeeks:Array<String> = funkin.utility.Utility.coolTextFile(directory + 'weekList.txt');
+				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
 				for (daWeek in listOfWeeks)
 				{
 					var path:String = directory + daWeek + '.json';
@@ -198,7 +197,7 @@ class WeekData {
 					weekFile.folder = directory.substring(Paths.mods().length, directory.length-1);
 					#end
 				}
-				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!funkin.states.PlayState.isStoryMode && !weekFile.hideFreeplay))
+				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
 					weeksList.push(weekToCheck);
@@ -229,12 +228,12 @@ class WeekData {
 
 	//To use on PlayState.hx or Highscore stuff
 	public static function getWeekFileName():String {
-		return weeksList[funkin.states.PlayState.storyWeek];
+		return weeksList[PlayState.storyWeek];
 	}
 
 	//Used on LoadingState, nothing really too relevant
 	public static function getCurrentWeek():WeekData {
-		return weeksLoaded.get(weeksList[funkin.states.PlayState.storyWeek]);
+		return weeksLoaded.get(weeksList[PlayState.storyWeek]);
 	}
 
 	public static function setDirectoryFromWeek(?data:WeekData = null) {
@@ -251,7 +250,7 @@ class WeekData {
 		#if MODS_ALLOWED
 		if (FileSystem.exists("modsList.txt"))
 		{
-			var list:Array<String> = funkin.utility.Utility.listFromString(File.getContent("modsList.txt"));
+			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
 			var foundTheTop = false;
 			for (i in list)
 			{
