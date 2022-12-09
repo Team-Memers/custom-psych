@@ -73,7 +73,7 @@ class CharacterEditorState extends MusicBeatState
 	private var camMenu:FlxCamera;
 
 	var changeBGbutton:FlxButton;
-	var leHealthIcon:funkin.utility.HealthIcon;
+	var leHealthIcon:HealthIcon;
 	var characterList:Array<String> = [];
 
 	var cameraFollowPointer:FlxSprite;

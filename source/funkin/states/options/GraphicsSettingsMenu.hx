@@ -24,11 +24,10 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
 import openfl.Lib;
-import funkin.utility.Option;
 
 using StringTools;
 
-class GraphicsSettingsMenu extends funkin.utility.OptionsFunctionality
+class GraphicsSettingsSubState extends BaseOptionsMenu
 {
 	public function new()
 	{

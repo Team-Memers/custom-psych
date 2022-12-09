@@ -46,7 +46,7 @@ import funkin.states.editors.Charter;
 import funkin.states.editors.Character;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
-import funkin.utility.gameplay.Note.EventNote;
+import funkin.utility.Note.EventNote;
 import openfl.events.KeyboardEvent;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
@@ -59,22 +59,6 @@ import funkin.utility.FunkinLua;
 import funkin.utility.DialogueBoxPsych;
 import funkin.utility.Conductor.Rating;
 import funkin.states.menus.MainMenu;
-import funkin.utility.gameplay.Character;
-import funkin.utility.Preferences;
-import funkin.utility.gameplay.Boyfriend;
-import funkin.utility.gameplay.Character;
-import funkin.utility.DialogueBox;
-import funkin.utility.DialogueBoxPsych;
-import funkin.utility.Conductor;
-import funkin.stages.TankmenBG;
-import funkin.stages.BGSprite;
-import funkin.stages.PhillyGlow;
-import funkin.utility.gameplay.Note;
-import funkin.utility.gameplay.StrumNote;
-import funkin.utility.gameplay.NoteSplash;
-import funkin.utility.AttachedSprite;
-import funkin.utility.HealthIcon;
-import funkin.utility.Paths;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -1532,7 +1516,7 @@ class PlayState extends MusicBeatState
 		playbackRate = value;
 		FlxAnimationController.globalSpeed = value;
 		trace('Anim speed: ' + FlxAnimationController.globalSpeed);
-		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * value;
+		funkin.utility.Conductor.safeZoneOffset = (funkin.utility.Preferences.safeFrames / 60) * 1000 * value;
 		setOnLuas('playbackRate', playbackRate);
 		return value;
 	}
@@ -2439,10 +2423,10 @@ class PlayState extends MusicBeatState
 	{
 		// FlxG.log.add(ChartParser.parse());
 
-		songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
+		songSpeed = funkin.utility.Preferences.getGameplaySetting('scrollspeed', 1);
 
 		var songData = SONG;
-		Conductor.changeBPM(songData.bpm);
+		funkin.utility.Conductor.changeBPM(songData.bpm);
 
 		curSong = songData.song;
 
