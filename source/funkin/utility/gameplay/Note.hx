@@ -7,8 +7,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import funkin.states.editors.Charter;
-
-using StringTools;
+import funkin.utility.ColorSwap;
 
 typedef EventNote = {
 	strumTime:Float,
@@ -121,11 +120,11 @@ class Note extends FlxSprite
 
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
-		if (noteData > -1 && noteData < funkin.utility.Preferences.arrowHSV.length)
+		if (noteData > -1 && noteData < Preferences.arrowHSV.length)
 		{
-			colorSwap.hue = funkin.utility.Preferences.arrowHSV[noteData][0] / 360;
-			colorSwap.saturation = funkin.utility.Preferences.arrowHSV[noteData][1] / 100;
-			colorSwap.brightness = funkin.utility.Preferences.arrowHSV[noteData][2] / 100;
+			colorSwap.hue = Preferences.arrowHSV[noteData][0] / 360;
+			colorSwap.saturation = Preferences.arrowHSV[noteData][1] / 100;
+			colorSwap.brightness = Preferences.arrowHSV[noteData][2] / 100;
 		}
 
 		if(noteData > -1 && noteType != value) {
@@ -172,11 +171,11 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (funkin.utility.Preferences.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (Preferences.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
-		if(!inEditor) this.strumTime += funkin.utility.Preferences.noteOffset;
+		if(!inEditor) this.strumTime += Preferences.noteOffset;
 
 		this.noteData = noteData;
 
@@ -203,7 +202,7 @@ class Note extends FlxSprite
 			alpha = 0.6;
 			multAlpha = 0.6;
 			hitsoundDisabled = true;
-			if(funkin.utility.Preferences.downScroll) flipY = true;
+			if(Preferences.downScroll) flipY = true;
 
 			offsetX += width / 2;
 			copyAngle = false;
@@ -227,7 +226,7 @@ class Note extends FlxSprite
 					prevNote.scale.y *= PlayState.instance.songSpeed;
 				}
 
-				if(funkin.states.PlayState.isPixelStage) {
+				if(PlayState.isPixelStage) {
 					prevNote.scale.y *= 1.19;
 					prevNote.scale.y *= (6 / height); //Auto adjust note size
 				}
@@ -273,16 +272,16 @@ class Note extends FlxSprite
 		var blahblah:String = arraySkin.join('/');
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
-				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah + 'ENDS'));
+				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
 				width = width / 4;
 				height = height / 2;
 				originalHeightForCalcs = height;
-				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
-				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah));
+				loadGraphic(Paths.image('pixelUI/' + blahblah));
 				width = width / 4;
 				height = height / 5;
-				loadGraphic(funkin.utility.Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
 			}
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
@@ -301,9 +300,9 @@ class Note extends FlxSprite
 				}*/
 			}
 		} else {
-			frames = funkin.utility.Paths.getSparrowAtlas(blahblah);
+			frames = Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();
-			antialiasing = funkin.utility.Preferences.globalAntialiasing;
+			antialiasing = Preferences.globalAntialiasing;
 		}
 		if(isSustainNote) {
 			scale.y = lastScaleY;
@@ -314,7 +313,7 @@ class Note extends FlxSprite
 			animation.play(animName, true);
 
 		if(inEditor) {
-			setGraphicSize(ChartingState.GRID_SIZE, ChartingState.GRID_SIZE);
+			setGraphicSize(Charter.GRID_SIZE, Charter.GRID_SIZE);
 			updateHitbox();
 		}
 	}

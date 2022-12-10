@@ -28,9 +28,7 @@ import haxe.Json;
 import sys.io.File;
 #end
 
-using StringTools;
-
-class MenuCharacterEditorState extends MusicBeatState
+class MenuCharacterEditor extends MusicBeatState
 {
 	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
 	var characterFile:MenuCharacterFile = null;
@@ -280,11 +278,11 @@ class MenuCharacterEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
+				MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 

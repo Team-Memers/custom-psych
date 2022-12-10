@@ -23,8 +23,6 @@ import haxe.Json;
 
 import flash.media.Sound;
 
-using StringTools;
-
 class Paths
 {
 	inline public static var SOUND_EXT = "ogg";

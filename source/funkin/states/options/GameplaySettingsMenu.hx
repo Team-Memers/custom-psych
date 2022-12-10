@@ -22,8 +22,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
-
-using StringTools;
+import funkin.utility.Option;
 
 class GameplaySettingsMenu extends funkin.utility.OptionsFunctionality
 {
@@ -155,6 +154,6 @@ class GameplaySettingsMenu extends funkin.utility.OptionsFunctionality
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound('hitsound'), Preferences.hitsoundVolume);
 	}
 }

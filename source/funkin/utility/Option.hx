@@ -21,8 +21,6 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
 
-using StringTools;
-
 class Option
 {
 	private var child:Alphabet;
@@ -109,11 +107,11 @@ class Option
 
 	public function getValue():Dynamic
 	{
-		return Reflect.getProperty(ClientPrefs, variable);
+		return Reflect.getProperty(Preferences, variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		Reflect.setProperty(ClientPrefs, variable, value);
+		Reflect.setProperty(Preferences, variable, value);
 	}
 
 	public function setChild(child:Alphabet)

@@ -23,8 +23,6 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
 
-using StringTools;
-
 class VisualsUIMenu extends funkin.utility.OptionsFunctionality
 {
 	public function new()
@@ -133,10 +131,10 @@ class VisualsUIMenu extends funkin.utility.OptionsFunctionality
 	var changedMusic:Bool = false;
 	function onChangePauseMusic()
 	{
-		if(ClientPrefs.pauseMusic == 'None')
+		if(Preferences.pauseMusic == 'None')
 			FlxG.sound.music.volume = 0;
 		else
-			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)));
+			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(Preferences.pauseMusic)));
 
 		changedMusic = true;
 	}
@@ -150,6 +148,6 @@ class VisualsUIMenu extends funkin.utility.OptionsFunctionality
 	function onChangeFPSCounter()
 	{
 		if(Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+			Main.fpsVar.visible = Preferences.showFPS;
 	}
 }

@@ -24,10 +24,9 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
 import openfl.Lib;
+import funkin.utility.Option;
 
-using StringTools;
-
-class GraphicsSettingsSubState extends BaseOptionsMenu
+class GraphicsSettingsSubState extends funkin.utility.OptionsFunctionality
 {
 	public function new()
 	{
@@ -80,7 +79,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			var sprite:Dynamic = sprite; //Make it check for FlxSprite instead of FlxBasic
 			var sprite:FlxSprite = sprite; //Don't judge me ok
 			if(sprite != null && (sprite is FlxSprite) && !(sprite is FlxText)) {
-				sprite.antialiasing = ClientPrefs.globalAntialiasing;
+				sprite.antialiasing = Preferences.globalAntialiasing;
 			}
 		}
 	}
@@ -89,13 +88,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 	{
 		if(ClientPrefs.framerate > FlxG.drawFramerate)
 		{
-			FlxG.updateFramerate = ClientPrefs.framerate;
-			FlxG.drawFramerate = ClientPrefs.framerate;
+			FlxG.updateFramerate = Preferences.framerate;
+			FlxG.drawFramerate = Preferences.framerate;
 		}
 		else
 		{
-			FlxG.drawFramerate = ClientPrefs.framerate;
-			FlxG.updateFramerate = ClientPrefs.framerate;
+			FlxG.drawFramerate = Preferences.framerate;
+			FlxG.updateFramerate = Preferences.framerate;
 		}
 	}
 }

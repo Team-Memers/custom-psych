@@ -3,8 +3,6 @@ package funkin.utility;
 import flixel.FlxSprite;
 import openfl.utils.Assets as OpenFlAssets;
 
-using StringTools;
-
 class HealthIcon extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
@@ -52,7 +50,7 @@ class HealthIcon extends FlxSprite
 			animation.play(char);
 			this.char = char;
 
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = Preferences.globalAntialiasing;
 			if(char.endsWith('-pixel')) {
 				antialiasing = false;
 			}

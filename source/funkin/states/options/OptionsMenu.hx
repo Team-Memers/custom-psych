@@ -24,9 +24,7 @@ import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
 import funkin.utility.Paths;
 
-using StringTools;
-
-class OptionsMenu extends funkin.utility.MusicBeatState
+class OptionsMenu extends MusicBeatState
 {
 	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Offset and Combo Placement', 'Graphics', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -40,13 +38,13 @@ class OptionsMenu extends funkin.utility.MusicBeatState
 			case 'Controls':
 				openSubState(new funkin.states.options.ControlsMenu());
 			case 'Graphics':
-				openSubState(new funkin.statesoptions.GraphicsSettingsMenu());
+				openSubState(new funkin.states.options.GraphicsSettingsMenu());
 			case 'Visuals and UI':
 				openSubState(new funkin.states.options.VisualsUIMenu());
 			case 'Gameplay':
 				openSubState(new funkin.states.options.GameplaySettingsMenu());
 			case 'Adjust Offset and Combo Placement':
-				LoadingState.loadAndSwitchState(new funkin.states.options.NoteOffsetMenu());
+				Loading.loadAndSwitchState(new funkin.states.options.NoteOffsetMenu());
 		}
 	}
 
@@ -63,7 +61,7 @@ class OptionsMenu extends funkin.utility.MusicBeatState
 		bg.updateHitbox();
 
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = Preferences.globalAntialiasing;
 		add(bg);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -90,7 +88,7 @@ class OptionsMenu extends funkin.utility.MusicBeatState
 
 	override function closeSubState() {
 		super.closeSubState();
-		ClientPrefs.saveSettings();
+		Preferences.saveSettings();
 	}
 
 	override function update(elapsed:Float) {
@@ -111,7 +109,7 @@ class OptionsMenu extends funkin.utility.MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new funkin.states.menus.MainMenu());
 		}
 
 		if (controls.ACCEPT) {

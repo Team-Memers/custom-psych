@@ -10,12 +10,9 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.system.FlxSound;
-import funkin.utility.Paths;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
-
-using StringTools;
 
 class MasterEditorMenu extends MusicBeatState
 {
@@ -107,28 +104,28 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new funkin.states.menus.MainMenu());
 		}
 
 		if (controls.ACCEPT)
 		{
 			switch(options[curSelected]) {
 				case 'Character Editor':
-					LoadingState.loadAndSwitchState(new CharacterEditorState(Character.DEFAULT_CHARACTER, false));
+					Loading.loadAndSwitchState(new funkin.states.editors.CharacterEditor(Character.DEFAULT_CHARACTER, false));
 				case 'Week Editor':
-					MusicBeatState.switchState(new WeekEditorState());
+					MusicBeatState.switchState(new funkin.states.editors.WeekEditor());
 				case 'Menu Character Editor':
-					MusicBeatState.switchState(new MenuCharacterEditorState());
+					MusicBeatState.switchState(new funkin.states.editors.MenuCharacterEditor());
 				case 'Dialogue Portrait Editor':
-					LoadingState.loadAndSwitchState(new DialogueCharacterEditorState(), false);
+					Loading.loadAndSwitchState(new funkin.states.editors.DialogueCharacterEditor(), false);
 				case 'Dialogue Editor':
-					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
+					Loading.loadAndSwitchState(new funkin.states.editors.DialogueEditor(), false);
 				case 'Chart Editor'://felt it would be cool maybe
-					LoadingState.loadAndSwitchState(new ChartingState(), false);
+					Loading.loadAndSwitchState(new funkin.states.editors.Charter(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
-			FreeplayState.destroyFreeplayVocals();
+			funkin.states.menus.FreeplayMenu.destroyFreeplayVocals();
 			#end
 		}
 		
@@ -174,7 +171,7 @@ class MasterEditorMenu extends MusicBeatState
 		if(curDirectory >= directories.length)
 			curDirectory = 0;
 	
-		WeekData.setDirectoryFromWeek();
+		funkin.utility.WeekData.setDirectoryFromWeek();
 		if(directories[curDirectory] == null || directories[curDirectory].length < 1)
 			directoryTxt.text = '< No Mod Directory Loaded >';
 		else

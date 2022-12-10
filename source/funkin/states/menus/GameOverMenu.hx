@@ -9,9 +9,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import funkin.states.PlayState;
+import funkin.utility.WeekData;
 
-class GameOverSubstate extends MusicBeatSubstate
+class GameOverMenu extends MusicBeatSubstate
 {
 	public var boyfriend:Boyfriend;
 	var camFollow:FlxPoint;
@@ -26,7 +26,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
 
-	public static var instance:GameOverSubstate;
+	public static var instance:GameOverMenu;
 
 	public static function resetVariables() {
 		characterName = 'bf-dead';
@@ -79,7 +79,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		PlayState.instance.callOnLuas('onUpdate', [elapsed]);
 		if(updateCamera) {
-			var lerpVal:Float = CoolUtil.boundTo(elapsed * 0.6, 0, 1);
+			var lerpVal:Float = Utility.boundTo(elapsed * 0.6, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 		}
 
@@ -97,9 +97,9 @@ class GameOverSubstate extends MusicBeatSubstate
 
 			WeekData.loadTheFirstEnabledMod();
 			if (PlayState.isStoryMode)
-				MusicBeatState.switchState(new StoryMenuState());
+				MusicBeatState.switchState(new funkin.states.menus.StoryMenu());
 			else
-				MusicBeatState.switchState(new FreeplayState());
+				MusicBeatState.switchState(new funkin.states.menus.FreeplayMenu());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);

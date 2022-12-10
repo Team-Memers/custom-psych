@@ -13,15 +13,13 @@ import lime.utils.Assets;
 import flixel.FlxSubState;
 import funkin.utility.Achievements;
 
-using StringTools;
-
-class AchievementsMenuState extends MusicBeatState
+class AchievementsMenu extends MusicBeatState
 {
 	#if ACHIEVEMENTS_ALLOWED
 	var options:Array<String> = [];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
-	private var achievementArray:Array<AttachedAchievement> = [];
+	private var achievementArray:Array<Achievements.AttachedAchievement> = [];
 	private var achievementIndex:Array<Int> = [];
 	private var descText:FlxText;
 
@@ -33,7 +31,7 @@ class AchievementsMenuState extends MusicBeatState
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.alpha = 0.6;
-		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+		menuBG.antialiasing = Preferences.globalAntialiasing;
 		add(menuBG);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -55,7 +53,7 @@ class AchievementsMenuState extends MusicBeatState
 			optionText.snapToPosition();
 			grpOptions.add(optionText);
 
-			var icon:AttachedAchievement = new AttachedAchievement(optionText.x - 105, optionText.y, achieveName);
+			var icon:Achievements.AttachedAchievement = new AttachedAchievement(optionText.x - 105, optionText.y, achieveName);
 			icon.sprTracker = optionText;
 			achievementArray.push(icon);
 			add(icon);
@@ -83,7 +81,7 @@ class AchievementsMenuState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new funkin.states.menus.MainMenu());
 		}
 	}
 

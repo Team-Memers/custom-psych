@@ -13,9 +13,7 @@ import sys.FileSystem;
 import openfl.utils.Assets;
 #end
 
-using StringTools;
-
-class CoolUtil
+class Utility
 {
 	public static var defaultDifficulties:Array<String> = [
 		'Hard',

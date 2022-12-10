@@ -10,8 +10,6 @@ import flixel.util.FlxTimer;
 import flixel.system.FlxSound;
 import flash.media.Sound;
 
-using StringTools;
-
 enum Alignment
 {
 	LEFT;
@@ -160,7 +158,7 @@ class Alphabet extends FlxSpriteGroup
 	{
 		if (isMenuItem)
 		{
-			var lerpVal:Float = funkin.utility.Utility.boundTo(elapsed * 9.6, 0, 1);
+			var lerpVal:Float = Utility.boundTo(elapsed * 9.6, 0, 1);
 			if(changeX)
 				x = FlxMath.lerp(x, (targetY * distancePerItem.x) + startPosition.x, lerpVal);
 			if(changeY)
@@ -328,7 +326,7 @@ class AlphaCharacter extends FlxSprite
 		super(x, y);
 		this.parent = parent;
 		image = 'alphabet';
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = Preferences.globalAntialiasing;
 
 		var curLetter:Letter = allLetters.get('?');
 		var lowercase = character.toLowerCase();

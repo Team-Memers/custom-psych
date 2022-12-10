@@ -22,10 +22,9 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
+import funkin.utility.AttachedText;
 
-using StringTools;
-
-class ControlsMenu extends funkin.utility.MusicBeatSubState {
+class ControlsMenu extends MusicBeatSubState {
 	private static var curSelected:Int = 1;
 	private static var curAlt:Bool = false;
 
@@ -73,7 +72,7 @@ class ControlsMenu extends funkin.utility.MusicBeatSubState {
 		//bg.color = 0xFFea71fd;
 		bg.alpha = 0.6;
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = Preferences.globalAntialiasing;
 		add(bg);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -126,14 +125,14 @@ class ControlsMenu extends funkin.utility.MusicBeatSubState {
 			}
 
 			if (controls.BACK) {
-				ClientPrefs.reloadControls();
+				Preferences.reloadControls();
 				close();
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
 
 			if(controls.ACCEPT && nextAccept <= 0) {
 				if(optionShit[curSelected][0] == defaultKey) {
-					ClientPrefs.keyBinds = ClientPrefs.defaultKeys.copy();
+					Preferences.keyBinds = Preferences.defaultKeys.copy();
 					reloadKeys();
 					changeSelection();
 					FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -151,14 +150,14 @@ class ControlsMenu extends funkin.utility.MusicBeatSubState {
 		} else {
 			var keyPressed:Int = FlxG.keys.firstJustPressed();
 			if (keyPressed > -1) {
-				var keysArray:Array<FlxKey> = ClientPrefs.keyBinds.get(optionShit[curSelected][1]);
+				var keysArray:Array<FlxKey> = Preferences.keyBinds.get(optionShit[curSelected][1]);
 				keysArray[curAlt ? 1 : 0] = keyPressed;
 
 				var opposite:Int = (curAlt ? 0 : 1);
 				if(keysArray[opposite] == keysArray[1 - opposite]) {
 					keysArray[opposite] = NONE;
 				}
-				ClientPrefs.keyBinds.set(optionShit[curSelected][1], keysArray);
+				Preferences.keyBinds.set(optionShit[curSelected][1], keysArray);
 
 				reloadKeys();
 				FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -272,7 +271,7 @@ class ControlsMenu extends funkin.utility.MusicBeatSubState {
 	}
 
 	private function addBindTexts(optionText:Alphabet, num:Int) {
-		var keys:Array<Dynamic> = ClientPrefs.keyBinds.get(optionShit[num][1]);
+		var keys:Array<Dynamic> = Preferences.keyBinds.get(optionShit[num][1]);
 		var text1 = new AttachedText(InputFormatter.getKeyName(keys[0]), 400, -55);
 		text1.setPosition(optionText.x + 400, optionText.y - 55);
 		text1.sprTracker = optionText;
@@ -300,7 +299,7 @@ class ControlsMenu extends funkin.utility.MusicBeatSubState {
 			item.destroy();
 		}
 
-		trace('Reloaded keys: ' + ClientPrefs.keyBinds);
+		trace('Reloaded keys: ' + Preferences.keyBinds);
 
 		for (i in 0...grpOptions.length) {
 			if(!unselectableCheck(i, true)) {

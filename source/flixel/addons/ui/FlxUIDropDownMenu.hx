@@ -1,4 +1,4 @@
-package funkin.utility;
+package funkin.addons.ui;
 
 import flash.geom.Rectangle;
 import flixel.addons.ui.interfaces.IFlxUIClickable;
@@ -34,7 +34,7 @@ The differences are the following:
 /**
  * @author larsiusprime
  */
-class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget implements IFlxUIClickable implements IHasParams
+class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IFlxUIClickable implements IHasParams
 {
 	public var skipButtonUpdate(default, set):Bool;
 
@@ -149,7 +149,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 
 	public var callback:String->Void;
 
-	// private var _ui_control_callback:Bool->FlxUIDropDownMenuCustom->Void;
+	// private var _ui_control_callback:Bool->FlxUIDropDownMenu->Void;
 
 	/**
 	 * This creates a new dropdown menu.
@@ -164,7 +164,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 	 * @param	UIControlCallback	Used internally by FlxUI
 	 */
 	public function new(X:Float = 0, Y:Float = 0, DataList:Array<StrNameLabel>, ?Callback:String->Void, ?Header:FlxUIDropDownHeader,
-			?DropPanel:FlxUI9SliceSprite, ?ButtonList:Array<FlxUIButton>, ?UIControlCallback:Bool->CustomDropDownMenu->Void)
+			?DropPanel:FlxUI9SliceSprite, ?ButtonList:Array<FlxUIButton>, ?UIControlCallback:Bool->FlxUIDropDownMenu->Void)
 	{
 		super(X, Y);
 		callback = Callback;
@@ -381,7 +381,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 		return t;
 	}
 
-	/*public function setUIControlCallback(UIControlCallback:Bool->FlxUIDropDownMenuCustom->Void):Void {
+	/*public function setUIControlCallback(UIControlCallback:Bool->FlxUIDropDownMenu->Void):Void {
 		_ui_control_callback = UIControlCallback;
 	}*/
 	public function changeLabelByIndex(i:Int, NewLabel:String):Void
@@ -520,7 +520,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 	 *
 	 * @param	StringArray		The strings to use as data - used for both label and string ID.
 	 * @param	UseIndexID		Whether to use the integer index of the current string as ID.
-	 * @return	The StrIDLabel array ready to be used in FlxUIDropDownMenuCustom's constructor
+	 * @return	The StrIDLabel array ready to be used in FlxUIDropDownMenu's constructor
 	 */
 	public static function makeStrIdLabelArray(StringArray:Array<String>, UseIndexID:Bool = false):Array<StrNameLabel>
 	{
@@ -539,7 +539,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 }
 
 /**
- * Header for a FlxUIDropDownMenuCustom
+ * Header for a FlxUIDropDownMenu
  */
 class FlxUIDropDownHeader extends FlxUIGroup
 {
@@ -559,7 +559,7 @@ class FlxUIDropDownHeader extends FlxUIGroup
 	public var button:FlxUISpriteButton;
 
 	/**
-	 * Creates a new dropdown header to be used in a FlxUIDropDownMenuCustom.
+	 * Creates a new dropdown header to be used in a FlxUIDropDownMenu.
 	 *
 	 * @param	Width	Width of the dropdown - only relevant when no back sprite was specified
 	 * @param	Back	Optional sprite to be placed in the background

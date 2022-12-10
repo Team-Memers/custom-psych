@@ -2,8 +2,6 @@ package funkin.utility;
 
 import flixel.FlxSprite;
 
-using StringTools;
-
 class AttachedSprite extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
@@ -26,7 +24,7 @@ class AttachedSprite extends FlxSprite
 		} else if(file != null) {
 			loadGraphic(Paths.image(file));
 		}
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = Preferences.globalAntialiasing;
 		scrollFactor.set();
 	}
 

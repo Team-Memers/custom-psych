@@ -15,7 +15,7 @@ import openfl.geom.Rectangle;
  * ...
  * @author 
  */
-class Prompt extends MusicBeatSubstate
+class Prompt extends MusicBeatSubState
 {
 	var selected = 0;
 	public var okc:Void->Void;
@@ -53,10 +53,8 @@ class Prompt extends MusicBeatSubstate
 	{
 		super.create();
 		if (goAnyway){
-			
-			
-				if(okc != null)okc();
-			close();
+			if(okc != null)okc();
+				close();
 			
 		}else{
 		panel = new FlxSprite(0, 0);
@@ -94,44 +92,6 @@ class Prompt extends MusicBeatSubstate
 		textshit.scrollFactor.set();
 		}
 	}
-	/*
-	override public function update(elapsed:Float):Void 
-	{
-		super.update(elapsed);
-		
-		
-		
-		if (!goAnyway){
-			
-			
-			
-		if (controls.UI_LEFT_P || controls.UI_RIGHT_P){
-			if (selected == 0){
-				selected = 1;
-			}else{
-				selected = 0;
-			}
-			FlxG.sound.play(Paths.sound('scrollMenu'));
-			//buttons.animation.play('but' + selected);
-		}
-		buttonAccept.color.brightness = 0.5;
-		buttonNo.color.brightness = 0.5;
-		if (selected == 0 ) buttonAccept.color.brightness = 0.9;
-		if (selected == 1 ) buttonNo.color.brightness = 0.9;
-		if (controls.ACCEPT ){
-			if (selected == 0){
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-				if(okc != null)okc();
-			}else{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if(cancelc != null)cancelc();
-			}
-			close();
-		}
-		
-		}
-	}
-	*/
 	
 	function makeSelectorGraphic(panel:FlxSprite,w,h,color:FlxColor)
 	{
@@ -165,5 +125,4 @@ class Prompt extends MusicBeatSubstate
 		panel.pixels.fillRect(new Rectangle((flipX ? antiX : 6), Std.int(Math.abs(antiY - 2)),  5, 1), color);
 		panel.pixels.fillRect(new Rectangle((flipX ? antiX : 8), Std.int(Math.abs(antiY - 1)),  3, 1), color);
 	}
-	
 }

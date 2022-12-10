@@ -3,8 +3,7 @@ package funkin.utility.gameplay;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
-
-using StringTools;
+import funkin.utility.ColorSwap
 
 class StrumNote extends FlxSprite
 {
@@ -75,7 +74,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('purple', 'arrowLEFT');
 			animation.addByPrefix('red', 'arrowRIGHT');
 
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = Preferences.globalAntialiasing;
 			setGraphicSize(Std.int(width * 0.7));
 
 			var lowerCaseAnim:String = dirArray[noteData % 4].toLowerCase();
@@ -125,11 +124,11 @@ class StrumNote extends FlxSprite
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 		} else {
-			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
+			if (noteData > -1 && noteData < Preferences.arrowHSV.length)
 			{
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+				colorSwap.hue = Preferences.arrowHSV[noteData][0] / 360;
+				colorSwap.saturation = Preferences.arrowHSV[noteData][1] / 100;
+				colorSwap.brightness = Preferences.arrowHSV[noteData][2] / 100;
 			}
 
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {

@@ -22,17 +22,17 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import funkin.utility.Controls;
+import funkin.utility.Checkbox;
+import funkin.utility.AttachedText;
 
-using StringTools;
-
-class GameplayChangersSubstate extends MusicBeatSubstate
+class GameplayChangersMenu extends MusicBeatSubState
 {
 	private var curOption:GameplayOption = null;
 	private var curSelected:Int = 0;
 	private var optionsArray:Array<Dynamic> = [];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
-	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
+	private var checkboxGroup:FlxTypedGroup<Checkbox>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	function getOptions()
@@ -107,7 +107,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		grpTexts = new FlxTypedGroup<AttachedText>();
 		add(grpTexts);
 
-		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
+		checkboxGroup = new FlxTypedGroup<Checkbox>();
 		add(checkboxGroup);
 		
 		getOptions();
@@ -125,7 +125,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				optionText.x += 110;
 				optionText.startPosition.x += 110;
 				optionText.snapToPosition();
-				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+				var checkbox:Checkbox = new Checkbox(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.offsetX -= 32;
 				checkbox.offsetY = -120;
@@ -169,7 +169,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		if (controls.BACK) {
 			close();
-			ClientPrefs.saveSettings();
+			Preferences.saveSettings();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 
@@ -436,11 +436,11 @@ class GameplayOption
 
 	public function getValue():Dynamic
 	{
-		return ClientPrefs.gameplaySettings.get(variable);
+		return Preferences.gameplaySettings.get(variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		ClientPrefs.gameplaySettings.set(variable, value);
+		Preferences.gameplaySettings.set(variable, value);
 	}
 
 	public function setChild(child:Alphabet)

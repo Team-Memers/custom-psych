@@ -30,9 +30,7 @@ import funkin.utility.Alphabet;
 import sys.io.File;
 #end
 
-using StringTools;
-
-class DialogueEditorState extends MusicBeatState
+class DialogueEditor extends MusicBeatState
 {
 	var character:DialogueCharacter;
 	var box:FlxSprite;
@@ -347,14 +345,14 @@ class DialogueEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = TitleMenu.muteKeys;
+			FlxG.sound.volumeDownKeys = TitleMenu.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = TitleMenu.volumeUpKeys;
 			if(FlxG.keys.justPressed.SPACE) {
 				reloadText(false);
 			}
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
+				MusicBeatState.switchState(new funkin.states.menus.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
 				transitioning = true;
 			}

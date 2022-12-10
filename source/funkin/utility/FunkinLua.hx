@@ -33,11 +33,8 @@ import flixel.math.FlxMath;
 import flixel.util.FlxSave;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.system.FlxAssets.FlxShader;
-import funkin.states.PlayState;
-import funkin.utility.Preferences;
-import funkin.utility.Conductor;
-import funkin.utility.Paths;
-import funkin.utility.MusicBeatState;
+import funkin.utility.gameplay.StrumNote;
+import funkin.states.menus.GameOverMenu;
 
 #if (!flash && sys)
 import flixel.addons.display.FlxRuntimeShader;
@@ -59,8 +56,6 @@ import hscript.Expr;
 #end
 
 import funkin.utility.Discord;
-
-using StringTools;
 
 class FunkinLua {
 	public static var Function_Stop:Dynamic = 1;
@@ -130,7 +125,7 @@ class FunkinLua {
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
 
-		var difficultyName:String = CoolUtil.difficulties[PlayState.storyDifficulty];
+		var difficultyName:String = Utility.difficulties[PlayState.storyDifficulty];
 		set('difficultyName', difficultyName);
 		set('difficultyPath', Paths.formatToSongPath(difficultyName));
 		set('weekRaw', PlayState.storyWeek);
@@ -158,7 +153,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', MainMenuState.psychEngineVersion.trim());
+		set('version', funkin.states.menus.MainMenu.psychEngineVersion.trim());
 
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -194,20 +189,20 @@ class FunkinLua {
 		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
-		set('downscroll', ClientPrefs.downScroll);
-		set('middlescroll', ClientPrefs.middleScroll);
-		set('framerate', ClientPrefs.framerate);
-		set('ghostTapping', ClientPrefs.ghostTapping);
-		set('hideHud', ClientPrefs.hideHud);
-		set('mechanics', ClientPrefs.mechanics);
-		set('timeBarType', ClientPrefs.timeBarType);
-		set('cameraZoomOnBeat', ClientPrefs.camZooms);
-		set('flashingLights', ClientPrefs.flashing);
-		set('noteOffset', ClientPrefs.noteOffset);
-		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
-		set('noResetButton', ClientPrefs.noReset);
-		set('lowQuality', ClientPrefs.lowQuality);
-		set('shadersEnabled', ClientPrefs.shaders);
+		set('downscroll', Preferences.downScroll);
+		set('middlescroll', Preferences.middleScroll);
+		set('framerate', Preferences.framerate);
+		set('ghostTapping', Preferences.ghostTapping);
+		set('hideHud', Preferences.hideHud);
+		set('mechanics', Preferences.mechanics);
+		set('timeBarType', Preferences.timeBarType);
+		set('cameraZoomOnBeat', Preferences.camZooms);
+		set('flashingLights', Preferences.flashing);
+		set('noteOffset', Preferences.noteOffset);
+		set('healthBarAlpha', Preferences.healthBarAlpha);
+		set('noResetButton', Preferences.noReset);
+		set('lowQuality', Preferences.lowQuality);
+		set('shadersEnabled', Preferences.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
 		set('buildTarget', 'windows');
@@ -239,7 +234,7 @@ class FunkinLua {
 
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
-			if(!ClientPrefs.shaders) return false;
+			if(!Preferences.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			return initLuaShader(name, glslVersion);
@@ -250,7 +245,7 @@ class FunkinLua {
 		});
 		
 		Lua_helper.add_callback(lua, "setSpriteShader", function(obj:String, shader:String) {
-			if(!ClientPrefs.shaders) return false;
+			if(!Preferences.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			if(!PlayState.instance.runtimeShaders.exists(shader) && !initLuaShader(shader))
@@ -607,7 +602,6 @@ class FunkinLua {
 
 						return;
 					}
-
 				}
 			}
 			Lua.pushnil(lua);
@@ -913,7 +907,7 @@ class FunkinLua {
 			PlayState.SONG = funkin.utility.Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
 			PlayState.instance.persistentUpdate = false;
-			funkin.states.Loading.loadAndSwitchState(new PlayState());
+			Loading.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.pause();
 			FlxG.sound.music.volume = 0;
@@ -1555,9 +1549,9 @@ class FunkinLua {
 				CustomFadeTransition.nextCamera = null;
 
 			if(PlayState.isStoryMode)
-				MusicBeatState.switchState(new StoryMenuState());
+				MusicBeatState.switchState(new funkin.states.menus.StoryMenu());
 			else
-				MusicBeatState.switchState(new FreeplayState());
+				MusicBeatState.switchState(new funkin.states.menus.FreeplayMenu());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.changedDifficulty = false;
@@ -1726,7 +1720,7 @@ class FunkinLua {
 			{
 				leSprite.loadGraphic(Paths.image(image));
 			}
-			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = Preferences.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
@@ -1736,7 +1730,7 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 
 			loadFrames(leSprite, image, spriteType);
-			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = Preferences.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
@@ -1799,7 +1793,6 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addAnimationByIndicesLoop", function(obj:String, name:String, prefix:String, indices:String, framerate:Int = 24) {
 			return addAnimByIndices(obj, name, prefix, indices, framerate, true);
 		});
-		
 
 		Lua_helper.add_callback(lua, "playAnim", function(obj:String, name:String, forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0)
 		{
@@ -1879,7 +1872,7 @@ class FunkinLua {
 					{
 						if(PlayState.instance.isDead)
 						{
-							GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), shit);
+							GameOverMenu.instance.insert(GameOverMenu.instance.members.indexOf(GameOverMenu.instance.boyfriend), shit);
 						}
 						else
 						{
@@ -2873,7 +2866,7 @@ class FunkinLua {
 	
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
-		if(!ClientPrefs.shaders) return false;
+		if(!Preferences.shaders) return false;
 
 		#if (!flash && sys)
 		if(PlayState.instance.runtimeShaders.exists(name))
@@ -3281,7 +3274,7 @@ class FunkinLua {
 
 	public static inline function getInstance()
 	{
-		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
+		return PlayState.instance.isDead ? GameOverMenu.instance : PlayState.instance;
 	}
 }
 
@@ -3294,7 +3287,7 @@ class ModchartSprite extends FlxSprite
 	public function new(?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = Preferences.globalAntialiasing;
 	}
 }
 
@@ -3331,7 +3324,7 @@ class DebugLuaText extends FlxText
 	}
 }
 
-class CustomSubstate extends funkin.utility.MusicBeatSubstate
+class CustomSubstate extends MusicBeatSubState
 {
 	public static var name:String = 'unnamed';
 	public static var instance:CustomSubstate;
@@ -3392,8 +3385,9 @@ class HScript
 		interp.variables.set('game', PlayState.instance);
 		interp.variables.set('Paths', Paths);
 		interp.variables.set('Conductor', Conductor);
-		interp.variables.set('ClientPrefs', ClientPrefs);
-		interp.variables.set('Character', Character);
+		interp.variables.set('Preferences', Preferences);
+		interp.variables.set('ClientPrefs', Preferences);
+		interp.variables.set('Character', funkin.utility.Character);
 		interp.variables.set('Alphabet', Alphabet);
 		interp.variables.set('CustomSubstate', CustomSubstate);
 		#if (!flash && sys)

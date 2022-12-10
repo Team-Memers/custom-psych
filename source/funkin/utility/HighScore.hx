@@ -2,9 +2,7 @@ package funkin.utility;
 
 import flixel.FlxG;
 
-using StringTools;
-
-class Highscore
+class HighScore
 {
 	#if (haxe >= "4.0.0")
 	public static var weekScores:Map<String, Int> = new Map();
@@ -103,7 +101,7 @@ class Highscore
 
 	public static function formatSong(song:String, diff:Int):String
 	{
-		return Paths.formatToSongPath(song) + CoolUtil.getDifficultyFilePath(diff);
+		return Paths.formatToSongPath(song) + Utility.getDifficultyFilePath(diff);
 	}
 
 	public static function getScore(song:String, diff:Int):Int
