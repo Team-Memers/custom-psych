@@ -11,7 +11,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import funkin.utility.WeekData;
 
-class GameOverMenu extends MusicBeatSubstate
+class GameOverMenu extends MusicBeatSubState
 {
 	public var boyfriend:Boyfriend;
 	var camFollow:FlxPoint;
