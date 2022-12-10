@@ -247,8 +247,8 @@ class PlayState extends MusicBeatState
 	var phillyWindowEvent:BGSprite;
 	var trainSound:FlxSound;
 
-	var phillyGlowGradient:PhillyGlow.PhillyGlowGradient;
-	var phillyGlowParticles:FlxTypedGroup<PhillyGlow.PhillyGlowParticle>;
+	var phillyGlowGradient:PhillyGlowGradient;
+	var phillyGlowParticles:FlxTypedGroup<PhillyGlowParticle>;
 
 	var limoKillingState:Int = 0;
 	var limo:BGSprite;
