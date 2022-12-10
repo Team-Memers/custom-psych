@@ -3,7 +3,7 @@ package funkin.utility.gameplay;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
-import funkin.utility.ColorSwap
+import funkin.utility.ColorSwap;
 
 class StrumNote extends FlxSprite
 {

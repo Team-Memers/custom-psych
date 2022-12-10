@@ -1,6 +1,5 @@
 package funkin.utility;
 
-import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
@@ -14,8 +13,6 @@ import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
-import funkin.states.PlayState;
-import funkin.utility.Conductor;
 
 class MusicBeatState extends FlxUIState
 {

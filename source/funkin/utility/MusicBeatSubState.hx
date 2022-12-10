@@ -1,4 +1,4 @@
-package funkin.subStates;
+package funkin.utility;
 
 import funkin.utility.Conductor.BPMChangeEvent;
 import flixel.FlxG;
