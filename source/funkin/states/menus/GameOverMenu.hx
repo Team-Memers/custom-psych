@@ -10,6 +10,7 @@ import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import funkin.utility.WeekData;
+import funkin.utility.gameplay.Boyfriend;
 
 class GameOverMenu extends MusicBeatSubState
 {
