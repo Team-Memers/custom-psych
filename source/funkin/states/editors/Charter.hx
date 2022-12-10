@@ -50,6 +50,7 @@ import flixel.addons.ui.FlxUIDropDownMenu;
 import funkin.utility.AttachedSprite;
 import funkin.utility.HealthIcon;
 import funkin.utility.Prompt;
+import funkin.utility.ColorSwap;
 
 #if sys
 import flash.media.Sound;
