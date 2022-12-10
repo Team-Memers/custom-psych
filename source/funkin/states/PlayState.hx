@@ -47,6 +47,7 @@ import funkin.states.editors.CharacterEditor;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
 import funkin.utility.gameplay.Note.EventNote;
+import funkin.utility.gameplay.Note;
 import openfl.events.KeyboardEvent;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
