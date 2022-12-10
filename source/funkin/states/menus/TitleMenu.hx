@@ -18,7 +18,6 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 import funkin.states.options.GraphicsSettingsMenu;
-//import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
@@ -35,6 +34,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import funkin.utility.ColorSwap;
 
 typedef TitleData =
 {
