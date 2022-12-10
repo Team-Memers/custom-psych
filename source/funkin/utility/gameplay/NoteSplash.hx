@@ -1,4 +1,4 @@
-package funkin.utility;
+package funkin.utility.gameplay;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

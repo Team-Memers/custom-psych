@@ -46,7 +46,7 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import funkin.utility.gameplay.Note;
 import funkin.utility.gameplay.StrumNote;
-import funkin.addons.ui.FlxUIDropDownMenu;
+import flixel.addons.ui.FlxUIDropDownMenu;
 import funkin.utility.AttachedSprite;
 import funkin.utility.HealthIcon;
 import funkin.utility.Prompt;
