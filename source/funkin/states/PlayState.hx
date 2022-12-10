@@ -75,6 +75,7 @@ import funkin.stages.TankmenBG;
 import funkin.utility.WeekData;
 import funkin.states.menus.GameOverMenu;
 import funkin.states.menus.PauseMenu;
+import funkin.utility.DialogueBox;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
